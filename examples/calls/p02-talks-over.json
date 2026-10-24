@@ -1,0 +1,72 @@
+{
+  "id": "p02-talks-over",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes, so I'm looking for something with two bedrooms, ideally near the station because I",
+      "start": 10.63,
+      "end": 16.4,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Great, the Elm Road flat has two bedrooms. Would you like to book a viewing?",
+      "start": 15.0,
+      "end": 20.77,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Sorry, I was still talking. I was saying I don't drive, so it has to be walking distance to the station.",
+      "start": 21.37,
+      "end": 29.45,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Okay. We have viewings on Saturday",
+      "start": 30.25,
+      "end": 32.26,
+      "interrupted": true
+    },
+    {
+      "speaker": "caller",
+      "text": "Is it walking distance or not?",
+      "start": 31.96,
+      "end": 34.27,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "We have viewings on Saturday between ten and two. Shall I book one?",
+      "start": 33.17,
+      "end": 38.17,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "I'll think about it. Bye.",
+      "start": 38.77,
+      "end": 40.69,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Thanks for your time, goodbye.",
+      "start": 41.49,
+      "end": 43.41,
+      "interrupted": null
+    }
+  ]
+}

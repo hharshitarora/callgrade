@@ -1,0 +1,65 @@
+{
+  "id": "c04-pets",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes, quick question first. I have a small dog. Is that allowed at the Elm Road flat?",
+      "start": 10.63,
+      "end": 17.17,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Pets are decided property by property and need the landlord's written consent, so I can't promise yes or no right now. I can ask the landlord for you.",
+      "start": 17.97,
+      "end": 28.74,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Okay, please do. It's a small terrier, very quiet.",
+      "start": 29.34,
+      "end": 32.8,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Noted, a small terrier. I'll put the request to the landlord today and call you back by Thursday with their answer. Is this the best number?",
+      "start": 33.6,
+      "end": 43.6,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes, this number is fine.",
+      "start": 44.2,
+      "end": 46.12,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Great. Speak to you by Thursday. Thanks for your time.",
+      "start": 46.92,
+      "end": 50.77,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Thanks, bye.",
+      "start": 51.37,
+      "end": 52.17,
+      "interrupted": null
+    }
+  ]
+}

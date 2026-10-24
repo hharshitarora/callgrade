@@ -1,0 +1,72 @@
+{
+  "id": "p04-wrong-intent",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes. I'm looking to rent a two bed, nothing too big.",
+      "start": 10.63,
+      "end": 14.86,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Great. Are you currently a homeowner, or would this be your first purchase?",
+      "start": 15.66,
+      "end": 20.66,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Neither, I want to rent. I'm not buying.",
+      "start": 21.26,
+      "end": 24.34,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Understood. We can arrange a free mortgage consultation so you know how much you could borrow when you're ready to buy.",
+      "start": 25.14,
+      "end": 33.22,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "I really just want to rent for now.",
+      "start": 33.82,
+      "end": 36.9,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Of course. I'll book you in with our mortgage adviser on Thursday, they can explain the buying process.",
+      "start": 37.7,
+      "end": 44.62,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "No, that's not what I want. I'll call back.",
+      "start": 45.22,
+      "end": 48.68,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "No problem, thanks for your time.",
+      "start": 49.48,
+      "end": 51.79,
+      "interrupted": null
+    }
+  ]
+}

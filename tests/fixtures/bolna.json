@@ -1,0 +1,8 @@
+{
+  "id": "bolna-demo-1",
+  "agent_id": "agent-demo",
+  "status": "completed",
+  "conversation_duration": 28,
+  "transcript": "assistant: Hello, this is Maya from Northgate Lettings.\nuser: Hi, yes.\nassistant: When are you hoping to move?\nIdeally soon?\nuser: Next month.\n",
+  "telephony_data": {"duration": 28, "call_type": "outbound"}
+}

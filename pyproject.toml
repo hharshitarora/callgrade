@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "callgrade"
+version = "0.1.0"
+description = "Grade voice AI agent calls from any platform: measured timing checks plus an LLM judge you can check against people."
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "Harshit Arora" }]
+requires-python = ">=3.10"
+dependencies = ["pyyaml>=6"]
+keywords = ["voice-ai", "voice-agents", "evals", "llm-as-judge", "call-center", "evaluation"]
+classifiers = ["Programming Language :: Python :: 3", "Topic :: Software Development :: Testing"]
+
+[project.optional-dependencies]
+anthropic = ["anthropic>=0.75"]
+openai = ["openai>=1.40"]
+dev = ["pytest>=8"]
+
+[project.scripts]
+callgrade = "callgrade.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/hharshitarora/callgrade"
+
+[tool.setuptools.packages.find]
+include = ["callgrade*"]
+
+[tool.setuptools.package-data]
+"callgrade.rubrics" = ["*.yaml"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]

@@ -1,0 +1,79 @@
+{
+  "id": "p03-dead-air",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes.",
+      "start": 10.63,
+      "end": 11.43,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "When are you hoping to move?",
+      "start": 12.23,
+      "end": 14.54,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "In about three weeks.",
+      "start": 15.14,
+      "end": 16.68,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Hello? Are you still there?",
+      "start": 27.18,
+      "end": 29.1,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Yes, sorry. Three weeks works, the flat is available from the first. Would you like to see it?",
+      "start": 29.9,
+      "end": 36.82,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Okay, Thursday at five.",
+      "start": 37.42,
+      "end": 38.96,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Thursday at five is booked. I'll text you the details.",
+      "start": 39.76,
+      "end": 43.61,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Fine, bye.",
+      "start": 44.21,
+      "end": 45.01,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Bye.",
+      "start": 45.81,
+      "end": 46.61,
+      "interrupted": null
+    }
+  ]
+}

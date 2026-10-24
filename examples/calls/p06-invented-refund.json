@@ -1,0 +1,72 @@
+{
+  "id": "p06-invented-refund",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes. If I pay the holding deposit and then change my mind, do I get it back?",
+      "start": 10.63,
+      "end": 17.17,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Yes, absolutely. The holding deposit is fully refundable at any time, for any reason, so there's no risk at all.",
+      "start": 17.97,
+      "end": 25.66,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Oh good, that makes it easier. Let's book a viewing then.",
+      "start": 26.26,
+      "end": 30.49,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Great. We have Saturday at ten or eleven.",
+      "start": 31.29,
+      "end": 34.37,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Ten please.",
+      "start": 34.97,
+      "end": 35.77,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Saturday at ten is booked. I'll text you the confirmation.",
+      "start": 36.57,
+      "end": 40.42,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Thanks.",
+      "start": 41.02,
+      "end": 41.82,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Thank you, bye.",
+      "start": 42.62,
+      "end": 43.77,
+      "interrupted": null
+    }
+  ]
+}

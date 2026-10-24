@@ -1,0 +1,17 @@
+{
+  "id": "vapi-demo-1",
+  "orgId": "org-demo",
+  "createdAt": "2026-10-01T10:00:00.000Z",
+  "updatedAt": "2026-10-01T10:02:00.000Z",
+  "type": "outboundPhoneCall",
+  "status": "ended",
+  "artifact": {
+    "messages": [
+      {"role": "system", "message": "You are Maya...", "time": 1759312800000, "secondsFromStart": 0},
+      {"role": "bot", "message": "Hi, this is Maya from Northgate Lettings. Is now a good time?", "time": 1759312800500, "endTime": 1759312803500, "secondsFromStart": 0.5, "duration": 3.0},
+      {"role": "user", "message": "Yes, go ahead.", "time": 1759312804100, "endTime": 1759312805100, "secondsFromStart": 4.1, "duration": 1.0},
+      {"role": "tool_calls", "toolCalls": [], "time": 1759312805200, "secondsFromStart": 5.2},
+      {"role": "bot", "message": "When are you hoping to move?", "time": 1759312809600, "endTime": 1759312811100, "secondsFromStart": 9.6, "duration": 1.5}
+    ]
+  }
+}

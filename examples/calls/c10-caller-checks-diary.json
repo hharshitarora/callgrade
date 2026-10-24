@@ -1,0 +1,72 @@
+{
+  "id": "c10-caller-checks-diary",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes, I'd like to see it. Hold on, let me check my diary.",
+      "start": 10.63,
+      "end": 15.63,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Of course, take your time.",
+      "start": 16.43,
+      "end": 18.35,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Okay, sorry. Wednesday after six?",
+      "start": 23.85,
+      "end": 25.77,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Wednesday at six fifteen is available. Shall I book it?",
+      "start": 26.57,
+      "end": 30.42,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes please.",
+      "start": 31.02,
+      "end": 31.82,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Booked. You'll get a text with the address and the name of the person meeting you.",
+      "start": 32.62,
+      "end": 38.77,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Thanks.",
+      "start": 39.37,
+      "end": 40.17,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Thank you, goodbye.",
+      "start": 40.97,
+      "end": 42.12,
+      "interrupted": null
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - name: Install
+        run: pip install -e ".[dev]"
+      - name: Unit tests
+        run: pytest
+      # No API key anywhere in CI, so forks can run it. The judge is covered by
+      # unit tests with a fake provider; the timing half is proven for real here.
+      - name: Grade the test set with measured checks only
+        run: callgrade grade examples/calls --judge none --out run
+      - name: Prove every planted timing failure is caught
+        run: |
+          python - <<'PY'
+          import json, subprocess, sys
+          out = json.loads(subprocess.check_output(
+              ["callgrade", "agree", "run/results.jsonl", "--planted", "examples/planted.jsonl"]))["planted_failures"]
+          print(json.dumps(out, indent=2))
+          if out["missed"] or out["false_alarms_on_clean_calls"]:
+              sys.exit("a planted timing failure was missed or a clean call raised an alarm")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: report-py${{ matrix.python }}
+          path: run/

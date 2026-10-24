@@ -1,0 +1,72 @@
+{
+  "id": "c08-reschedule",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant at Northgate Lettings. How can I help?",
+      "start": 0.8,
+      "end": 6.18,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Hi, I have a viewing on Tuesday at five but I can't make it anymore.",
+      "start": 6.78,
+      "end": 12.55,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "No problem. Can I take your name so I can find the booking?",
+      "start": 13.35,
+      "end": 18.35,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Sam Patel.",
+      "start": 18.95,
+      "end": 19.75,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Thanks Sam, I can see Tuesday at five at Elm Road. When would you like to move it to?",
+      "start": 20.55,
+      "end": 27.86,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Is Wednesday at five any good?",
+      "start": 28.46,
+      "end": 30.77,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Wednesday at five is free. I've moved your viewing there and cancelled Tuesday. You'll get a new confirmation text.",
+      "start": 31.57,
+      "end": 38.88,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Great, thanks.",
+      "start": 39.48,
+      "end": 40.28,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "You're welcome Sam, see you Wednesday.",
+      "start": 41.08,
+      "end": 43.39,
+      "interrupted": null
+    }
+  ]
+}

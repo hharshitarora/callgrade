@@ -1,0 +1,12 @@
+{
+  "agent_id": "agent-demo",
+  "conversation_id": "el-demo-1",
+  "status": "done",
+  "transcript": [
+    {"role": "agent", "message": "Hi, this is Maya. Is now a good time?", "time_in_call_secs": 0, "interrupted": true},
+    {"role": "user", "message": "Sorry, who is this?", "time_in_call_secs": 2},
+    {"role": "agent", "message": null, "time_in_call_secs": 3, "tool_calls": []},
+    {"role": "agent", "message": "Maya, from Northgate Lettings.", "time_in_call_secs": 4}
+  ],
+  "metadata": {"call_duration_secs": 9}
+}

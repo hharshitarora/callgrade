@@ -1,0 +1,86 @@
+{
+  "id": "p05-ignores-question",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes. How much is the security deposit on the Elm Road flat?",
+      "start": 10.63,
+      "end": 15.25,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "It's a lovely flat with a bright living room. When are you hoping to move?",
+      "start": 16.05,
+      "end": 21.82,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Next month. But what's the deposit?",
+      "start": 22.42,
+      "end": 24.73,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Next month is perfect. Would you like to book a viewing this week?",
+      "start": 25.53,
+      "end": 30.53,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Maybe, I just need to know the deposit first.",
+      "start": 31.13,
+      "end": 34.59,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "We have Thursday at six or Saturday at eleven. Which would you prefer?",
+      "start": 35.39,
+      "end": 40.39,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Saturday I guess.",
+      "start": 40.99,
+      "end": 42.14,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Saturday at eleven is booked. I'll text you the details now.",
+      "start": 42.94,
+      "end": 47.17,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Okay.",
+      "start": 47.77,
+      "end": 48.57,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Thanks, bye.",
+      "start": 49.37,
+      "end": 50.17,
+      "interrupted": null
+    }
+  ]
+}

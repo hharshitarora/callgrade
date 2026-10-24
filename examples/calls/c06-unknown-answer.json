@@ -1,0 +1,72 @@
+{
+  "id": "c06-unknown-answer",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yeah. Does the Elm Road flat come with a parking space?",
+      "start": 10.63,
+      "end": 14.86,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "I don't have parking details for that flat, and I'd rather not guess. I'll check with the branch and text you the answer today.",
+      "start": 15.66,
+      "end": 24.89,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Okay, fair enough.",
+      "start": 25.49,
+      "end": 26.64,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "In the meantime, would you like to book a viewing so you can see the street too?",
+      "start": 27.44,
+      "end": 33.98,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Sure, Monday at nine if you have it.",
+      "start": 34.58,
+      "end": 37.66,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Monday at nine is booked. You'll get a text with the confirmation now, and the parking answer later today.",
+      "start": 38.46,
+      "end": 45.77,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Thanks.",
+      "start": 46.37,
+      "end": 47.17,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "You're welcome, goodbye.",
+      "start": 47.97,
+      "end": 49.12,
+      "interrupted": null
+    }
+  ]
+}

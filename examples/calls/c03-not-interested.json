@@ -1,0 +1,51 @@
+{
+  "id": "c03-not-interested",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Oh, sorry, I actually found somewhere last week.",
+      "start": 10.63,
+      "end": 13.71,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Congratulations, that's great news. I'll close your enquiry so we don't call again. Is that okay?",
+      "start": 14.51,
+      "end": 20.66,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes please, thanks.",
+      "start": 21.26,
+      "end": 22.41,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Done. Good luck with the move, and goodbye.",
+      "start": 23.21,
+      "end": 26.29,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Bye.",
+      "start": 26.89,
+      "end": 27.69,
+      "interrupted": null
+    }
+  ]
+}

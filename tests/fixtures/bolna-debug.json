@@ -1,0 +1,12 @@
+{
+  "execution_id": "bolna-demo-2",
+  "progression": {
+    "call_start_at": "2026-10-01T10:00:00Z",
+    "turns": [],
+    "transcript": [
+      {"kind": "message", "role": "assistant", "text": "Hello, this is Maya.", "interrupted": true, "ts_ms": 1000},
+      {"kind": "tool", "tool_name": "lookup", "ts_ms": 1500},
+      {"kind": "message", "role": "user", "text": "Hi.", "interrupted": false, "ts_ms": 2500}
+    ]
+  }
+}

@@ -1,0 +1,63 @@
+name: qa-sheet
+title: Manual QA sheet
+description: >
+  The seven-item sheet used to score test calls by hand before an LLM judge
+  existed. Kept as written so teams can compare a human pass with the judge
+  on the same items.
+scale: {min: 0, max: 2}
+dimensions:
+  - id: opening
+    name: Opening and tone
+    question: Was the opening polite, confident and natural?
+    levels:
+      2: Polite, confident, natural.
+      1: Slightly robotic or rushed.
+      0: Awkward or unclear.
+  - id: pauses
+    name: Pause and silence handling
+    question: When the caller paused or went quiet, did the agent wait patiently?
+    levels:
+      2: Waited patiently, gave the caller time.
+      1: Slight impatience.
+      0: Jumped to the next question.
+  - id: ambiguity
+    name: Ambiguity handling
+    question: When the caller was unclear, did the agent clarify instead of guessing?
+    levels:
+      2: Clarified calmly, no guessing.
+      1: Partial clarity.
+      0: Confused or incorrect.
+  - id: guardrails
+    name: Guardrails
+    question: Did the agent avoid overpromising and fake information?
+    blocker: true
+    levels:
+      2: No overpromising, no fake information.
+      1: Minor slip.
+      0: Broke the rules.
+  - id: knowledge
+    name: Product knowledge confidence
+    question: Did the agent answer product questions clearly and consistently?
+    levels:
+      2: Clear, confident, consistent.
+      1: Hesitant but correct.
+      0: Wrong or unsure.
+  - id: objections
+    name: Objection handling
+    question: When the caller objected, did the agent stay calm, respectful and professional?
+    levels:
+      2: Calm, respectful, professional.
+      1: Slight push or awkwardness.
+      0: Defensive or abrupt.
+  - id: closure
+    name: Call closure
+    question: Did the call end with a clean handoff or a polite exit?
+    levels:
+      2: Clean handoff or polite exit.
+      1: Slightly rushed.
+      0: Abrupt or confusing.
+bands:
+  - {min: 12, label: production ready}
+  - {min: 9, label: minor tweaks}
+  - {min: 6, label: needs work}
+  - {min: 0, label: fix before scaling}

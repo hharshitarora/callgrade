@@ -1,0 +1,12 @@
+{
+  "call_id": "retell-demo-1",
+  "call_type": "phone_call",
+  "call_status": "ended",
+  "transcript": "Agent: Hi, is now a good time?\nUser: Yes.\n",
+  "transcript_object": [
+    {"role": "agent", "content": "Hi, is now a good time?", "words": [{"word": "Hi,", "start": 0.4, "end": 0.6}, {"word": "time?", "start": 1.5, "end": 1.9}]},
+    {"role": "user", "content": "Yes, I was still", "words": [{"word": "Yes,", "start": 2.5, "end": 2.8}, {"word": "still", "start": 3.4, "end": 3.9}]},
+    {"role": "transfer_target", "content": "Hello?", "words": [{"word": "Hello?", "start": 4.0, "end": 4.3}]},
+    {"role": "agent", "content": "Great, when are you moving?", "words": [{"word": "Great,", "start": 3.0, "end": 3.3}, {"word": "moving?", "start": 4.4, "end": 4.9}]}
+  ]
+}

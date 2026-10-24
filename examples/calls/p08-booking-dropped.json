@@ -1,0 +1,51 @@
+{
+  "id": "p08-booking-dropped",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes, I'm keen. Can I see it this Saturday?",
+      "start": 10.63,
+      "end": 14.09,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Saturday viewings run between ten and two. Do you have a preferred time?",
+      "start": 14.89,
+      "end": 19.89,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Eleven would be great. Please book me in.",
+      "start": 20.49,
+      "end": 23.57,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Wonderful. Thanks so much for your time today, have a great weekend. Goodbye.",
+      "start": 24.37,
+      "end": 29.37,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Wait, so am I booked?",
+      "start": 29.97,
+      "end": 31.89,
+      "interrupted": null
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "id": "p09-ignores-correction",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes.",
+      "start": 10.63,
+      "end": 11.43,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "So the Elm Road flat has two bedrooms, a bright living room and a",
+      "start": 12.23,
+      "end": 17.01,
+      "interrupted": true
+    },
+    {
+      "speaker": "caller",
+      "text": "Sorry, I actually need three bedrooms now, my brother is moving in.",
+      "start": 16.71,
+      "end": 21.33,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "and a modern kitchen. It's two bedrooms at fourteen hundred a month, would you like to see it on Saturday?",
+      "start": 22.13,
+      "end": 29.82,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "But I just said I need three bedrooms.",
+      "start": 30.42,
+      "end": 33.5,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "The two bedroom is a great size for most families. Saturday at ten or eleven?",
+      "start": 34.3,
+      "end": 40.07,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Never mind. Bye.",
+      "start": 40.67,
+      "end": 41.82,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Thanks for your time, goodbye.",
+      "start": 42.62,
+      "end": 44.54,
+      "interrupted": null
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "id": "c02-holding-deposit",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes, hi. Before we go on, how much do you take to reserve a place?",
+      "start": 10.63,
+      "end": 16.4,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Good question. To reserve a property we take a holding deposit of one week's rent, and it goes toward your first month's rent once the tenancy is signed.",
+      "start": 17.2,
+      "end": 27.97,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Okay, and for the Elm Road flat that would be what, about three hundred and twenty?",
+      "start": 28.57,
+      "end": 34.72,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Roughly, yes. The rent is fourteen hundred a month, so one week works out at about three hundred and twenty three pounds.",
+      "start": 35.52,
+      "end": 43.98,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Okay, that's manageable. I'd like to see it.",
+      "start": 44.58,
+      "end": 47.66,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "We have viewings Monday to Friday between nine and six. What suits you?",
+      "start": 48.46,
+      "end": 53.46,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Tuesday after work, maybe half five?",
+      "start": 54.06,
+      "end": 56.37,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Tuesday at five thirty is booked. You'll get a text confirming it with the address in a moment.",
+      "start": 57.17,
+      "end": 64.09,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Perfect, thanks.",
+      "start": 64.69,
+      "end": 65.49,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Thank you, have a good evening.",
+      "start": 66.29,
+      "end": 68.6,
+      "interrupted": null
+    }
+  ]
+}
