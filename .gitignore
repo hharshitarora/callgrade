@@ -5,3 +5,4 @@ callgrade-out/
 .pytest_cache/
 .env
 private/
+run/

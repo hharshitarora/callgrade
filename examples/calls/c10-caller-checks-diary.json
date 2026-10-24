@@ -28,14 +28,14 @@
     },
     {
       "speaker": "caller",
-      "text": "Okay, sorry. Wednesday after six?",
+      "text": "Okay, sorry. Wednesday after four?",
       "start": 23.85,
       "end": 25.77,
       "interrupted": null
     },
     {
       "speaker": "agent",
-      "text": "Wednesday at six fifteen is available. Shall I book it?",
+      "text": "Wednesday at four fifteen is available. Shall I book it?",
       "start": 26.57,
       "end": 30.42,
       "interrupted": null

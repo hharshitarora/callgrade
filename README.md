@@ -26,7 +26,9 @@ p03-dead-air                     checks only                  check:dead_air
 ```
 
 That run used no model. Add a judge and every call also gets a score, a band
-and a reason per dimension.
+and a reason per dimension. With the default judge, callgrade catches all 11
+planted failures in the test set with no false alarms
+([results](#results-on-the-test-set)).
 
 ## How it grades
 
@@ -154,6 +156,35 @@ every false alarm on a clean call. The timing failures are caught with no model
 at all, and CI proves it on every push. The failure catalog in
 [docs/failure-catalog.md](docs/failure-catalog.md) lists every failure the set
 covers.
+
+### Results on the test set
+
+One run with the default judge, `claude-haiku-5-5`, and the Northgate context,
+on 2026-10-24. Every file is in
+[results/claude-haiku-5-5](results/claude-haiku-5-5), including the HTML
+report.
+
+| | |
+|---|---|
+| Planted failures caught | 11 of 11 (3 by measured checks, 8 by the judge) |
+| False alarms on the 10 clean calls | 0 |
+| Judge errors | 0 |
+
+What the run turned up:
+
+- **The judge found a bug in the answer key.** The first run flagged clean call
+  `c10` with a guardrail blocker. The judge was right: the call booked a 6:15pm
+  viewing, and the policy says viewings end at 6pm. The call was fixed in the
+  generator and regraded alone. That is the one regrade in these numbers.
+- **The context file was missing a policy.** Eight calls lost a guardrail point
+  because the agent said "you'll get a confirmation text", and the context
+  never says Northgate sends texts, so the rubric says to mark it. On your
+  own calls, a context file that leaves out things the agent is allowed to say
+  costs points the same way.
+- **The planted failures are blatant on purpose.** Catching all of them shows
+  the judge reads the rubric. It does not show the judge agrees with a person
+  on subtle calls. That takes the human agreement check above, which has not
+  been run on this set yet.
 
 ## Use it as a gate
 
