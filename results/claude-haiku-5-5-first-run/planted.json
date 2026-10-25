@@ -1,0 +1,15 @@
+{
+  "planted_failures": {
+    "planted": 11,
+    "caught": 10,
+    "missed": [
+      "p09-ignores-correction dim:interruptions"
+    ],
+    "missed_but_marked_down": [
+      "p09-ignores-correction dim:interruptions"
+    ],
+    "not_graded": [],
+    "detection_rate": 0.909,
+    "false_alarms_on_clean_calls": []
+  }
+}

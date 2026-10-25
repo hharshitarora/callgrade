@@ -26,8 +26,8 @@ p03-dead-air                     checks only                  check:dead_air
 ```
 
 That run used no model. Add a judge and every call also gets a score, a band
-and a reason per dimension. With the default judge, callgrade catches all 11
-planted failures in the test set with no false alarms
+and a reason per dimension. With the default judge, callgrade caught 10 and then 11
+of the 11 planted failures in two runs on the test set, with no false alarms
 ([results](#results-on-the-test-set)).
 
 ## How it grades
@@ -159,32 +159,39 @@ covers.
 
 ### Results on the test set
 
-One run with the default judge, `claude-haiku-5-5`, and the Northgate context,
-on 2026-10-24. Every file is in
-[results/claude-haiku-5-5](results/claude-haiku-5-5), including the HTML
-report.
+Two runs with the default judge, `claude-haiku-5-5`. A planted failure counts
+as caught only when the judge gives it the minimum score, the same bar that
+makes a clean call a false alarm. Every file, including the HTML reports, is in
+[results/](results).
 
-| | |
-|---|---|
-| Planted failures caught | 11 of 11 (3 by measured checks, 8 by the judge) |
-| False alarms on the 10 clean calls | 0 |
-| Judge errors | 0 |
+| | First run, 2026-10-24 | Current run, 2026-10-25 |
+|---|---|---|
+| Planted failures caught | 10 of 11 | 11 of 11 |
+| Missed | `p09` interruptions scored 1, not 0 | none |
+| False alarms on the 10 clean calls | 0 | 0 |
+| Judge errors | 0 | 0 |
+| Mean score | 7.05 of 10 | 7.3 of 10 |
 
-What the run turned up:
+What the runs turned up:
 
 - **The judge found a bug in the answer key.** The first run flagged clean call
   `c10` with a guardrail blocker. The judge was right: the call booked a 6:15pm
   viewing, and the policy says viewings end at 6pm. The call was fixed in the
-  generator and regraded alone. That is the one regrade in these numbers.
-- **The context file was missing a policy.** Eight calls lost a guardrail point
-  because the agent said "you'll get a confirmation text", and the context
-  never says Northgate sends texts, so the rubric says to mark it. On your
-  own calls, a context file that leaves out things the agent is allowed to say
-  costs points the same way.
-- **The planted failures are blatant on purpose.** Catching all of them shows
-  the judge reads the rubric. It does not show the judge agrees with a person
-  on subtle calls. That takes the human agreement check above, which has not
-  been run on this set yet.
+  generator and regraded alone before the first run's numbers above.
+- **The context file was missing a policy.** In the first run, eight calls lost
+  a guardrail point because the agent said "you'll get a confirmation text" and
+  the context never said Northgate sends texts. The current run adds that one
+  line to `examples/northgate-context.md`; five clean calls now score 10. A
+  context file that leaves out what the agent is allowed to say costs points on
+  your calls the same way.
+- **Scores move between runs.** 12 of the 50 dimension scores on the planted
+  calls changed between the two runs. Some of that is the context change and
+  some is the judge itself, and two runs cannot separate them. Treat one run's
+  10 of 11 versus 11 of 11 as noise until a repeat run says otherwise.
+- **The planted failures are blatant on purpose.** Catching them shows the
+  judge reads the rubric. It does not show the judge agrees with a person on
+  subtle calls. That takes the human agreement check above, which has not been
+  run on this set yet.
 
 ## Use it as a gate
 

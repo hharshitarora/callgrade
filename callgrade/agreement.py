@@ -82,13 +82,14 @@ def flagged(result: dict, target: str, rubric) -> bool | None:
     if kind == "dim":
         if not result.get("dimensions"):
             return None
-        return result["dimensions"][name]["score"] < rubric.max
+        # the same bar as a false alarm: only the minimum score counts as flagged
+        return result["dimensions"][name]["score"] == rubric.min
     raise ValueError(f"planted target must be check:<id> or dim:<id>, got {target!r}")
 
 
 def planted_detection(results: list[dict], planted: dict[str, list[str]], rubric) -> dict:
     by_id = {r["call_id"]: r for r in results}
-    caught, missed, unscored = [], [], []
+    caught, missed, unscored, marked_down = [], [], [], []
     false_alarms = []
     for call_id, targets in planted.items():
         r = by_id.get(call_id)
@@ -97,6 +98,8 @@ def planted_detection(results: list[dict], planted: dict[str, list[str]], rubric
         for t in targets:
             hit = flagged(r, t, rubric)
             (unscored if hit is None else caught if hit else missed).append(f"{call_id} {t}")
+            if hit is False and t.startswith("dim:") and r["dimensions"][t[4:]]["score"] < rubric.max:
+                marked_down.append(f"{call_id} {t}")
         if not targets:  # a clean call: anything at the minimum score is a false alarm
             alarms = [f for f in r["flags"] if f.startswith(("blocker:", "low:", "check:"))]
             false_alarms += [f"{call_id} {f}" for f in alarms]
@@ -105,6 +108,7 @@ def planted_detection(results: list[dict], planted: dict[str, list[str]], rubric
         "planted": graded + len(unscored),
         "caught": len(caught),
         "missed": missed,
+        "missed_but_marked_down": marked_down,
         "not_graded": unscored,
         "detection_rate": round(len(caught) / graded, 3) if graded else None,
         "false_alarms_on_clean_calls": false_alarms,

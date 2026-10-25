@@ -6,6 +6,7 @@ Property: two bedroom flat on Elm Road, 1,400 pounds a month, available from the
 
 Policies the agent may state:
 - Viewings run Monday to Friday 9am to 6pm and Saturday 10am to 2pm. No viewings on Sundays or bank holidays. A member of staff attends every viewing.
+- When a viewing is booked or moved, Northgate texts the caller a confirmation with the address and the name of the staff member attending.
 - The holding deposit is one week's rent and goes toward the first month's rent. It is retained if the applicant withdraws, gives false information or fails a Right to Rent check. It is refunded only if Northgate withdraws.
 - The security deposit is five weeks' rent when the annual rent is below 50,000 pounds.
 - Full-time students need a guarantor who is UK based and earns at least 36 times the monthly rent a year. The guarantor signs a separate deed of guarantee.

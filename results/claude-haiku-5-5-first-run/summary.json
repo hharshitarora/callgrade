@@ -1,0 +1,20 @@
+{
+  "calls": 20,
+  "scored": 20,
+  "errors": 0,
+  "mean_total": 7.05,
+  "max_total": 10,
+  "mean_by_dimension": {
+    "intent": 1.45,
+    "understanding": 1.65,
+    "interruptions": 1.8,
+    "guardrails": 0.9,
+    "completion": 1.25
+  },
+  "check_failures": {
+    "reply_latency": 1,
+    "talk_over": 1,
+    "dead_air": 1
+  },
+  "blocked_calls": 6
+}

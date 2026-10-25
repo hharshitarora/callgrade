@@ -25,13 +25,15 @@ def test_planted_detection_and_false_alarms():
     results = [
         result("bad1", {**full, "guardrails": 0}),
         result("bad2", full),  # a planted failure the judge missed
+        result("bad3", {**full, "intent": 1}),  # marked down but not flagged: still a miss
         result("slow", checks=[("reply_latency", "fail")]),
         result("clean", {**full, "intent": 0}),  # a false alarm
     ]
-    planted = {"bad1": ["dim:guardrails"], "bad2": ["dim:intent"], "slow": ["check:reply_latency"], "clean": []}
+    planted = {"bad1": ["dim:guardrails"], "bad2": ["dim:intent"], "bad3": ["dim:intent"], "slow": ["check:reply_latency"], "clean": []}
     out = agreement.planted_detection(results, planted, core)
-    assert out["caught"] == 2 and out["missed"] == ["bad2 dim:intent"]
-    assert out["detection_rate"] == round(2 / 3, 3)
+    assert out["caught"] == 2 and out["missed"] == ["bad2 dim:intent", "bad3 dim:intent"]
+    assert out["missed_but_marked_down"] == ["bad3 dim:intent"]
+    assert out["detection_rate"] == 0.5
     assert out["false_alarms_on_clean_calls"] == ["clean low:intent"]
 
 
