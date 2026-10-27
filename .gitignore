@@ -6,3 +6,4 @@ callgrade-out/
 .env
 private/
 run*/
+/*.json
