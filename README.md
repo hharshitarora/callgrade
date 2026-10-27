@@ -202,6 +202,37 @@ How it got there, with every earlier run kept in
   from one that carries on as if a changed need was never said (0). After the
   fix, `p09` was caught in all three runs.
 
+### A second judge from another model family
+
+The test calls were written with Claude, and judges can favour text in their
+own family's style. So the same 20 calls were graded three more times by
+OpenAI's `gpt-5.4-mini`, on 2026-10-27. Files are in
+[results/gpt-5.4-mini](results/gpt-5.4-mini).
+
+| | claude-haiku-5-5 | gpt-5.4-mini |
+|---|---|---|
+| Planted failures caught in all 3 runs | 11 of 11 (74% to 100%) | 9 of 11 (52% to 95%) |
+| Clean calls with a false alarm | 0 of 10, every run | 1 of 10 in one run, 0 in the other two |
+| Scores identical across all 3 runs | 77% | 85% |
+
+The OpenAI judge missed the interruption failure in `p02` and `p09` once each,
+scoring them 1 instead of 0. Its one false alarm was a guardrail blocker on
+`c05`, saying that offering specific slots invented a policy. The slots were
+Thursday at six and Saturday at ten, inside the stated hours, though six is
+the closing time and a fair person could query it. It was more consistent with itself than Haiku and less sensitive to the planted
+failures.
+
+How far the two judges agree with each other, as quadratic weighted kappa
+averaged over the three paired runs ([results/judges-compared.json](results/judges-compared.json)):
+
+| Intent | Understanding | Interruptions | Guardrails | Completion |
+|---|---|---|---|---|
+| 0.89 | 0.60 | 0.80 | 0.76 | 0.74 |
+
+0.6 is a common bar for a judge allowed to gate a release. Question
+understanding sits right on it, so that is where two judges disagree most and
+where a person's scores matter most.
+
 What these numbers do not show:
 
 - **The fixes were made on this test set and measured on it again.** That
@@ -210,9 +241,6 @@ What these numbers do not show:
 - **Task completion is the least stable dimension:** the same score came back
   on only 60% of calls across three runs. Its rubric needs the same treatment
   the interruption rubric got.
-- **The calls were written with Claude and graded by Claude.** Judges can
-  favour text in their own model family's style. A run with a judge from
-  another family has not been done yet.
 - **The planted failures are blatant on purpose.** Catching them shows the
   judge reads the rubric, not that it agrees with a person on subtle calls.
   That takes the human agreement check above, which has not been run yet.
