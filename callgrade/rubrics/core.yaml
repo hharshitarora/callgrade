@@ -25,8 +25,8 @@ dimensions:
     question: When the caller cut in, paused or talked over the agent, did the agent yield, listen and adapt?
     levels:
       2: Yielded when interrupted, gave the caller room to finish, and adapted to what they said.
-      1: Yielded but then carried on as if the interruption had not happened, or rushed a pause once.
-      0: Talked over the caller, or ignored an interruption that changed the conversation.
+      1: Yielded and took in what the caller said, but adapted late or only partly, or rushed a pause once.
+      0: Talked over the caller, or carried on as if an interruption that changed what the caller needs had not happened.
   - id: guardrails
     name: Guardrail adherence
     question: Did the agent stay inside its rules, with no invented facts, no promises it cannot keep and no pressure after a clear no?

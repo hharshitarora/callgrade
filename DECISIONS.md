@@ -47,6 +47,22 @@ answering 2 scores well. Cohen's kappa corrects for that, and quadratic weights
 make a 0 versus 2 disagreement cost more than a 0 versus 1, which matches how a
 person would read the miss.
 
+## A failure counts as caught only at the minimum score
+
+A planted failure is caught when its dimension scores the minimum, and a clean
+call raises a false alarm on the same condition. An earlier version counted
+any lost point as a catch while only the minimum counted as an alarm. That
+lopsided bar made the catch rate look better than the judge was. A failure that
+lost only a point is listed as missed but marked down.
+
+## Repeat runs and intervals, not one number
+
+The same judge on the same call does not always return the same score, and a
+test set of 20 calls cannot pin a rate down. So `agree` takes several runs and
+reports a failure as caught only if every run caught it, and every rate carries
+a 95% Wilson interval. The Wilson interval stays honest at 0 and 100%, where
+the usual plus or minus formula collapses to a single point.
+
 ## Haiku is the default judge
 
 Grading is a reading task with a fixed rubric, and teams grade thousands of

@@ -26,8 +26,8 @@ p03-dead-air                     checks only                  check:dead_air
 ```
 
 That run used no model. Add a judge and every call also gets a score, a band
-and a reason per dimension. With the default judge, callgrade caught 10 and then 11
-of the 11 planted failures in two runs on the test set, with no false alarms
+and a reason per dimension. With the default judge, callgrade caught all 11
+planted failures in each of three runs on the test set, with no false alarms
 ([results](#results-on-the-test-set)).
 
 ## How it grades
@@ -157,41 +157,65 @@ at all, and CI proves it on every push. The failure catalog in
 [docs/failure-catalog.md](docs/failure-catalog.md) lists every failure the set
 covers.
 
+**Against itself.** A judge is a model, so the same call can get a different
+score on a second run. Pass several runs of the same calls to `agree` and it
+reports how often each score came back the same, and which planted failures
+were caught every time rather than once:
+
+```bash
+for i in 1 2 3; do callgrade grade calls/ --out run-$i; done
+callgrade agree run-1/results.jsonl run-2/results.jsonl run-3/results.jsonl --planted planted.jsonl
+```
+
+Every rate comes with a 95% interval. On a test set this small, 11 of 11 means
+"somewhere between 74% and 100%", and the report says so.
+
 ### Results on the test set
 
-Two runs with the default judge, `claude-haiku-5-5`. A planted failure counts
-as caught only when the judge gives it the minimum score, the same bar that
-makes a clean call a false alarm. Every file, including the HTML reports, is in
-[results/](results).
+Three runs of the default judge, `claude-haiku-5-5`, with the Northgate
+context, on 2026-10-26. A planted failure counts as caught only when the judge
+gives it the minimum score, the same bar that makes a clean call a false
+alarm. Every file, including the HTML reports, is in
+[results/claude-haiku-5-5](results/claude-haiku-5-5).
 
-| | First run, 2026-10-24 | Current run, 2026-10-25 |
+| | Result | 95% interval |
 |---|---|---|
-| Planted failures caught | 10 of 11 | 11 of 11 |
-| Missed | `p09` interruptions scored 1, not 0 | none |
-| False alarms on the 10 clean calls | 0 | 0 |
-| Judge errors | 0 | 0 |
-| Mean score | 7.05 of 10 | 7.3 of 10 |
+| Planted failures caught in all 3 runs | 11 of 11 | 74% to 100% |
+| Clean calls with a false alarm | 0 of 10, in every run | 0% to 28% |
+| Scores identical across all 3 runs | 77% of call and dimension pairs | |
+| Judge errors | 0 of 60 gradings | |
 
-What the runs turned up:
+How it got there, with every earlier run kept in
+[results/history](results/history):
 
 - **The judge found a bug in the answer key.** The first run flagged clean call
   `c10` with a guardrail blocker. The judge was right: the call booked a 6:15pm
-  viewing, and the policy says viewings end at 6pm. The call was fixed in the
-  generator and regraded alone before the first run's numbers above.
-- **The context file was missing a policy.** In the first run, eight calls lost
-  a guardrail point because the agent said "you'll get a confirmation text" and
-  the context never said Northgate sends texts. The current run adds that one
-  line to `examples/northgate-context.md`; five clean calls now score 10. A
-  context file that leaves out what the agent is allowed to say costs points on
-  your calls the same way.
-- **Scores move between runs.** 12 of the 50 dimension scores on the planted
-  calls changed between the two runs. Some of that is the context change and
-  some is the judge itself, and two runs cannot separate them. Treat one run's
-  10 of 11 versus 11 of 11 as noise until a repeat run says otherwise.
+  viewing, and the policy says viewings end at 6pm. The call was fixed.
+- **The context file was missing a policy.** Eight calls lost a guardrail point
+  because the agent said "you'll get a confirmation text" and the context never
+  said Northgate sends texts. That line was added.
+- **Repeat runs found a bug in the rubric.** On three runs, `p09`, where the
+  agent ignores a caller who cuts in to say they need three bedrooms, was
+  caught once. The rubric's middle level read "yielded but then carried on as
+  if the interruption had not happened", which describes `p09` exactly, so a 1
+  was a fair reading. The levels now separate an agent that adapts late (1)
+  from one that carries on as if a changed need was never said (0). After the
+  fix, `p09` was caught in all three runs.
+
+What these numbers do not show:
+
+- **The fixes were made on this test set and measured on it again.** That
+  flatters the numbers. A new set of planted calls, written after the fixes,
+  is the honest next check.
+- **Task completion is the least stable dimension:** the same score came back
+  on only 60% of calls across three runs. Its rubric needs the same treatment
+  the interruption rubric got.
+- **The calls were written with Claude and graded by Claude.** Judges can
+  favour text in their own model family's style. A run with a judge from
+  another family has not been done yet.
 - **The planted failures are blatant on purpose.** Catching them shows the
-  judge reads the rubric. It does not show the judge agrees with a person on
-  subtle calls. That takes the human agreement check above, which has not been
-  run on this set yet.
+  judge reads the rubric, not that it agrees with a person on subtle calls.
+  That takes the human agreement check above, which has not been run yet.
 
 ## Use it as a gate
 

@@ -89,17 +89,24 @@ def cmd_label_sheet(args) -> int:
 
 def cmd_agree(args) -> int:
     rubric = rubric_mod.load(args.rubric)
-    results = [json.loads(line) for line in Path(args.results).read_text(encoding="utf-8").splitlines() if line.strip()]
+    runs = [[json.loads(line) for line in Path(f).read_text(encoding="utf-8").splitlines() if line.strip()]
+            for f in args.results]
+    results = runs[0]
     out = {}
     if args.human:
         out["human_agreement"] = agreement.human_agreement(results, agreement.load_human(Path(args.human)), rubric)
     if args.planted:
         out["planted_failures"] = agreement.planted_detection(results, agreement.load_planted(Path(args.planted)), rubric)
+    if len(runs) > 1:
+        out["across_runs"] = agreement.across_runs(
+            runs, agreement.load_planted(Path(args.planted)) if args.planted else None, rubric)
     if not out:
         sys.exit("pass --human and/or --planted")
     print(json.dumps(out, indent=2))
     if args.min_detection is not None:
         rate = (out.get("planted_failures") or {}).get("detection_rate")
+        if len(runs) > 1 and args.planted:  # with repeats, a failure only counts if it was caught every time
+            rate = out["across_runs"]["planted_caught_every_run_rate"]
         if rate is None or rate < args.min_detection:
             return 1
     return 0
@@ -137,8 +144,9 @@ def main(argv=None) -> int:
     ls.add_argument("--rubric", default="core")
     ls.set_defaults(fn=cmd_label_sheet)
 
-    a = sub.add_parser("agree", help="measure the judge against human scores and planted failures")
-    a.add_argument("results", help="results.jsonl from callgrade grade")
+    a = sub.add_parser("agree", help="measure the judge against human scores, planted failures and its own repeat runs")
+    a.add_argument("results", nargs="+",
+                   help="results.jsonl from callgrade grade; pass several runs of the same calls to measure consistency")
     a.add_argument("--rubric", default="core")
     a.add_argument("--human", help="filled-in CSV from callgrade label-sheet")
     a.add_argument("--planted", help="jsonl of {call_id, planted: [check:<id> | dim:<id>]}")

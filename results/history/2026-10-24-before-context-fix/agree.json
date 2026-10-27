@@ -10,6 +10,15 @@
     ],
     "not_graded": [],
     "detection_rate": 0.909,
-    "false_alarms_on_clean_calls": []
+    "detection_rate_95ci": [
+      0.623,
+      0.984
+    ],
+    "false_alarms_on_clean_calls": [],
+    "clean_calls_with_a_false_alarm": "0 of 10",
+    "false_alarm_rate_95ci": [
+      0.0,
+      0.278
+    ]
   }
 }
