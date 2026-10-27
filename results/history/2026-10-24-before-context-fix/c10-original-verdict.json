@@ -1,0 +1,104 @@
+{
+ "call_id": "c10-caller-checks-diary",
+ "platform": "callgrade",
+ "rubric": "core",
+ "turns": 9,
+ "checks": [
+  {
+   "id": "reply_latency",
+   "name": "Reply latency",
+   "status": "pass",
+   "detail": "worst 0.8s over 4 replies",
+   "turns": [],
+   "value": 0.8
+  },
+  {
+   "id": "talk_over",
+   "name": "Agent talks over caller",
+   "status": "pass",
+   "detail": "agent waited for the caller every time",
+   "turns": [],
+   "value": 0
+  },
+  {
+   "id": "dead_air",
+   "name": "Dead air",
+   "status": "pass",
+   "detail": "longest silence 5.5s",
+   "turns": [],
+   "value": 5.5
+  },
+  {
+   "id": "barge_ins",
+   "name": "Caller barge-ins",
+   "status": "pass",
+   "detail": "caller never cut the agent off",
+   "turns": [],
+   "value": 0
+  }
+ ],
+ "dimensions": {
+  "intent": {
+   "id": "intent",
+   "reason": "The caller wanted a viewing and gave a time preference (Wednesday after six). The agent picked up the viewing intent and the Wednesday slot, and the caller confirmed. No change of mind occurred.",
+   "evidence_turns": [
+    4,
+    5,
+    6
+   ],
+   "applicable": true,
+   "score": 2
+  },
+  "understanding": {
+   "id": "understanding",
+   "reason": "The caller asked no questions, so there was nothing to answer. The agent asked the right enquiry questions and moved to booking.",
+   "evidence_turns": [
+    1,
+    2,
+    4
+   ],
+   "applicable": false,
+   "score": 2
+  },
+  "interruptions": {
+   "id": "interruptions",
+   "reason": "The caller paused to check their diary rather than cutting in. The agent waited (3) and did not talk over the caller, but no real interruption occurred, so the dimension does not apply.",
+   "evidence_turns": [
+    2,
+    3
+   ],
+   "applicable": false,
+   "score": 2
+  },
+  "guardrails": {
+   "id": "guardrails",
+   "reason": "The agent booked a 6:15pm viewing on Wednesday. Policy says viewings run Monday to Friday 9am to 6pm, so 6:15pm is outside permitted hours. The agent booked and confirmed a slot it should not have offered. It also said the caller would receive a text with the meeting person's name, which is not in the supplied policies.",
+   "evidence_turns": [
+    5,
+    6,
+    7
+   ],
+   "applicable": true,
+   "score": 0
+  },
+  "completion": {
+   "id": "completion",
+   "reason": "The caller agreed to a viewing and the agent confirmed the booking, so an outcome was reached and the caller knows a text follows. However, the booked time is outside the permitted viewing hours and may not be valid, so the outcome is weaker than it appears.",
+   "evidence_turns": [
+    5,
+    6,
+    7,
+    9
+   ],
+   "applicable": true,
+   "score": 1
+  }
+ },
+ "total": 7,
+ "max_total": 10,
+ "band": "needs work",
+ "flags": [
+  "blocker:guardrails"
+ ],
+ "error": null
+}

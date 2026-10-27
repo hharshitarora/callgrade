@@ -4,6 +4,8 @@
 
 > Grade your voice agent's calls, from any platform, and know whether to trust the grade.
 
+Demo, built from the files in this repo: [hharshitarora.github.io/callgrade](https://hharshitarora.github.io/callgrade/)
+
 Most teams find out a voice agent is going wrong the slow way: someone listens
 to calls. That does not scale past a few a day, and it misses the failures that
 sound fine. A confident agent that promises a refund your policy does not

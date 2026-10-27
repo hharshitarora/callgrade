@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>callgrade</title>
+<meta name="description" content="Grade your voice agent's calls from any platform, and measure whether the grade can be trusted. Open source.">
+<style>
+:root {
+  --bg: #faf9f6; --fg: #1d1c1a; --muted: #6b6762; --line: #e4e1dc; --card: #ffffff;
+  --accent: #b5431c; --good: #2f7d4a; --bad: #b3261e; --warn: #a66a00; --mark: #fff1c9;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --sans: -apple-system, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #15141a; --fg: #ece9e4; --muted: #9b968f; --line: #2b2a31; --card: #1d1c23;
+  --accent: #f08a5d; --good: #6cc48a; --bad: #ef6b63; --warn: #e2b14a; --mark: #3b3420;
+}}
+:root[data-theme="dark"] {
+  --bg: #15141a; --fg: #ece9e4; --muted: #9b968f; --line: #2b2a31; --card: #1d1c23;
+  --accent: #f08a5d; --good: #6cc48a; --bad: #ef6b63; --warn: #e2b14a; --mark: #3b3420;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.55 var(--sans); }
+main { max-width: 880px; margin: 0 auto; padding: 0 16px 80px; }
+h1 { font-size: 2.6rem; margin: 64px 0 8px; letter-spacing: -0.02em; }
+h2 { font-size: 1.5rem; margin: 64px 0 12px; letter-spacing: -0.01em; }
+p.lede { font-size: 1.25rem; color: var(--muted); margin: 0 0 20px; max-width: 640px; }
+a { color: var(--accent); }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.btn { display: inline-block; padding: 9px 14px; border: 1px solid var(--line); border-radius: 8px; color: var(--fg); text-decoration: none; background: var(--card); }
+.btn.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+code, pre { font-family: var(--mono); font-size: 0.92em; }
+pre { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; overflow-x: auto; }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+.tab { padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--fg); cursor: pointer; font: inherit; font-size: 0.95rem; }
+.tab[aria-selected="true"] { border-color: var(--accent); color: var(--accent); }
+.stage { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 700px) { .stage { grid-template-columns: 1fr; } }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+.takeaway { color: var(--muted); margin: 0 0 12px; }
+.turn { display: grid; grid-template-columns: 2.2rem 1fr; gap: 8px; padding: 6px 8px; border-radius: 6px; opacity: 0; transform: translateY(4px); transition: opacity .25s, transform .25s; }
+.turn.on { opacity: 1; transform: none; }
+.turn.flag { background: var(--mark); }
+.turn .who { color: var(--muted); font-family: var(--mono); font-size: 0.8rem; padding-top: 4px; }
+.turn.agent .who { color: var(--accent); }
+.gap { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); padding: 2px 8px 2px 3.1rem; opacity: 0; transition: opacity .25s; }
+.gap.on { opacity: 1; }
+.gap.bad { color: var(--bad); }
+.verdict { display: flex; flex-direction: column; gap: 10px; }
+.check, .dim { opacity: 0; transition: opacity .3s; }
+.check.on, .dim.on { opacity: 1; }
+.check { display: flex; gap: 10px; align-items: baseline; font-size: 0.95rem; }
+.pill { font-family: var(--mono); font-size: 0.75rem; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); white-space: nowrap; }
+.pill.pass { color: var(--good); border-color: var(--good); }
+.pill.fail { color: var(--bad); border-color: var(--bad); }
+.dim { border-top: 1px solid var(--line); padding-top: 10px; }
+.dim b { display: inline-block; min-width: 2rem; }
+.dim .reason { color: var(--muted); font-size: 0.95rem; margin: 4px 0 0; }
+.score0 b { color: var(--bad); } .score1 b { color: var(--warn); } .score2 b { color: var(--good); }
+.total { font-size: 1.3rem; margin-top: 4px; opacity: 0; transition: opacity .3s; }
+.total.on { opacity: 1; }
+.total small { color: var(--muted); font-size: 0.9rem; }
+.ctl { display: flex; gap: 8px; margin: 12px 0 0; }
+.ctl button { font: inherit; font-size: 0.9rem; padding: 6px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--fg); cursor: pointer; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; }
+td.num { font-family: var(--mono); white-space: nowrap; }
+.miss { border-left: 3px solid var(--accent); padding-left: 14px; margin: 18px 0; }
+.quote { color: var(--muted); font-style: italic; }
+.mismatch { background: var(--mark); padding: 2px 4px; border-radius: 4px; }
+footer { color: var(--muted); font-size: 0.9rem; margin-top: 64px; border-top: 1px solid var(--line); padding-top: 16px; }
+@media (prefers-reduced-motion: reduce) { .turn, .gap, .check, .dim, .total { transition: none; } }
+</style>
+</head>
+<body>
+<main>
+<h1>callgrade</h1>
+<p class="lede">Grade your voice agent's calls, from any platform, and know whether to trust the grade.</p>
+<div class="row">
+  <a class="btn primary" href="https://github.com/hharshitarora/callgrade">GitHub</a>
+  <a class="btn" href="https://github.com/hharshitarora/callgrade#quickstart">Quickstart</a>
+  <code>pip install "callgrade[anthropic] @ git+https://github.com/hharshitarora/callgrade"</code>
+</div>
+
+<h2>Watch it grade</h2>
+<p>Three calls from the held-out test set, with the verdict the default judge gave each one. Timing comes from the timestamps in plain code. The verdict comes from an LLM reading a rubric, and it has to say which turn before it gives a number.</p>
+<div class="tabs" role="tablist" id="tabs"></div>
+<p class="takeaway" id="takeaway"></p>
+<div class="stage">
+  <div class="card"><div id="transcript"></div><div class="ctl"><button id="replay">Replay</button><button id="skip">Show all</button></div></div>
+  <div class="card verdict" id="verdict"></div>
+</div>
+
+<h2>How far to trust it</h2>
+<p>A judge is a model, so callgrade measures the judge. Each judge graded each set three times. A planted failure counts as caught only if every run caught it, and every rate carries a 95% interval, because 9 of 9 on a small set is a range, not a certainty.</p>
+<div class="tablewrap"><table id="numbers"></table></div>
+<p>How far the two judges agree with each other, as quadratic weighted kappa (1 is perfect, 0 is chance, 0.6 is a common bar for a judge that gates a release):</p>
+<div class="tablewrap"><table id="kappa"></table></div>
+<p>The held-out set was written after the rubrics were tuned on the development set, and committed before any judge saw it. No person has scored either set yet; that check exists in the tool and has not been run.</p>
+
+<h2>What it got wrong, so far</h2>
+<div class="miss">
+  <p><strong>The judge found a bug in my answer key.</strong> The first run flagged a call I had marked clean. Its reason:</p>
+  <p class="quote" id="c10"></p>
+  <p>It was right. I had the agent book 6:15pm against a policy that ends viewings at 6pm. I fixed the call, not the judge.</p>
+</div>
+<div class="miss">
+  <p><strong>One call is a coin the judge sometimes calls wrong.</strong> In <code>p09</code> the caller cuts in to say they need three bedrooms and the agent keeps pitching the two-bedroom. Three runs on the current rubric:</p>
+  <div id="p09"></div>
+  <p>In the run that scored a 1, the written reason describes a 0. The reason and the score disagree, which no rubric can fix. It is the argument for reading the reasons, not only the totals.</p>
+</div>
+
+<h2>Where it came from</h2>
+<p>The first version was a sheet I filled in by hand to score test calls for a voice agent that qualified rental leads. The sheet became an LLM judge on four dimensions, and that judge is what moved the agent from "it feels off" to "it misreads intent when the caller says they need to think about it". This is the open version, with platform adapters, measured timing checks, and the agreement measurements the original never had.</p>
+<p>Design choices are in <a href="https://github.com/hharshitarora/callgrade/blob/main/DECISIONS.md">DECISIONS.md</a>. Every failure the test sets cover is in the <a href="https://github.com/hharshitarora/callgrade/blob/main/docs/failure-catalog.md">failure catalog</a>.</p>
+
+<footer>Every transcript, score, reason and rate on this page is read from the files in the repo at commit <code id="commit"></code>. MIT licensed. Built by <a href="https://github.com/hharshitarora">Harshit Arora</a>.</footer>
+</main>
+<script>
+const $ = (s) => document.querySelector(s);
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let token = 0;
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+function esc(s) { return s.replace(/[&<>]/g, (c) => ({"&": "&amp;", "<": "&lt;", ">": "&gt;"}[c])); }
+
+function renderCall(call) {
+  $("#takeaway").textContent = call.takeaway;
+  const flagged = new Set(call.dimensions.flatMap((d) => d.evidence_turns || []).filter((t) => call.dimensions.some((d) => d.score < 2 && (d.evidence_turns || []).includes(t))));
+  call.checks.forEach((c) => (c.turns || []).forEach((t) => flagged.add(t)));
+  const tr = $("#transcript");
+  tr.innerHTML = "";
+  const nodes = [];
+  call.turns.forEach((t, i) => {
+    if (i > 0) {
+      const gap = +(t.start - call.turns[i - 1].end).toFixed(1);
+      const g = document.createElement("div");
+      g.className = "gap" + (gap > 3 || gap < -0.5 ? " bad" : "");
+      g.textContent = gap < 0 ? `agent starts ${Math.abs(gap)}s before the caller finishes` : `${gap}s`;
+      if (Math.abs(gap) <= 1 && gap >= 0) g.textContent = "";
+      tr.appendChild(g); nodes.push({el: g, wait: 0});
+    }
+    const d = document.createElement("div");
+    d.className = `turn ${t.speaker}` + (flagged.has(i + 1) ? " flag" : "");
+    d.innerHTML = `<span class="who">${i + 1}</span><span>${esc(t.text)}</span>`;
+    tr.appendChild(d); nodes.push({el: d, wait: Math.min(1800, 250 + (t.end - t.start) * 180)});
+  });
+  const v = $("#verdict");
+  v.innerHTML = "";
+  const vnodes = [];
+  call.checks.forEach((c) => {
+    const d = document.createElement("div");
+    d.className = "check";
+    d.innerHTML = `<span class="pill ${c.status}">${c.status}</span><span><b>${esc(c.name)}</b> <span style="color:var(--muted)">${esc(c.detail)}</span></span>`;
+    v.appendChild(d); vnodes.push({el: d, wait: 500});
+  });
+  call.dimensions.forEach((d) => {
+    const el = document.createElement("div");
+    el.className = `dim score${d.score}`;
+    const turns = (d.evidence_turns || []).length ? ` <span style="color:var(--muted)">turns ${d.evidence_turns.join(", ")}</span>` : "";
+    el.innerHTML = `<b>${d.score}</b> ${esc(d.name)}${turns}<p class="reason">${esc(d.reason)}</p>`;
+    v.appendChild(el); vnodes.push({el, wait: 1300});
+  });
+  const tot = document.createElement("div");
+  tot.className = "total";
+  tot.innerHTML = `<strong>${call.total} / ${call.max_total}</strong> ${esc(call.band)} <small>${call.flags.length ? esc(call.flags.join(", ")) : "no flags"}</small>`;
+  v.appendChild(tot); vnodes.push({el: tot, wait: 0});
+  return nodes.concat(vnodes);
+}
+
+async function play(call, instant) {
+  const my = ++token;
+  const nodes = renderCall(call);
+  for (const n of nodes) {
+    if (my !== token) return;
+    n.el.classList.add("on");
+    if (!instant && !reduced && n.wait) await sleep(n.wait);
+  }
+}
+
+function numbersTable(numbers) {
+  const judges = ["claude-haiku-5-5", "gpt-5.4-mini"];
+  const sets = [["holdout", "Held-out set"], ["dev", "Development set"]];
+  const pct = (x) => Math.round(x * 100) + "%";
+  let h = "<tr><th></th>" + sets.map(([s, label]) => judges.map((j) => `<th>${label}<br><code>${j}</code></th>`).join("")).join("") + "</tr>";
+  const row = (label, f) => "<tr><td>" + label + "</td>" + sets.map(([s]) => judges.map((j) => `<td class="num">${f(numbers[s][j])}</td>`).join("")).join("") + "</tr>";
+  h += row("Planted failures caught in all 3 runs", (n) => n.caught_every_run);
+  h += row("95% interval", (n) => `${pct(n.caught_ci[0])} to ${pct(n.caught_ci[1])}`);
+  h += row("Clean calls with a false alarm, per run", (n) => n.false_alarms_per_run.join(", "));
+  h += row("Scores identical across all 3 runs", (n) => pct(n.identical));
+  $("#numbers").innerHTML = h;
+}
+
+function kappaTable(kappa, names) {
+  const dims = Object.keys(names);
+  $("#kappa").innerHTML = "<tr><th></th>" + dims.map((d) => `<th>${names[d]}</th>`).join("") + "</tr>" +
+    [["holdout", "Held-out set"], ["dev", "Development set"]].map(([s, label]) => `<tr><td>${label}</td>` + dims.map((d) => `<td class="num">${kappa[s][d].toFixed(2)}</td>`).join("") + "</tr>").join("");
+}
+
+fetch("data.json").then((r) => r.json()).then((data) => {
+  $("#commit").textContent = data.commit;
+  const tabs = $("#tabs");
+  data.showcase.forEach((call, i) => {
+    const b = document.createElement("button");
+    b.className = "tab"; b.role = "tab"; b.textContent = call.title;
+    b.setAttribute("aria-selected", i === 0);
+    b.onclick = () => { [...tabs.children].forEach((t) => t.setAttribute("aria-selected", t === b)); play(call); };
+    tabs.appendChild(b);
+  });
+  let current = () => data.showcase[[...tabs.children].findIndex((t) => t.getAttribute("aria-selected") === "true")];
+  $("#replay").onclick = () => play(current());
+  $("#skip").onclick = () => play(current(), true);
+  play(data.showcase[0]);
+  numbersTable(data.numbers);
+  kappaTable(data.kappa, data.dimension_names);
+  $("#c10").textContent = "“" + data.misses.c10.reason + "”";
+  $("#p09").innerHTML = data.misses.p09.map((r) => {
+    const mis = r.score > 0;
+    return `<p><b>Run ${r.run}, scored ${r.score}${mis ? ' <span class="mismatch">reason says 0</span>' : ""}:</b> <span class="quote">“${esc(r.reason)}”</span></p>`;
+  }).join("");
+});
+</script>
+</body>
+</html>

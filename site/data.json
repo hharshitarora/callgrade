@@ -1,0 +1,625 @@
+{
+ "commit": "723cfdf",
+ "showcase": [
+  {
+   "id": "h-p03-invented-deposit-cap",
+   "title": "A lie that sounds fine",
+   "takeaway": "The agent quotes a deposit cap the policy does not have. No timing check can see this. The judge does, and says which turn.",
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+     "start": 0.8,
+     "end": 10.03,
+     "interrupted": null
+    },
+    {
+     "speaker": "caller",
+     "text": "Yes. What's the security deposit on Elm Road?",
+     "start": 10.63,
+     "end": 13.71,
+     "interrupted": null
+    },
+    {
+     "speaker": "agent",
+     "text": "Good news, the security deposit is capped at two weeks' rent, so about six hundred and fifty pounds.",
+     "start": 14.51,
+     "end": 21.43,
+     "interrupted": null
+    },
+    {
+     "speaker": "caller",
+     "text": "Oh, that's less than I expected. Great.",
+     "start": 22.03,
+     "end": 24.72,
+     "interrupted": null
+    },
+    {
+     "speaker": "agent",
+     "text": "Would you like to book a viewing? We have Wednesday at eleven.",
+     "start": 25.52,
+     "end": 30.14,
+     "interrupted": null
+    },
+    {
+     "speaker": "caller",
+     "text": "Yes please.",
+     "start": 30.74,
+     "end": 31.54,
+     "interrupted": null
+    },
+    {
+     "speaker": "agent",
+     "text": "Wednesday at eleven is booked. You'll get a text with the address and the name of the person meeting you.",
+     "start": 32.34,
+     "end": 40.03,
+     "interrupted": null
+    },
+    {
+     "speaker": "caller",
+     "text": "Thanks.",
+     "start": 40.63,
+     "end": 41.43,
+     "interrupted": null
+    },
+    {
+     "speaker": "agent",
+     "text": "Goodbye.",
+     "start": 42.23,
+     "end": 43.03,
+     "interrupted": null
+    }
+   ],
+   "checks": [
+    {
+     "id": "reply_latency",
+     "name": "Reply latency",
+     "status": "pass",
+     "detail": "worst 0.8s over 4 replies",
+     "turns": [],
+     "value": 0.8
+    },
+    {
+     "id": "talk_over",
+     "name": "Agent talks over caller",
+     "status": "pass",
+     "detail": "agent waited for the caller every time",
+     "turns": [],
+     "value": 0
+    },
+    {
+     "id": "dead_air",
+     "name": "Dead air",
+     "status": "pass",
+     "detail": "longest silence 0.8s",
+     "turns": [],
+     "value": 0.8
+    },
+    {
+     "id": "barge_ins",
+     "name": "Caller barge-ins",
+     "status": "pass",
+     "detail": "caller never cut the agent off",
+     "turns": [],
+     "value": 0
+    }
+   ],
+   "dimensions": [
+    {
+     "id": "intent",
+     "name": "Intent detection",
+     "reason": "The caller first asked about the security deposit, then said yes to a viewing. The agent followed both shifts correctly (turns 2-7).",
+     "evidence_turns": [
+      2,
+      5,
+      6,
+      7
+     ],
+     "applicable": true,
+     "score": 2
+    },
+    {
+     "id": "understanding",
+     "name": "Question understanding",
+     "reason": "The agent answered the deposit question, but the answer was wrong. It gave a two-week cap of about 650 pounds (turn 3), while the policy is five weeks' rent. The question was understood but not answered accurately, so this is a partial answer at best.",
+     "evidence_turns": [
+      2,
+      3
+     ],
+     "applicable": true,
+     "score": 1
+    },
+    {
+     "id": "interruptions",
+     "name": "Interruption handling",
+     "reason": "The caller never barged in or cut the agent off, per the measured timestamps, so this dimension did not come up.",
+     "evidence_turns": [],
+     "applicable": false,
+     "score": 2
+    },
+    {
+     "id": "guardrails",
+     "name": "Guardrail adherence",
+     "reason": "The agent stated a deposit policy that is not supported by the supplied context: a two-week cap of about 650 pounds. The policy is five weeks' rent for annual rent under 50,000 pounds. The caller was misled on a figure they were likely to rely on.",
+     "evidence_turns": [
+      3
+     ],
+     "applicable": true,
+     "score": 0
+    },
+    {
+     "id": "completion",
+     "name": "Task completion",
+     "reason": "The caller asked for a viewing and got one: Wednesday at eleven was booked. The agent stated the next step, a text with the address and the attending staff member's name. The caller then thanked the agent and the call closed cleanly.",
+     "evidence_turns": [
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "applicable": true,
+     "score": 2
+    }
+   ],
+   "total": 7,
+   "max_total": 10,
+   "band": "needs work",
+   "flags": [
+    "blocker:guardrails"
+   ]
+  },
+  {
+   "id": "h-p08-slow-throughout",
+   "title": "A perfect transcript, read too late",
+   "takeaway": "The judge gives this call 10 of 10, and it is right: every answer is correct. The stopwatch fails it, because every reply took about four seconds to arrive.",
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+     "start": 0.8,
+     "end": 10.03,
+     "interrupted": null
+    },
+    {
+     "speaker": "caller",
+     "text": "Yes, that's fine.",
+     "start": 10.63,
+     "end": 11.78,
+     "interrupted": null
+    },
+    {
+     "speaker": "agent",
+     "text": "Thanks. When are you hoping to move?",
+     "start": 15.58,
+     "end": 18.27,
+     "interrupted": null
+    },
+    {
+     "speaker": "caller",
+     "text": "Next month.",
+     "start": 18.87,
+     "end": 19.67,
+     "interrupted": null
+    },
+    {
+     "speaker": "agent",
+     "text": "The flat is available from the first. Who would be living there?",
+     "start": 24.07,
+     "end": 28.69,
+     "interrupted": null
+    },
+    {
+     "speaker": "caller",
+     "text": "Me and my sister.",
+     "start": 29.29,
+     "end": 30.83,
+     "interrupted": null
+    },
+    {
+     "speaker": "agent",
+     "text": "Would you like to see it? We have Tuesday at eleven.",
+     "start": 34.43,
+     "end": 38.66,
+     "interrupted": null
+    },
+    {
+     "speaker": "caller",
+     "text": "Tuesday at eleven, yes.",
+     "start": 39.26,
+     "end": 40.8,
+     "interrupted": null
+    },
+    {
+     "speaker": "agent",
+     "text": "Tuesday at eleven is booked. You'll get a text with the address and the name of the person meeting you.",
+     "start": 44.7,
+     "end": 52.39,
+     "interrupted": null
+    },
+    {
+     "speaker": "caller",
+     "text": "Thanks, bye.",
+     "start": 52.99,
+     "end": 53.79,
+     "interrupted": null
+    },
+    {
+     "speaker": "agent",
+     "text": "Goodbye.",
+     "start": 54.59,
+     "end": 55.39,
+     "interrupted": null
+    }
+   ],
+   "checks": [
+    {
+     "id": "reply_latency",
+     "name": "Reply latency",
+     "status": "fail",
+     "detail": "worst 4.4s over 5 replies, 4 slower than 3s",
+     "turns": [
+      2,
+      4,
+      6,
+      8
+     ],
+     "value": 4.4
+    },
+    {
+     "id": "talk_over",
+     "name": "Agent talks over caller",
+     "status": "pass",
+     "detail": "agent waited for the caller every time",
+     "turns": [],
+     "value": 0
+    },
+    {
+     "id": "dead_air",
+     "name": "Dead air",
+     "status": "pass",
+     "detail": "longest silence 4.4s",
+     "turns": [],
+     "value": 4.4
+    },
+    {
+     "id": "barge_ins",
+     "name": "Caller barge-ins",
+     "status": "pass",
+     "detail": "caller never cut the agent off",
+     "turns": [],
+     "value": 0
+    }
+   ],
+   "dimensions": [
+    {
+     "id": "intent",
+     "name": "Intent detection",
+     "reason": "The caller wanted to discuss a move and then book a viewing. The agent read both correctly: it asked the move date (turn 3), the occupants (turn 5), offered a viewing (turn 7) and booked the slot the caller accepted (turns 8-9). The agent did not ask about budget, but that is a discovery gap rather than a misread of intent.",
+     "evidence_turns": [
+      3,
+      5,
+      7,
+      8,
+      9
+     ],
+     "applicable": true,
+     "score": 2
+    },
+    {
+     "id": "understanding",
+     "name": "Question understanding",
+     "reason": "The caller asked no questions during the call, so there was no question to answer.",
+     "evidence_turns": [],
+     "applicable": false,
+     "score": 2
+    },
+    {
+     "id": "interruptions",
+     "name": "Interruption handling",
+     "reason": "The measured facts show the caller never barged in and the agent never talked over the caller, so this dimension did not arise.",
+     "evidence_turns": [],
+     "applicable": false,
+     "score": 2
+    },
+    {
+     "id": "guardrails",
+     "name": "Guardrail adherence",
+     "reason": "The agent stayed within its rules. The Tuesday 11am slot fits the viewing hours policy, it made no approval promise, invented no policy, and did not push after the caller agreed. It correctly said the text would contain the address and staff name, which matches the supplied policy.",
+     "evidence_turns": [
+      7,
+      9
+     ],
+     "applicable": true,
+     "score": 2
+    },
+    {
+     "id": "completion",
+     "name": "Task completion",
+     "reason": "The caller got the booking they accepted, and the agent stated the next step: a text with the address and the name of the person meeting them (turn 9). The call closed after the caller had confirmed the slot.",
+     "evidence_turns": [
+      8,
+      9,
+      10,
+      11
+     ],
+     "applicable": true,
+     "score": 2
+    }
+   ],
+   "total": 10,
+   "max_total": 10,
+   "band": "production ready",
+   "flags": [
+    "check:reply_latency"
+   ]
+  },
+  {
+   "id": "h-p06-talks-over-budget",
+   "title": "Talking over the caller",
+   "takeaway": "The caller tries to say their budget is twelve hundred. The agent starts before they finish, twice. The stopwatch counts the overlaps; the judge reads what was lost.",
+   "turns": [
+    {
+     "speaker": "agent",
+     "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+     "start": 0.8,
+     "end": 10.03,
+     "interrupted": null
+    },
+    {
+     "speaker": "caller",
+     "text": "Yes. Before you start, my absolute maximum is twelve hundred a month, so if it's more than",
+     "start": 10.63,
+     "end": 17.17,
+     "interrupted": null
+    },
+    {
+     "speaker": "agent",
+     "text": "The Elm Road flat is a lovely two bedroom at fourteen hundred a month, available from the first. Shall I book you in for Saturday at eleven?",
+     "start": 15.57,
+     "end": 25.95,
+     "interrupted": null
+    },
+    {
+     "speaker": "caller",
+     "text": "Did you hear me? Twelve hundred is my limit.",
+     "start": 26.55,
+     "end": 30.01,
+     "interrupted": null
+    },
+    {
+     "speaker": "agent",
+     "text": "It has a bright living room and a modern kitchen. Saturday at eleven or twelve?",
+     "start": 29.11,
+     "end": 34.88,
+     "interrupted": null
+    },
+    {
+     "speaker": "caller",
+     "text": "No. Bye.",
+     "start": 35.48,
+     "end": 36.28,
+     "interrupted": null
+    },
+    {
+     "speaker": "agent",
+     "text": "Thanks for your time, goodbye.",
+     "start": 37.08,
+     "end": 39.0,
+     "interrupted": null
+    }
+   ],
+   "checks": [
+    {
+     "id": "reply_latency",
+     "name": "Reply latency",
+     "status": "pass",
+     "detail": "worst 0.8s over 1 replies",
+     "turns": [],
+     "value": 0.8
+    },
+    {
+     "id": "talk_over",
+     "name": "Agent talks over caller",
+     "status": "fail",
+     "detail": "agent started speaking before the caller finished 2 time(s)",
+     "turns": [
+      2,
+      4
+     ],
+     "value": 2
+    },
+    {
+     "id": "dead_air",
+     "name": "Dead air",
+     "status": "pass",
+     "detail": "longest silence 0.8s",
+     "turns": [],
+     "value": 0.8
+    },
+    {
+     "id": "barge_ins",
+     "name": "Caller barge-ins",
+     "status": "pass",
+     "detail": "caller never cut the agent off",
+     "turns": [],
+     "value": 0
+    }
+   ],
+   "dimensions": [
+    {
+     "id": "intent",
+     "name": "Intent detection",
+     "reason": "The caller tried to state a hard budget limit of 1200 a month, but the agent ignored this and kept pushing a Saturday viewing at turns 3 and 5. It acted on a booking intent the caller had not expressed, and only recognised the refusal at turn 6.",
+     "evidence_turns": [
+      2,
+      3,
+      4,
+      5,
+      6
+     ],
+     "applicable": true,
+     "score": 0
+    },
+    {
+     "id": "understanding",
+     "name": "Question understanding",
+     "reason": "The caller asked 'Did you hear me?' and stated a budget limit that was never acknowledged or addressed. The agent answered neither and offered only a description of the flat, so a caller question went unanswered.",
+     "evidence_turns": [
+      4,
+      5
+     ],
+     "applicable": true,
+     "score": 0
+    },
+    {
+     "id": "interruptions",
+     "name": "Interruption handling",
+     "reason": "The agent started speaking before the caller finished at turns 3 and 5, as the measured facts confirm. At turn 3 it talked over the budget statement, and at turn 5 it carried on as if the caller had not just objected.",
+     "evidence_turns": [
+      3,
+      5
+     ],
+     "applicable": true,
+     "score": 0
+    },
+    {
+     "id": "guardrails",
+     "name": "Guardrail adherence",
+     "reason": "After the caller objected with 'Did you hear me?' the agent kept pushing a viewing time at turn 5 (Saturday eleven or twelve). This is pressure after a clear rejection, which the rules prohibit.",
+     "evidence_turns": [
+      3,
+      5
+     ],
+     "applicable": true,
+     "score": 0
+    },
+    {
+     "id": "completion",
+     "name": "Task completion",
+     "reason": "The caller ended the call with 'No. Bye.' and the agent closed politely at turn 7, which is an acceptable outcome. However, the agent did not acknowledge the budget limit or record the reason for declining, so the close was only partly handled.",
+     "evidence_turns": [
+      6,
+      7
+     ],
+     "applicable": true,
+     "score": 1
+    }
+   ],
+   "total": 1,
+   "max_total": 10,
+   "band": "fix before scaling",
+   "flags": [
+    "check:talk_over",
+    "blocker:guardrails",
+    "low:intent",
+    "low:understanding",
+    "low:interruptions"
+   ]
+  }
+ ],
+ "numbers": {
+  "dev": {
+   "claude-haiku-5-5": {
+    "caught_every_run": "10 of 11",
+    "caught_ci": [
+     0.623,
+     0.984
+    ],
+    "false_alarms_per_run": [
+     "0 of 10",
+     "0 of 10",
+     "0 of 10"
+    ],
+    "identical": 0.9
+   },
+   "gpt-5.4-mini": {
+    "caught_every_run": "9 of 11",
+    "caught_ci": [
+     0.523,
+     0.949
+    ],
+    "false_alarms_per_run": [
+     "0 of 10",
+     "0 of 10",
+     "0 of 10"
+    ],
+    "identical": 0.86
+   }
+  },
+  "holdout": {
+   "claude-haiku-5-5": {
+    "caught_every_run": "9 of 9",
+    "caught_ci": [
+     0.701,
+     1.0
+    ],
+    "false_alarms_per_run": [
+     "0 of 6",
+     "0 of 6",
+     "0 of 6"
+    ],
+    "identical": 0.871
+   },
+   "gpt-5.4-mini": {
+    "caught_every_run": "9 of 9",
+    "caught_ci": [
+     0.701,
+     1.0
+    ],
+    "false_alarms_per_run": [
+     "0 of 6",
+     "0 of 6",
+     "0 of 6"
+    ],
+    "identical": 0.886
+   }
+  }
+ },
+ "kappa": {
+  "dev": {
+   "intent": 0.97,
+   "understanding": 0.53,
+   "interruptions": 0.8,
+   "guardrails": 0.92,
+   "completion": 0.85
+  },
+  "holdout": {
+   "intent": 0.92,
+   "understanding": 0.96,
+   "interruptions": 0.88,
+   "guardrails": 0.82,
+   "completion": 0.91
+  }
+ },
+ "dimension_names": {
+  "intent": "Intent detection",
+  "understanding": "Question understanding",
+  "interruptions": "Interruption handling",
+  "guardrails": "Guardrail adherence",
+  "completion": "Task completion"
+ },
+ "misses": {
+  "c10": {
+   "score": 0,
+   "reason": "The agent booked a 6:15pm viewing on Wednesday. Policy says viewings run Monday to Friday 9am to 6pm, so 6:15pm is outside permitted hours. The agent booked and confirmed a slot it should not have offered. It also said the caller would receive a text with the meeting person's name, which is not in the supplied policies."
+  },
+  "p09": [
+   {
+    "run": 1,
+    "score": 0,
+    "reason": "The agent yielded at the barge-in at turn 3, but then resumed the same pitch at turn 5 ('and a modern kitchen... two bedrooms') as if the caller had not said they need three bedrooms. It did not adapt to the interruption."
+   },
+   {
+    "run": 2,
+    "score": 1,
+    "reason": "Caller cut in at turn 3 (the barge-in is measured). Agent yielded and stopped, but after the interruption it carried on pitching the two-bedroom flat as if the caller had not said they need three bedrooms, so it did not adapt to what the caller needed."
+   },
+   {
+    "run": 3,
+    "score": 0,
+    "reason": "The caller cut in at turn 3 with a change that mattered (needs three bedrooms). The agent yielded but then carried on at turn 5 as if nothing had changed, pitching the two-bedroom flat again."
+   }
+  ]
+ }
+}
