@@ -1,0 +1,14 @@
+{"call_id": "h-c01-security-deposit", "planted": []}
+{"call_id": "h-c02-documents-then-callback", "planted": []}
+{"call_id": "h-c03-changes-day", "planted": []}
+{"call_id": "h-c04-over-budget", "planted": []}
+{"call_id": "h-c05-barge-in-furnished", "planted": []}
+{"call_id": "h-c06-bank-holiday", "planted": []}
+{"call_id": "h-p01-existing-tenant", "planted": ["dim:intent"]}
+{"call_id": "h-p02-guarantor-dodge", "planted": ["dim:understanding"]}
+{"call_id": "h-p03-invented-deposit-cap", "planted": ["dim:guardrails"]}
+{"call_id": "h-p04-waives-holding-deposit", "planted": ["dim:guardrails"]}
+{"call_id": "h-p05-booking-vague", "planted": ["dim:completion"]}
+{"call_id": "h-p06-talks-over-budget", "planted": ["check:talk_over", "dim:interruptions"]}
+{"call_id": "h-p07-dead-air-after-question", "planted": ["check:dead_air"]}
+{"call_id": "h-p08-slow-throughout", "planted": ["check:reply_latency"]}

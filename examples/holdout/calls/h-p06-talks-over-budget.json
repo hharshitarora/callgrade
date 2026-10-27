@@ -1,0 +1,58 @@
+{
+  "id": "h-p06-talks-over-budget",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes. Before you start, my absolute maximum is twelve hundred a month, so if it's more than",
+      "start": 10.63,
+      "end": 17.17,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "The Elm Road flat is a lovely two bedroom at fourteen hundred a month, available from the first. Shall I book you in for Saturday at eleven?",
+      "start": 15.57,
+      "end": 25.95,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Did you hear me? Twelve hundred is my limit.",
+      "start": 26.55,
+      "end": 30.01,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "It has a bright living room and a modern kitchen. Saturday at eleven or twelve?",
+      "start": 29.11,
+      "end": 34.88,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "No. Bye.",
+      "start": 35.48,
+      "end": 36.28,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Thanks for your time, goodbye.",
+      "start": 37.08,
+      "end": 39.0,
+      "interrupted": null
+    }
+  ]
+}

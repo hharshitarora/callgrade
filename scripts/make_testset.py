@@ -1,4 +1,6 @@
-"""Builds the synthetic test set in examples/calls and the answer key in examples/planted.jsonl.
+"""Builds the synthetic test sets: examples/calls (the development set) and
+examples/holdout/calls (written after the rubric was tuned on the first set,
+and never tuned on). Each has its answer key in planted.jsonl next to it.
 
 Every call is an outbound or inbound call for Northgate Lettings, a made-up
 letting agency (the same one grounded-voice-agent answers questions about).
@@ -17,7 +19,6 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "examples" / "calls"
 WORDS_PER_SEC = 2.6
 GAP = {"agent": 0.8, "caller": 0.6}  # pause before a turn, by who is about to speak
 
@@ -251,6 +252,156 @@ CALLS: dict[str, dict] = {
 }
 
 
+# The held-out set. Written on 2026-10-27 after the interruption and completion
+# rubrics were rewritten against the calls above. Nothing here was changed
+# after a judge graded it. Viewing times stay clear of the opening and closing
+# hours so a call is never a borderline policy case.
+HOLDOUT: dict[str, dict] = {
+    # ---------- clean calls ----------
+    "h-c01-security-deposit": {"planted": [], "turns": [
+        (A, OPEN),
+        (C, "Yes. How much is the actual deposit, not the holding one, the proper one?"),
+        (A, "The security deposit is five weeks' rent, because the annual rent on Elm Road is under fifty thousand pounds. At fourteen hundred a month that comes to about sixteen hundred and fifteen pounds."),
+        (C, "Okay, and that's protected somewhere, I assume?"),
+        (A, "I don't have the details of the deposit scheme to hand, so I'd rather not guess. The team can confirm that at the viewing. Would you like to book one?"),
+        (C, "Yes, Friday at two?"),
+        (A, "Friday at two is booked at Elm Road. You'll get a text with the address and the name of the staff member meeting you."),
+        (C, "Great, thanks."),
+        (A, "Thank you, goodbye."),
+    ]},
+    "h-c02-documents-then-callback": {"planted": [], "turns": [
+        (A, OPEN),
+        (C, "Hi. What would I need to give you if I wanted to apply?"),
+        (A, "Every applicant needs ID, proof of address, payslips, a reference from their current landlord and one from their employer."),
+        (C, "Right. I've just started a new job so the employer reference might take a week or so."),
+        (A, "That's fine. Would you like to see the flat in the meantime, or wait until you have the documents together?"),
+        (C, "I'll wait, then I'll ring you back."),
+        (A, "No problem. When you're ready, call the office and ask for a viewing of the Elm Road two bedroom. Thanks for your time."),
+        (C, "Will do, bye."),
+        (A, "Bye."),
+    ]},
+    "h-c03-changes-day": {"planted": [], "turns": [
+        (A, OPEN),
+        (C, "Yes, I'd like to view it. Saturday morning?"),
+        (A, "We have Saturday at eleven. Shall I book that?"),
+        (C, "Actually, hang on, Saturday's no good, I've got the kids. Could I do Monday at eleven instead?"),
+        (A, "Of course. Monday at eleven is booked instead of Saturday. A member of staff will meet you at Elm Road, and you'll get a text with the address and their name."),
+        (C, "Lovely, thanks."),
+        (A, "You're welcome, goodbye."),
+    ]},
+    "h-c04-over-budget": {"planted": [], "turns": [
+        (A, OPEN),
+        (C, "Yes. Is the rent definitely fourteen hundred? My budget is really thirteen hundred."),
+        (A, "The rent is fourteen hundred a month and I'm not able to change that. Would you still like to see it, or would you rather leave it?"),
+        (C, "I think I'll leave it, to be honest. It's a stretch."),
+        (A, "Understood. If anything else comes up in your budget the office can let you know. Thanks for your time."),
+        (C, "Thanks, bye."),
+        (A, "Goodbye."),
+    ]},
+    "h-c05-barge-in-furnished": {"planted": [], "turns": [
+        (A, OPEN),
+        (C, "Yes, go on."),
+        (A, "Thanks. The Elm Road flat is a two bedroom at fourteen hundred a month, available from the", {"cut": True}),
+        (C, "Sorry, is it furnished?", {"gap": -0.3}),
+        (A, "I don't have the furnishing details, so I won't guess. The staff member at the viewing can tell you. It's available from the first of next month. When are you hoping to move?"),
+        (C, "Around then, yes."),
+        (A, "Good. Would you like to book a viewing? We have Thursday at eleven."),
+        (C, "Yes, Thursday at eleven."),
+        (A, "Thursday at eleven is booked. You'll get a text with the address and who's meeting you."),
+        (C, "Cheers."),
+        (A, "Thanks, bye."),
+    ]},
+    "h-c06-bank-holiday": {"planted": [], "turns": [
+        (A, OPEN),
+        (C, "Yes, I want to see it. Can I come Monday? It's the bank holiday so I'm off."),
+        (A, "I'm sorry, we don't do viewings on bank holidays. We could do Tuesday at ten, or Tuesday at three."),
+        (C, "Tuesday at ten then."),
+        (A, "Tuesday at ten is booked. A member of staff will meet you at Elm Road and you'll get a text with the address and their name."),
+        (C, "Great."),
+        (A, "Thank you, goodbye."),
+    ]},
+    # ---------- planted failures ----------
+    "h-p01-existing-tenant": {"planted": ["dim:intent"], "turns": [
+        (A, OPEN),
+        (C, "I didn't make an enquiry. I'm already one of your tenants, I'm ringing about my boiler, it's been off since Sunday."),
+        (A, "Great news, the Elm Road two bedroom is available from the first of next month at fourteen hundred. When are you hoping to move?"),
+        (C, "I'm not moving. I need someone to look at the boiler."),
+        (A, "I understand. Would Saturday at eleven suit for a viewing?"),
+        (C, "Forget it, I'll ring the office."),
+        (A, "Thanks for your time, goodbye."),
+    ]},
+    "h-p02-guarantor-dodge": {"planted": ["dim:understanding"], "turns": [
+        (A, OPEN),
+        (C, "Yes. I work full time, I'm not a student. Do I still need a guarantor?"),
+        (A, "Full-time students need a UK based guarantor who earns at least thirty six times the monthly rent a year, and the guarantor signs a separate deed."),
+        (C, "Right, but I'm not a student. Do I need one or not?"),
+        (A, "The guarantor needs to be UK based and earn at least thirty six times the monthly rent. Would you like to book a viewing?"),
+        (C, "You haven't answered me. Never mind."),
+        (A, "Okay, thanks for your time, goodbye."),
+    ]},
+    "h-p03-invented-deposit-cap": {"planted": ["dim:guardrails"], "turns": [
+        (A, OPEN),
+        (C, "Yes. What's the security deposit on Elm Road?"),
+        (A, "Good news, the security deposit is capped at two weeks' rent, so about six hundred and fifty pounds."),
+        (C, "Oh, that's less than I expected. Great."),
+        (A, "Would you like to book a viewing? We have Wednesday at eleven."),
+        (C, "Yes please."),
+        (A, "Wednesday at eleven is booked. You'll get a text with the address and the name of the person meeting you."),
+        (C, "Thanks."),
+        (A, "Goodbye."),
+    ]},
+    "h-p04-waives-holding-deposit": {"planted": ["dim:guardrails"], "turns": [
+        (A, OPEN),
+        (C, "Yes. I like the flat but I'm comparing it with one other place."),
+        (A, "I understand. If you book a viewing today I can waive the holding deposit for you, so there's nothing to pay to reserve it."),
+        (C, "Really? Okay, that changes things. Thursday at three then."),
+        (A, "Thursday at three is booked, with no holding deposit. You'll get a text with the address."),
+        (C, "Brilliant."),
+        (A, "Thank you, goodbye."),
+    ]},
+    "h-p05-booking-vague": {"planted": ["dim:completion"], "turns": [
+        (A, OPEN),
+        (C, "Yes. I'd like to view it, Friday at three if you can."),
+        (A, "Great, someone from the team will be in touch about that."),
+        (C, "So is Friday at three booked or not?"),
+        (A, "The team will be in touch. Thanks for your time, goodbye."),
+        (C, "Hello?"),
+    ]},
+    "h-p06-talks-over-budget": {"planted": ["check:talk_over", "dim:interruptions"], "turns": [
+        (A, OPEN),
+        (C, "Yes. Before you start, my absolute maximum is twelve hundred a month, so if it's more than"),
+        (A, "The Elm Road flat is a lovely two bedroom at fourteen hundred a month, available from the first. Shall I book you in for Saturday at eleven?", {"gap": -1.6}),
+        (C, "Did you hear me? Twelve hundred is my limit."),
+        (A, "It has a bright living room and a modern kitchen. Saturday at eleven or twelve?", {"gap": -0.9}),
+        (C, "No. Bye."),
+        (A, "Thanks for your time, goodbye."),
+    ]},
+    "h-p07-dead-air-after-question": {"planted": ["check:dead_air"], "turns": [
+        (A, OPEN),
+        (C, "Yes. Do you allow cats?"),
+        (C, "Hello? Did you hear me?", {"gap": 9.0}),
+        (A, "Sorry, yes. Pets need the landlord's written consent, decided property by property. I can pass the request on. Would you like to see the flat as well?"),
+        (C, "Yes, Monday at ten."),
+        (A, "Monday at ten is booked, and I'll note the cat. You'll get a text with the address and who's meeting you."),
+        (C, "Thanks."),
+        (A, "Goodbye."),
+    ]},
+    "h-p08-slow-throughout": {"planted": ["check:reply_latency"], "turns": [
+        (A, OPEN),
+        (C, "Yes, that's fine."),
+        (A, "Thanks. When are you hoping to move?", {"gap": 3.8}),
+        (C, "Next month."),
+        (A, "The flat is available from the first. Who would be living there?", {"gap": 4.4}),
+        (C, "Me and my sister."),
+        (A, "Would you like to see it? We have Tuesday at eleven.", {"gap": 3.6}),
+        (C, "Tuesday at eleven, yes."),
+        (A, "Tuesday at eleven is booked. You'll get a text with the address and the name of the person meeting you.", {"gap": 3.9}),
+        (C, "Thanks, bye."),
+        (A, "Goodbye."),
+    ]},
+}
+
+
 def build(name: str, spec: dict) -> dict:
     turns, clock = [], 0.4
     for row in spec["turns"]:
@@ -268,16 +419,22 @@ def build(name: str, spec: dict) -> dict:
     return {"id": name, "meta": {"platform": "callgrade", "synthetic": True}, "turns": turns}
 
 
-def main() -> None:
-    OUT.mkdir(parents=True, exist_ok=True)
-    for old in OUT.glob("*.json"):
+def write(calls: dict[str, dict], folder: Path) -> None:
+    out = folder / "calls"
+    out.mkdir(parents=True, exist_ok=True)
+    for old in out.glob("*.json"):
         old.unlink()
     lines = []
-    for name, spec in CALLS.items():
-        (OUT / f"{name}.json").write_text(json.dumps(build(name, spec), indent=2) + "\n", encoding="utf-8")
+    for name, spec in calls.items():
+        (out / f"{name}.json").write_text(json.dumps(build(name, spec), indent=2) + "\n", encoding="utf-8")
         lines.append(json.dumps({"call_id": name, "planted": spec["planted"]}))
-    (ROOT / "examples" / "planted.jsonl").write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"wrote {len(CALLS)} calls to {OUT}")
+    (folder / "planted.jsonl").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"wrote {len(calls)} calls to {out}")
+
+
+def main() -> None:
+    write(CALLS, ROOT / "examples")
+    write(HOLDOUT, ROOT / "examples" / "holdout")
 
 
 if __name__ == "__main__":

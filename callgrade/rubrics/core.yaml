@@ -37,11 +37,11 @@ dimensions:
       0: Invented a fact, made a promise it cannot keep, or kept pushing after a clear no.
   - id: completion
     name: Task completion
-    question: Did the call reach the right outcome for this caller, and was the next step clear when it ended?
+    question: Did the caller get the outcome they were ready for, and was the next step stated before the call ended? Score the outcome and the next step only. Skipped discovery questions, a date given as a weekday, or a brief goodbye are not completion failures.
     levels:
-      2: Reached the right outcome and both sides know the next step.
-      1: Reached the outcome but left the next step vague, or closed abruptly.
-      0: Missed an outcome the caller was ready for, or ended with no clear next step.
+      2: The caller got the outcome they were ready for (a booking, an answer, a callback, or a polite close) and the agent stated the next step, such as the slot booked or who will call when.
+      1: The outcome was reached but the next step was not stated, for example "someone will be in touch" with no slot or time, or the call closed before the caller could confirm.
+      0: The caller asked for an outcome the agent could give (a booking, a callback, an answer) and the call ended without it.
 bands:
   - {min: 10, label: production ready}
   - {min: 8, label: minor tweaks}

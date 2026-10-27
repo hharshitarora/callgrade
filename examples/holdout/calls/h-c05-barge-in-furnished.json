@@ -1,0 +1,86 @@
+{
+  "id": "h-c05-barge-in-furnished",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes, go on.",
+      "start": 10.63,
+      "end": 11.78,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Thanks. The Elm Road flat is a two bedroom at fourteen hundred a month, available from the",
+      "start": 12.58,
+      "end": 19.12,
+      "interrupted": true
+    },
+    {
+      "speaker": "caller",
+      "text": "Sorry, is it furnished?",
+      "start": 18.82,
+      "end": 20.36,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "I don't have the furnishing details, so I won't guess. The staff member at the viewing can tell you. It's available from the first of next month. When are you hoping to move?",
+      "start": 21.16,
+      "end": 33.85,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Around then, yes.",
+      "start": 34.45,
+      "end": 35.6,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Good. Would you like to book a viewing? We have Thursday at eleven.",
+      "start": 36.4,
+      "end": 41.4,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes, Thursday at eleven.",
+      "start": 42.0,
+      "end": 43.54,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Thursday at eleven is booked. You'll get a text with the address and who's meeting you.",
+      "start": 44.34,
+      "end": 50.49,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Cheers.",
+      "start": 51.09,
+      "end": 51.89,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Thanks, bye.",
+      "start": 52.69,
+      "end": 53.49,
+      "interrupted": null
+    }
+  ]
+}

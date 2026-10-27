@@ -1,0 +1,58 @@
+{
+  "id": "h-p01-existing-tenant",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "I didn't make an enquiry. I'm already one of your tenants, I'm ringing about my boiler, it's been off since Sunday.",
+      "start": 10.63,
+      "end": 18.71,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Great news, the Elm Road two bedroom is available from the first of next month at fourteen hundred. When are you hoping to move?",
+      "start": 19.51,
+      "end": 28.74,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "I'm not moving. I need someone to look at the boiler.",
+      "start": 29.34,
+      "end": 33.57,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "I understand. Would Saturday at eleven suit for a viewing?",
+      "start": 34.37,
+      "end": 38.22,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Forget it, I'll ring the office.",
+      "start": 38.82,
+      "end": 41.13,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Thanks for your time, goodbye.",
+      "start": 41.93,
+      "end": 43.85,
+      "interrupted": null
+    }
+  ]
+}

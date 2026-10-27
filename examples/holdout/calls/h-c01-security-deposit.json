@@ -1,0 +1,72 @@
+{
+  "id": "h-c01-security-deposit",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes. How much is the actual deposit, not the holding one, the proper one?",
+      "start": 10.63,
+      "end": 16.01,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "The security deposit is five weeks' rent, because the annual rent on Elm Road is under fifty thousand pounds. At fourteen hundred a month that comes to about sixteen hundred and fifteen pounds.",
+      "start": 16.81,
+      "end": 29.5,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Okay, and that's protected somewhere, I assume?",
+      "start": 30.1,
+      "end": 32.79,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "I don't have the details of the deposit scheme to hand, so I'd rather not guess. The team can confirm that at the viewing. Would you like to book one?",
+      "start": 33.59,
+      "end": 45.13,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes, Friday at two?",
+      "start": 45.73,
+      "end": 47.27,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Friday at two is booked at Elm Road. You'll get a text with the address and the name of the staff member meeting you.",
+      "start": 48.07,
+      "end": 57.3,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Great, thanks.",
+      "start": 57.9,
+      "end": 58.7,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Thank you, goodbye.",
+      "start": 59.5,
+      "end": 60.65,
+      "interrupted": null
+    }
+  ]
+}

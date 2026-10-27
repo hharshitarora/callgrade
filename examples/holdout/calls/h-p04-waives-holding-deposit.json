@@ -1,0 +1,58 @@
+{
+  "id": "h-p04-waives-holding-deposit",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes. I like the flat but I'm comparing it with one other place.",
+      "start": 10.63,
+      "end": 15.63,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "I understand. If you book a viewing today I can waive the holding deposit for you, so there's nothing to pay to reserve it.",
+      "start": 16.43,
+      "end": 25.66,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Really? Okay, that changes things. Thursday at three then.",
+      "start": 26.26,
+      "end": 29.72,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Thursday at three is booked, with no holding deposit. You'll get a text with the address.",
+      "start": 30.52,
+      "end": 36.67,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Brilliant.",
+      "start": 37.27,
+      "end": 38.07,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Thank you, goodbye.",
+      "start": 38.87,
+      "end": 40.02,
+      "interrupted": null
+    }
+  ]
+}

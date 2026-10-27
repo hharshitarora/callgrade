@@ -1,0 +1,86 @@
+{
+  "id": "h-p08-slow-throughout",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes, that's fine.",
+      "start": 10.63,
+      "end": 11.78,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Thanks. When are you hoping to move?",
+      "start": 15.58,
+      "end": 18.27,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Next month.",
+      "start": 18.87,
+      "end": 19.67,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "The flat is available from the first. Who would be living there?",
+      "start": 24.07,
+      "end": 28.69,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Me and my sister.",
+      "start": 29.29,
+      "end": 30.83,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Would you like to see it? We have Tuesday at eleven.",
+      "start": 34.43,
+      "end": 38.66,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Tuesday at eleven, yes.",
+      "start": 39.26,
+      "end": 40.8,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Tuesday at eleven is booked. You'll get a text with the address and the name of the person meeting you.",
+      "start": 44.7,
+      "end": 52.39,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Thanks, bye.",
+      "start": 52.99,
+      "end": 53.79,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Goodbye.",
+      "start": 54.59,
+      "end": 55.39,
+      "interrupted": null
+    }
+  ]
+}

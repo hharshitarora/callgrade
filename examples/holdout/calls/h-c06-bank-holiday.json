@@ -1,0 +1,58 @@
+{
+  "id": "h-c06-bank-holiday",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes, I want to see it. Can I come Monday? It's the bank holiday so I'm off.",
+      "start": 10.63,
+      "end": 17.17,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "I'm sorry, we don't do viewings on bank holidays. We could do Tuesday at ten, or Tuesday at three.",
+      "start": 17.97,
+      "end": 25.28,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Tuesday at ten then.",
+      "start": 25.88,
+      "end": 27.42,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Tuesday at ten is booked. A member of staff will meet you at Elm Road and you'll get a text with the address and their name.",
+      "start": 28.22,
+      "end": 38.22,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Great.",
+      "start": 38.82,
+      "end": 39.62,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Thank you, goodbye.",
+      "start": 40.42,
+      "end": 41.57,
+      "interrupted": null
+    }
+  ]
+}

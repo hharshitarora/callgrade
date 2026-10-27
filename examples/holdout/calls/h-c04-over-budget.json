@@ -1,0 +1,58 @@
+{
+  "id": "h-c04-over-budget",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Yes. Is the rent definitely fourteen hundred? My budget is really thirteen hundred.",
+      "start": 10.63,
+      "end": 15.63,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "The rent is fourteen hundred a month and I'm not able to change that. Would you still like to see it, or would you rather leave it?",
+      "start": 16.43,
+      "end": 26.81,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "I think I'll leave it, to be honest. It's a stretch.",
+      "start": 27.41,
+      "end": 31.64,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Understood. If anything else comes up in your budget the office can let you know. Thanks for your time.",
+      "start": 32.44,
+      "end": 39.75,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Thanks, bye.",
+      "start": 40.35,
+      "end": 41.15,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Goodbye.",
+      "start": 41.95,
+      "end": 42.75,
+      "interrupted": null
+    }
+  ]
+}

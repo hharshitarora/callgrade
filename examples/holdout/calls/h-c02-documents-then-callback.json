@@ -1,0 +1,72 @@
+{
+  "id": "h-c02-documents-then-callback",
+  "meta": {
+    "platform": "callgrade",
+    "synthetic": true
+  },
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Maya, an AI assistant calling from Northgate Lettings about the enquiry you made on our website. Is now a good time?",
+      "start": 0.8,
+      "end": 10.03,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Hi. What would I need to give you if I wanted to apply?",
+      "start": 10.63,
+      "end": 15.63,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Every applicant needs ID, proof of address, payslips, a reference from their current landlord and one from their employer.",
+      "start": 16.43,
+      "end": 23.74,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Right. I've just started a new job so the employer reference might take a week or so.",
+      "start": 24.34,
+      "end": 30.88,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "That's fine. Would you like to see the flat in the meantime, or wait until you have the documents together?",
+      "start": 31.68,
+      "end": 39.37,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "I'll wait, then I'll ring you back.",
+      "start": 39.97,
+      "end": 42.66,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "No problem. When you're ready, call the office and ask for a viewing of the Elm Road two bedroom. Thanks for your time.",
+      "start": 43.46,
+      "end": 52.31,
+      "interrupted": null
+    },
+    {
+      "speaker": "caller",
+      "text": "Will do, bye.",
+      "start": 52.91,
+      "end": 54.06,
+      "interrupted": null
+    },
+    {
+      "speaker": "agent",
+      "text": "Bye.",
+      "start": 54.86,
+      "end": 55.66,
+      "interrupted": null
+    }
+  ]
+}
