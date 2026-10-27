@@ -63,6 +63,15 @@ reports a failure as caught only if every run caught it, and every rate carries
 a 95% Wilson interval. The Wilson interval stays honest at 0 and 100%, where
 the usual plus or minus formula collapses to a single point.
 
+## A held-out set, written after the tuning
+
+Every rubric fix in the history was made by looking at what the judge got
+wrong on `examples/calls`, then grading `examples/calls` again. Numbers from
+that loop flatter the judge. `examples/holdout` was written after the last
+fix and committed before any judge graded it, and nothing in it changes after
+a run. If a future rubric change needs the held-out set to be edited, that set
+becomes development data and a new held-out set gets written.
+
 ## Haiku is the default judge
 
 Grading is a reading task with a fixed rubric, and teams grade thousands of

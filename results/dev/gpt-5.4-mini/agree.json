@@ -1,0 +1,56 @@
+{
+  "planted_failures": {
+    "planted": 11,
+    "caught": 10,
+    "missed": [
+      "p09-ignores-correction dim:interruptions"
+    ],
+    "missed_but_marked_down": [
+      "p09-ignores-correction dim:interruptions"
+    ],
+    "not_graded": [],
+    "detection_rate": 0.909,
+    "detection_rate_95ci": [
+      0.623,
+      0.984
+    ],
+    "false_alarms_on_clean_calls": [],
+    "clean_calls_with_a_false_alarm": "0 of 10",
+    "false_alarm_rate_95ci": [
+      0.0,
+      0.278
+    ]
+  },
+  "across_runs": {
+    "runs": 3,
+    "calls_graded_in_every_run": 20,
+    "scores_identical_in_every_run": 0.86,
+    "identical_by_dimension": {
+      "intent": 0.95,
+      "understanding": 0.9,
+      "interruptions": 0.95,
+      "guardrails": 0.65,
+      "completion": 0.85
+    },
+    "planted_detection_rate_per_run": [
+      0.909,
+      0.818,
+      0.909
+    ],
+    "planted_caught_every_run": "9 of 11",
+    "planted_caught_every_run_rate": 0.818,
+    "planted_caught_every_run_95ci": [
+      0.523,
+      0.949
+    ],
+    "planted_missed_in_some_run": [
+      "p02-talks-over dim:interruptions",
+      "p09-ignores-correction dim:interruptions"
+    ],
+    "clean_calls_with_a_false_alarm_per_run": [
+      "0 of 10",
+      "0 of 10",
+      "0 of 10"
+    ]
+  }
+}

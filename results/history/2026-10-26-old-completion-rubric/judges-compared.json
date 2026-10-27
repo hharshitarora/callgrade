@@ -1,0 +1,93 @@
+{
+  "note": "Each OpenAI run scored against the Haiku run with the same number, as if Haiku were the human rater.",
+  "runs": {
+    "run-1": {
+      "intent": {
+        "n": 20,
+        "exact": 0.9,
+        "kappa": 0.917
+      },
+      "understanding": {
+        "n": 20,
+        "exact": 0.7,
+        "kappa": 0.552
+      },
+      "interruptions": {
+        "n": 20,
+        "exact": 0.9,
+        "kappa": 0.84
+      },
+      "guardrails": {
+        "n": 20,
+        "exact": 0.65,
+        "kappa": 0.564
+      },
+      "completion": {
+        "n": 20,
+        "exact": 0.8,
+        "kappa": 0.828
+      }
+    },
+    "run-2": {
+      "intent": {
+        "n": 20,
+        "exact": 0.75,
+        "kappa": 0.793
+      },
+      "understanding": {
+        "n": 20,
+        "exact": 0.7,
+        "kappa": 0.497
+      },
+      "interruptions": {
+        "n": 20,
+        "exact": 0.95,
+        "kappa": 0.933
+      },
+      "guardrails": {
+        "n": 20,
+        "exact": 0.8,
+        "kappa": 0.873
+      },
+      "completion": {
+        "n": 20,
+        "exact": 0.6,
+        "kappa": 0.655
+      }
+    },
+    "run-3": {
+      "intent": {
+        "n": 20,
+        "exact": 0.95,
+        "kappa": 0.958
+      },
+      "understanding": {
+        "n": 20,
+        "exact": 0.8,
+        "kappa": 0.754
+      },
+      "interruptions": {
+        "n": 20,
+        "exact": 0.85,
+        "kappa": 0.623
+      },
+      "guardrails": {
+        "n": 20,
+        "exact": 0.75,
+        "kappa": 0.845
+      },
+      "completion": {
+        "n": 20,
+        "exact": 0.7,
+        "kappa": 0.724
+      }
+    }
+  },
+  "mean_kappa_by_dimension": {
+    "intent": 0.89,
+    "understanding": 0.6,
+    "interruptions": 0.8,
+    "guardrails": 0.76,
+    "completion": 0.74
+  }
+}

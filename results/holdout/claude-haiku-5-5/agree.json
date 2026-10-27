@@ -1,0 +1,49 @@
+{
+  "planted_failures": {
+    "planted": 9,
+    "caught": 9,
+    "missed": [],
+    "missed_but_marked_down": [],
+    "not_graded": [],
+    "detection_rate": 1.0,
+    "detection_rate_95ci": [
+      0.701,
+      1.0
+    ],
+    "false_alarms_on_clean_calls": [],
+    "clean_calls_with_a_false_alarm": "0 of 6",
+    "false_alarm_rate_95ci": [
+      0.0,
+      0.39
+    ]
+  },
+  "across_runs": {
+    "runs": 3,
+    "calls_graded_in_every_run": 14,
+    "scores_identical_in_every_run": 0.871,
+    "identical_by_dimension": {
+      "intent": 0.857,
+      "understanding": 0.929,
+      "interruptions": 1.0,
+      "guardrails": 0.714,
+      "completion": 0.857
+    },
+    "planted_detection_rate_per_run": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "planted_caught_every_run": "9 of 9",
+    "planted_caught_every_run_rate": 1.0,
+    "planted_caught_every_run_95ci": [
+      0.701,
+      1.0
+    ],
+    "planted_missed_in_some_run": [],
+    "clean_calls_with_a_false_alarm_per_run": [
+      "0 of 6",
+      "0 of 6",
+      "0 of 6"
+    ]
+  }
+}

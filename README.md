@@ -26,9 +26,10 @@ p03-dead-air                     checks only                  check:dead_air
 ```
 
 That run used no model. Add a judge and every call also gets a score, a band
-and a reason per dimension. With the default judge, callgrade caught all 11
-planted failures in each of three runs on the test set, with no false alarms
-([results](#results-on-the-test-set)).
+and a reason per dimension. With the default judge, callgrade caught every
+planted failure in a held-out set of calls in each of three runs, with no
+false alarms, and the numbers come with their error bars
+([results](#results-on-the-test-sets)).
 
 ## How it grades
 
@@ -145,6 +146,8 @@ quadratic weights count a 0-versus-2 disagreement as worse than a 0-versus-1.
 **Against planted failures.** `examples/calls` holds 20 synthetic calls for a
 made-up letting agency: 10 clean, and 10 that each carry one failure a careful
 person would flag. `examples/planted.jsonl` is the answer key.
+`examples/holdout/` is a second set of 14, written after the rubrics were
+tuned on the first.
 
 ```bash
 callgrade grade examples/calls --context examples/northgate-context.md --out run
@@ -170,22 +173,41 @@ callgrade agree run-1/results.jsonl run-2/results.jsonl run-3/results.jsonl --pl
 Every rate comes with a 95% interval. On a test set this small, 11 of 11 means
 "somewhere between 74% and 100%", and the report says so.
 
-### Results on the test set
+### Results on the test sets
 
-Three runs of the default judge, `claude-haiku-5-5`, with the Northgate
-context, on 2026-10-26. A planted failure counts as caught only when the judge
-gives it the minimum score, the same bar that makes a clean call a false
-alarm. Every file, including the HTML reports, is in
-[results/claude-haiku-5-5](results/claude-haiku-5-5).
+There are two sets. `examples/calls` is the development set: 20 calls, 10
+clean and 10 with a planted failure, and the rubrics were tuned against it.
+`examples/holdout/calls` is the held-out set: 14 calls, 6 clean and 8 planted,
+written after that tuning and committed before any judge saw them, so its
+numbers are the ones to trust. Both judges graded both sets three times on
+2026-10-27. A planted failure counts as caught only when the judge gives it
+the minimum score, the same bar that makes a clean call a false alarm. Every
+file, including the HTML reports, is under [results/](results).
 
-| | Result | 95% interval |
-|---|---|---|
-| Planted failures caught in all 3 runs | 11 of 11 | 74% to 100% |
-| Clean calls with a false alarm | 0 of 10, in every run | 0% to 28% |
-| Scores identical across all 3 runs | 77% of call and dimension pairs | |
-| Judge errors | 0 of 60 gradings | |
+| | Development set | | Held-out set | |
+|---|---|---|---|---|
+| | claude-haiku-5-5 | gpt-5.4-mini | claude-haiku-5-5 | gpt-5.4-mini |
+| Planted failures caught in all 3 runs | 10 of 11 | 9 of 11 | 9 of 9 | 9 of 9 |
+| 95% interval | 62% to 98% | 52% to 95% | 70% to 100% | 70% to 100% |
+| Clean calls with a false alarm | 0 of 10, every run | 0 of 10, every run | 0 of 6, every run | 0 of 6, every run |
+| Scores identical across all 3 runs | 90% | 86% | 87% | 89% |
+| Judge errors | 0 | 0 | 0 | 0 |
 
-How it got there, with every earlier run kept in
+How far the two judges agree with each other, as quadratic weighted kappa
+averaged over the three paired runs
+([results/judges-compared.json](results/judges-compared.json)):
+
+| | Intent | Understanding | Interruptions | Guardrails | Completion |
+|---|---|---|---|---|---|
+| Development set | 0.97 | 0.53 | 0.80 | 0.92 | 0.85 |
+| Held-out set | 0.92 | 0.96 | 0.88 | 0.82 | 0.91 |
+
+0.6 is a common bar for a judge allowed to gate a release. Question
+understanding on the development set is the one number under it: the two
+judges read `p05`, where the caller asks about the deposit twice and gets a
+viewing slot both times, differently every run.
+
+How the development set got here, with every earlier run kept in
 [results/history](results/history):
 
 - **The judge found a bug in the answer key.** The first run flagged clean call
@@ -194,56 +216,37 @@ How it got there, with every earlier run kept in
 - **The context file was missing a policy.** Eight calls lost a guardrail point
   because the agent said "you'll get a confirmation text" and the context never
   said Northgate sends texts. That line was added.
-- **Repeat runs found a bug in the rubric.** On three runs, `p09`, where the
-  agent ignores a caller who cuts in to say they need three bedrooms, was
-  caught once. The rubric's middle level read "yielded but then carried on as
-  if the interruption had not happened", which describes `p09` exactly, so a 1
-  was a fair reading. The levels now separate an agent that adapts late (1)
-  from one that carries on as if a changed need was never said (0). After the
-  fix, `p09` was caught in all three runs.
-
-### A second judge from another model family
-
-The test calls were written with Claude, and judges can favour text in their
-own family's style. So the same 20 calls were graded three more times by
-OpenAI's `gpt-5.4-mini`, on 2026-10-27. Files are in
-[results/gpt-5.4-mini](results/gpt-5.4-mini).
-
-| | claude-haiku-5-5 | gpt-5.4-mini |
-|---|---|---|
-| Planted failures caught in all 3 runs | 11 of 11 (74% to 100%) | 9 of 11 (52% to 95%) |
-| Clean calls with a false alarm | 0 of 10, every run | 1 of 10 in one run, 0 in the other two |
-| Scores identical across all 3 runs | 77% | 85% |
-
-The OpenAI judge missed the interruption failure in `p02` and `p09` once each,
-scoring them 1 instead of 0. Its one false alarm was a guardrail blocker on
-`c05`, saying that offering specific slots invented a policy. The slots were
-Thursday at six and Saturday at ten, inside the stated hours, though six is
-the closing time and a fair person could query it. It was more consistent with itself than Haiku and less sensitive to the planted
-failures.
-
-How far the two judges agree with each other, as quadratic weighted kappa
-averaged over the three paired runs ([results/judges-compared.json](results/judges-compared.json)):
-
-| Intent | Understanding | Interruptions | Guardrails | Completion |
-|---|---|---|---|---|
-| 0.89 | 0.60 | 0.80 | 0.76 | 0.74 |
-
-0.6 is a common bar for a judge allowed to gate a release. Question
-understanding sits right on it, so that is where two judges disagree most and
-where a person's scores matter most.
+- **Repeat runs found overlapping levels in the interruption rubric.** `p09`,
+  where the agent ignores a caller who cuts in to say they need three bedrooms,
+  was caught once in three runs. The middle level read "yielded but then
+  carried on as if the interruption had not happened", which describes `p09`
+  exactly. The levels were rewritten to separate adapting late (1) from
+  carrying on as if a changed need was never said (0).
+- **Repeat runs found the same in the completion rubric.** The same score came
+  back on only 60% of calls. The judge was docking points for skipped discovery
+  questions and for "Thursday" without a date, which the dimension is not
+  about. The rubric now says so, and the figure went to 90%.
 
 What these numbers do not show:
 
-- **The fixes were made on this test set and measured on it again.** That
-  flatters the numbers. A new set of planted calls, written after the fixes,
-  is the honest next check.
-- **Task completion is the least stable dimension:** the same score came back
-  on only 60% of calls across three runs. Its rubric needs the same treatment
-  the interruption rubric got.
-- **The planted failures are blatant on purpose.** Catching them shows the
-  judge reads the rubric, not that it agrees with a person on subtle calls.
-  That takes the human agreement check above, which has not been run yet.
+- **`p09` is still a coin the judge sometimes calls wrong.** After the rubric
+  fix, Haiku caught it in 5 of 6 runs. In the run it missed, the written
+  reason says the agent "carried on as if the caller had not said they need
+  three bedrooms", which is the rubric's description of a 0, and then scores a
+  1. The reason and the score disagree. That is a judge error the rubric
+  cannot fix, and a reason to read the reasons, not only the totals.
+- **GPT reads the interruption dimension more leniently.** It missed `p02` and
+  `p09` once each on the development set, both with a 1 instead of a 0, and
+  caught every interruption failure on the held-out set, where the agent
+  talks over the caller twice. A milder version of the same failure splits
+  the judges.
+- **The held-out set is small.** 0 false alarms on 6 clean calls means
+  "somewhere between 0% and 39%". 9 of 9 means 70% to 100%. Both sets were
+  written by the same person for the same made-up agency, so a judge that
+  learned the house style of one has seen the other.
+- **No human has scored either set yet.** Catching planted failures shows the
+  judge reads the rubric. Agreement with a person on subtle calls is the
+  measurement above that has not been run.
 
 ## Use it as a gate
 

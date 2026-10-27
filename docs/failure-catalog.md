@@ -25,6 +25,26 @@ timestamps in the export. Failures caught by a rubric dimension need the judge.
 | Ignored interruption | The caller cuts in to say they need three bedrooms; the agent finishes its pitch for two | `dim:interruptions` | `p09-ignores-correction` |
 | Talking over, judged | The same call as the talk-over check: the judge should mark the handling down too | `dim:interruptions` | `p02-talks-over` |
 
+## The held-out set
+
+`examples/holdout/calls` carries the same failure types again, written after
+the rubrics were tuned on the calls above and never edited after a judge ran:
+
+| Call | Failure |
+|---|---|
+| `h-p01-existing-tenant` | Wrong intent: a current tenant rings about a broken boiler and gets a sales pitch |
+| `h-p02-guarantor-dodge` | Dodged question: a full-time worker asks if they need a guarantor and hears the student policy twice |
+| `h-p03-invented-deposit-cap` | Invented fact: a two week deposit cap the policy does not have |
+| `h-p04-waives-holding-deposit` | Promise it cannot keep: waiving the holding deposit to win a booking |
+| `h-p05-booking-vague` | Dropped booking: "someone will be in touch" instead of the Friday at three the caller asked for |
+| `h-p06-talks-over-budget` | Talking over, measured and judged: the caller's budget limit is spoken over twice |
+| `h-p07-dead-air-after-question` | Dead air: nine seconds of silence after "do you allow cats?" |
+| `h-p08-slow-throughout` | Slow replies: every agent turn arrives after a 3.5 to 4.5 second wait |
+
+The six clean held-out calls include a caller who changes the viewing day
+mid-call, one who is over budget and leaves, and one who asks for a bank
+holiday viewing and is offered the next day.
+
 ## Calls that should raise nothing
 
 These ten clean calls exist to catch false alarms. Several are close to a
