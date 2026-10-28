@@ -373,8 +373,7 @@ function stats(numbers) {
 
 function gridTable(set, data) {
   const g = data.grid[set];
-  const short = { "claude-haiku-5-5": "claude-haiku-5-5", "gpt-5.4-mini": "gpt-5.4-mini" };
-  let h = `<tr><th></th>${g.judges.map((j) => `<th class="j" colspan="3">${short[j]}</th><th class="gapcol"></th>`).join("")}</tr>`;
+  let h = `<tr><th></th>${g.judges.map((j) => `<th class="j" colspan="3">${j}</th><th class="gapcol"></th>`).join("")}</tr>`;
   h += `<tr><th>call</th>${g.judges.map(() => `<th>run 1</th><th>run 2</th><th>run 3</th><th class="gapcol"></th>`).join("")}</tr>`;
   let seenClean = false;
   g.calls.forEach((c) => {
