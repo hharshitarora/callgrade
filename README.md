@@ -10,6 +10,8 @@ Demo, built from the files in this repo: [hharshitarora.github.io/callgrade](htt
 
 The page plays three held-out calls, shows every run of both judges on every call, and owns up to the two misses. A 75-second recording of it is at [hharshitarora.github.io/callgrade/demo.mp4](https://hharshitarora.github.io/callgrade/demo.mp4), made by `scripts/record_demo.cjs` from the page itself, so it never drifts from the files.
 
+There is also a 26-second launch cut, [launch.mp4](https://hharshitarora.github.io/callgrade/launch.mp4), built with the open-source [/brag](https://github.com/latent-spaces/brag) skill and HyperFrames from the same result files. Music: Sascha Ende, [ende.app](https://ende.app) (CC BY 4.0).
+
 Most teams find out a voice agent is going wrong the slow way: someone listens
 to calls. That does not scale past a few a day, and it misses the failures that
 sound fine. A confident agent that promises a refund your policy does not
