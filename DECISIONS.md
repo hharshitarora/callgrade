@@ -93,3 +93,12 @@ committed files drift from the generator.
 The callgrade format is deliberately plain: a list of turns with a speaker, the
 text and optional times. Anyone can write a converter for a platform that is not
 supported yet without reading this codebase.
+
+## The demo page shows nothing typed in by hand
+
+Every transcript, score, reason, rate and terminal line on the demo page comes
+from `examples/` and `results/` through `scripts/make_site.py`, and a test
+fails if `site/data.json` drifts from those files. The video is recorded from
+the page itself. A demo that is allowed to say anything is worth nothing as
+evidence, and this one is also the tool's own output, so it cannot be prettier
+than the tool.

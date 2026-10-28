@@ -7,99 +7,214 @@
 <meta name="description" content="Grade your voice agent's calls from any platform, and measure whether the grade can be trusted. Open source.">
 <style>
 :root {
-  --bg: #faf9f6; --fg: #1d1c1a; --muted: #6b6762; --line: #e4e1dc; --card: #ffffff;
-  --accent: #b5431c; --good: #2f7d4a; --bad: #b3261e; --warn: #a66a00; --mark: #fff1c9;
-  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --bg: #f6f4ef; --fg: #17161a; --muted: #6a665f; --line: #dedad2; --card: #fffdf9; --soft: #efece5;
+  --accent: #c2410c; --accent-soft: #fde8dc; --good: #1f7a44; --good-soft: #dcf2e3; --bad: #b3261e; --bad-soft: #fadcd9;
+  --warn: #9a6400; --warn-soft: #fbedc8; --caller: #5b6477; --mark: #fff1c9; --ink: #17161a;
+  --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
   --sans: -apple-system, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #15141a; --fg: #ece9e4; --muted: #9b968f; --line: #2b2a31; --card: #1d1c23;
-  --accent: #f08a5d; --good: #6cc48a; --bad: #ef6b63; --warn: #e2b14a; --mark: #3b3420;
+  --bg: #121216; --fg: #ebe8e2; --muted: #9a958d; --line: #2a2930; --card: #1a1a20; --soft: #202027;
+  --accent: #f28b5c; --accent-soft: #3a2218; --good: #6cc48a; --good-soft: #17301f; --bad: #ef6b63; --bad-soft: #3a1c1a;
+  --warn: #e2b14a; --warn-soft: #372b12; --caller: #a9b1c3; --mark: #3b3420; --ink: #ebe8e2;
 }}
 :root[data-theme="dark"] {
-  --bg: #15141a; --fg: #ece9e4; --muted: #9b968f; --line: #2b2a31; --card: #1d1c23;
-  --accent: #f08a5d; --good: #6cc48a; --bad: #ef6b63; --warn: #e2b14a; --mark: #3b3420;
+  --bg: #121216; --fg: #ebe8e2; --muted: #9a958d; --line: #2a2930; --card: #1a1a20; --soft: #202027;
+  --accent: #f28b5c; --accent-soft: #3a2218; --good: #6cc48a; --good-soft: #17301f; --bad: #ef6b63; --bad-soft: #3a1c1a;
+  --warn: #e2b14a; --warn-soft: #372b12; --caller: #a9b1c3; --mark: #3b3420; --ink: #ebe8e2;
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.55 var(--sans); }
-main { max-width: 880px; margin: 0 auto; padding: 0 16px 80px; }
-h1 { font-size: 2.6rem; margin: 64px 0 8px; letter-spacing: -0.02em; }
-h2 { font-size: 1.5rem; margin: 64px 0 12px; letter-spacing: -0.01em; }
-p.lede { font-size: 1.25rem; color: var(--muted); margin: 0 0 20px; max-width: 640px; }
-a { color: var(--accent); }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
+main { max-width: 960px; margin: 0 auto; padding: 0 16px 96px; }
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+code, pre, .mono { font-family: var(--mono); font-size: 0.9em; }
+h2 { font-size: 1.7rem; line-height: 1.2; margin: 88px 0 10px; letter-spacing: -0.015em; }
+h2 + p { margin-top: 0; max-width: 680px; }
+.sub { color: var(--muted); }
+.eyebrow { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+
+/* hero */
+.hero { padding-top: 72px; }
+.hero .eyebrow { margin-top: 0; }
+h1 { font-size: clamp(2.3rem, 6vw, 3.6rem); line-height: 1.04; letter-spacing: -0.03em; margin: 0 0 16px; max-width: 760px; }
+h1 em { font-style: normal; color: var(--accent); }
+.lede { font-size: 1.2rem; color: var(--muted); max-width: 620px; margin: 0 0 24px; }
 .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-.btn { display: inline-block; padding: 9px 14px; border: 1px solid var(--line); border-radius: 8px; color: var(--fg); text-decoration: none; background: var(--card); }
-.btn.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
-code, pre { font-family: var(--mono); font-size: 0.92em; }
-pre { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; overflow-x: auto; }
-.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
-.tab { padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--fg); cursor: pointer; font: inherit; font-size: 0.95rem; }
-.tab[aria-selected="true"] { border-color: var(--accent); color: var(--accent); }
-.stage { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media (max-width: 700px) { .stage { grid-template-columns: 1fr; } }
-.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
-.takeaway { color: var(--muted); margin: 0 0 12px; }
-.turn { display: grid; grid-template-columns: 2.2rem 1fr; gap: 8px; padding: 6px 8px; border-radius: 6px; opacity: 0; transform: translateY(4px); transition: opacity .25s, transform .25s; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 1px solid var(--line); border-radius: 10px; color: var(--fg); text-decoration: none; background: var(--card); font-weight: 500; }
+.btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.btn:hover { border-color: var(--accent); }
+.install { margin-top: 14px; display: inline-flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; max-width: 100%; overflow-x: auto; white-space: nowrap; }
+.install span { color: var(--muted); }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 40px 0 0; }
+@media (max-width: 700px) { .stats { grid-template-columns: 1fr; } }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 18px 16px; }
+.stat .big { font-size: 2.2rem; font-weight: 650; letter-spacing: -0.03em; line-height: 1; display: flex; gap: 0; }
+.stat .big .d { display: inline-block; opacity: 0; transform: translateY(14px); filter: blur(4px); transition: opacity .5s, transform .5s cubic-bezier(.2,.8,.2,1), filter .5s; }
+.stat.on .big .d { opacity: 1; transform: none; filter: none; }
+.stat .big .d:nth-child(1) { transition-delay: .05s } .stat .big .d:nth-child(2) { transition-delay: .12s } .stat .big .d:nth-child(3) { transition-delay: .19s } .stat .big .d:nth-child(4) { transition-delay: .26s } .stat .big .d:nth-child(5) { transition-delay: .33s } .stat .big .d:nth-child(6) { transition-delay: .40s } .stat .big .d:nth-child(7) { transition-delay: .47s }
+.stat .what { margin: 8px 0 2px; font-weight: 500; }
+.stat .ci { color: var(--muted); font-size: 0.9rem; }
+
+/* tabs */
+.tabs { position: relative; display: inline-flex; gap: 2px; background: var(--soft); border: 1px solid var(--line); border-radius: 12px; padding: 3px; margin: 18px 0 10px; max-width: 100%; overflow-x: auto; }
+.tab { position: relative; z-index: 1; padding: 8px 14px; border: 0; border-radius: 9px; background: transparent; color: var(--muted); cursor: pointer; font: inherit; font-size: 0.95rem; white-space: nowrap; }
+.tab[aria-selected="true"] { color: var(--fg); }
+.tabs .pill { position: absolute; top: 3px; left: 0; height: calc(100% - 6px); background: var(--card); border: 1px solid var(--line); border-radius: 9px; transition: left .3s cubic-bezier(.2,.8,.2,1), width .3s cubic-bezier(.2,.8,.2,1); z-index: 0; }
+.takeaway { color: var(--muted); margin: 0 0 14px; max-width: 720px; }
+
+/* stage */
+.stage { display: grid; grid-template-columns: 1.1fr 1fr; gap: 14px; align-items: start; }
+@media (max-width: 760px) { .stage { grid-template-columns: 1fr; } }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+.card h3 { margin: 0 0 10px; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; display: flex; justify-content: space-between; align-items: baseline; }
+.card h3 small { font-family: var(--mono); text-transform: none; letter-spacing: 0; font-weight: 400; }
+.timeline { width: 100%; height: 56px; display: block; margin: 0 0 10px; }
+.timeline .bar { opacity: .18; transition: opacity .3s; }
+.timeline .bar.on { opacity: 1; }
+.timeline .bar.caller { fill: var(--caller); } .timeline .bar.agent { fill: var(--accent); }
+.timeline .overlap { fill: var(--bad); opacity: 0; transition: opacity .3s; } .timeline .overlap.on { opacity: .95; }
+.timeline .gapbad { fill: var(--bad); opacity: 0; transition: opacity .3s; } .timeline .gapbad.on { opacity: .18; }
+.timeline .lane { fill: none; stroke: var(--line); stroke-dasharray: 2 3; }
+.timeline .label { font: 10px var(--mono); fill: var(--muted); }
+.timeline .head { stroke: var(--fg); stroke-width: 1.5; opacity: 0; transition: transform .35s linear, opacity .3s; }
+.timeline .head.on { opacity: .8; }
+.tlkey { margin: -4px 0 10px; font-size: 0.78rem; color: var(--muted); font-family: var(--mono); }
+.tlkey i { display: inline-block; width: 14px; height: 8px; border-radius: 2px; margin: 0 4px 0 8px; vertical-align: 0; }
+.tlkey i.caller { background: var(--caller); } .tlkey i.agent { background: var(--accent); } .tlkey i.bad { background: var(--bad); }
+.transcript { max-height: 420px; overflow-y: auto; padding-right: 4px; }
+.turn { display: grid; grid-template-columns: 2.6rem 1fr; gap: 8px; padding: 7px 8px; border-radius: 8px; opacity: 0; transform: translateY(5px); transition: opacity .3s, transform .3s; }
 .turn.on { opacity: 1; transform: none; }
 .turn.flag { background: var(--mark); }
-.turn .who { color: var(--muted); font-family: var(--mono); font-size: 0.8rem; padding-top: 4px; }
+.turn .who { color: var(--muted); font-family: var(--mono); font-size: 0.75rem; padding-top: 5px; }
 .turn.agent .who { color: var(--accent); }
-.gap { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); padding: 2px 8px 2px 3.1rem; opacity: 0; transition: opacity .25s; }
+.turn.caller .who { color: var(--caller); }
+.gap { font-family: var(--mono); font-size: 0.76rem; color: var(--muted); padding: 1px 8px 1px 3.4rem; opacity: 0; transition: opacity .25s; }
 .gap.on { opacity: 1; }
-.gap.bad { color: var(--bad); }
-.verdict { display: flex; flex-direction: column; gap: 10px; }
-.check, .dim { opacity: 0; transition: opacity .3s; }
-.check.on, .dim.on { opacity: 1; }
-.check { display: flex; gap: 10px; align-items: baseline; font-size: 0.95rem; }
-.pill { font-family: var(--mono); font-size: 0.75rem; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); white-space: nowrap; }
-.pill.pass { color: var(--good); border-color: var(--good); }
-.pill.fail { color: var(--bad); border-color: var(--bad); }
-.dim { border-top: 1px solid var(--line); padding-top: 10px; }
-.dim b { display: inline-block; min-width: 2rem; }
-.dim .reason { color: var(--muted); font-size: 0.95rem; margin: 4px 0 0; }
-.score0 b { color: var(--bad); } .score1 b { color: var(--warn); } .score2 b { color: var(--good); }
-.total { font-size: 1.3rem; margin-top: 4px; opacity: 0; transition: opacity .3s; }
-.total.on { opacity: 1; }
-.total small { color: var(--muted); font-size: 0.9rem; }
+.gap.bad { color: var(--bad); font-weight: 600; }
 .ctl { display: flex; gap: 8px; margin: 12px 0 0; }
-.ctl button { font: inherit; font-size: 0.9rem; padding: 6px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--fg); cursor: pointer; }
-.tablewrap { overflow-x: auto; }
-table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
-th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
-th { color: var(--muted); font-weight: 600; }
-td.num { font-family: var(--mono); white-space: nowrap; }
-.miss { border-left: 3px solid var(--accent); padding-left: 14px; margin: 18px 0; }
+.ctl button { font: inherit; font-size: 0.88rem; padding: 6px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--fg); cursor: pointer; }
+.ctl button:hover { border-color: var(--accent); }
+
+.verdict { display: flex; flex-direction: column; gap: 8px; }
+.group { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 6px 0 2px; }
+.check, .dim { opacity: 0; transform: translateY(4px); transition: opacity .3s, transform .3s; }
+.check.on, .dim.on { opacity: 1; transform: none; }
+.check { display: flex; gap: 10px; align-items: baseline; font-size: 0.95rem; }
+.pill { font-family: var(--mono); font-size: 0.72rem; padding: 2px 8px; border-radius: 999px; white-space: nowrap; font-weight: 600; }
+.pill.pass { color: var(--good); background: var(--good-soft); }
+.pill.fail { color: var(--bad); background: var(--bad-soft); }
+.pill.unmeasured { color: var(--muted); background: var(--soft); }
+.status { font-size: 0.9rem; color: var(--muted); padding: 6px 0; opacity: 0; transition: opacity .3s; position: relative; }
+.status.on { opacity: 1; }
+.status.live { background: linear-gradient(90deg, var(--muted) 0%, var(--fg) 50%, var(--muted) 100%); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmer 1.4s linear infinite; }
+@keyframes shimmer { from { background-position: 200% 0 } to { background-position: -200% 0 } }
+.dim { border-top: 1px solid var(--line); padding-top: 9px; display: grid; grid-template-columns: 2rem 1fr; gap: 8px; }
+.dim .score { font-weight: 700; font-size: 1.1rem; line-height: 1.3; }
+.dim .reason { color: var(--muted); font-size: 0.92rem; margin: 2px 0 0; }
+.dim .turns { color: var(--muted); font-family: var(--mono); font-size: 0.78rem; margin-left: 6px; }
+.score0 .score { color: var(--bad); } .score1 .score { color: var(--warn); } .score2 .score { color: var(--good); }
+.total { border-top: 2px solid var(--fg); margin-top: 4px; padding-top: 10px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; opacity: 0; transition: opacity .3s; }
+.total.on { opacity: 1; }
+.total .big { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.03em; display: flex; }
+.total .big .d { display: inline-block; opacity: 0; transform: translateY(12px); transition: opacity .4s, transform .4s cubic-bezier(.2,.8,.2,1); }
+.total.on .big .d { opacity: 1; transform: none; }
+.total .band { font-weight: 600; }
+.total .flags { color: var(--muted); font-family: var(--mono); font-size: 0.8rem; width: 100%; }
+.badge { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 0.85rem; font-weight: 600; }
+.badge.good { color: var(--good); background: var(--good-soft); } .badge.bad { color: var(--bad); background: var(--bad-soft); } .badge.warn { color: var(--warn); background: var(--warn-soft); }
+
+/* grid */
+.gridhead { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin: 14px 0 10px; }
+.legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.85rem; color: var(--muted); }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 5px; }
+.sq.caught, .legend i.caught, .sq.clean, .legend i.clean { background: var(--good); }
+.sq.clean, .legend i.clean { opacity: .45; }
+.sq.marked, .legend i.marked { background: var(--warn); }
+.sq.missed, .legend i.missed, .sq.alarm, .legend i.alarm { background: var(--bad); }
+.gridwrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--card); padding: 10px 12px; }
+table.grid { border-collapse: separate; border-spacing: 0; font-size: 0.85rem; }
+table.grid th { text-align: left; font-weight: 500; color: var(--muted); padding: 4px 6px; font-family: var(--mono); font-size: 0.78rem; white-space: nowrap; }
+table.grid th.j { text-align: center; border-bottom: 1px solid var(--line); }
+table.grid td { padding: 3px 6px; white-space: nowrap; }
+table.grid td.id { font-family: var(--mono); font-size: 0.8rem; }
+table.grid td.id small { color: var(--muted); margin-left: 6px; }
+table.grid tr.sep td { padding-top: 10px; }
+.sq { display: inline-block; width: 18px; height: 18px; border-radius: 4px; margin: 0 2px; cursor: default; }
+td.gapcol { width: 14px; }
+
+/* tables */
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+table.plain { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+table.plain th, table.plain td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.plain tr:last-child td { border-bottom: 0; }
+table.plain th { color: var(--muted); font-weight: 600; font-size: 0.85rem; }
+table.plain td.num { font-family: var(--mono); white-space: nowrap; }
+table.plain td:first-child { min-width: 240px; }
+@media (max-width: 700px) { table.plain td:first-child { min-width: 160px; } }
+table.plain td.lo { color: var(--warn); font-weight: 600; }
+
+/* misses */
+.miss { border-left: 3px solid var(--accent); padding-left: 16px; margin: 22px 0; }
 .quote { color: var(--muted); font-style: italic; }
-.mismatch { background: var(--mark); padding: 2px 4px; border-radius: 4px; }
-footer { color: var(--muted); font-size: 0.9rem; margin-top: 64px; border-top: 1px solid var(--line); padding-top: 16px; }
-@media (prefers-reduced-motion: reduce) { .turn, .gap, .check, .dim, .total { transition: none; } }
+.mismatch { background: var(--mark); padding: 2px 6px; border-radius: 4px; font-style: normal; font-weight: 600; font-size: 0.85rem; }
+
+/* terminal */
+.term { background: #121216; color: #d6d3cc; border-radius: 14px; padding: 16px 18px; overflow-x: auto; font-family: var(--mono); font-size: 0.82rem; line-height: 1.5; border: 1px solid #2a2930; }
+.term .prompt { color: #6cc48a; }
+.term .cmd { color: #fff; }
+.term .flag { color: #ef6b63; }
+.term .ok { color: #6cc48a; }
+.term .c { color: #8a867f; }
+footer { color: var(--muted); font-size: 0.9rem; margin-top: 88px; border-top: 1px solid var(--line); padding-top: 16px; }
+@media (prefers-reduced-motion: reduce) { .turn, .gap, .check, .dim, .total, .stat .big .d, .total .big .d, .timeline .bar, .timeline .head, .tabs .pill { transition: none; } .status.live { animation: none; } }
 </style>
 </head>
 <body>
 <main>
-<h1>callgrade</h1>
-<p class="lede">Grade your voice agent's calls, from any platform, and know whether to trust the grade.</p>
+<section class="hero">
+<p class="eyebrow">open source · python · MIT</p>
+<h1>Grade your voice agent's calls. <em>Then grade the grader.</em></h1>
+<p class="lede">callgrade reads a call export from any platform, times every reply with plain code, has an LLM score it against a rubric, and measures how far that score can be trusted.</p>
 <div class="row">
   <a class="btn primary" href="https://github.com/hharshitarora/callgrade">GitHub</a>
   <a class="btn" href="https://github.com/hharshitarora/callgrade#quickstart">Quickstart</a>
-  <code>pip install "callgrade[anthropic] @ git+https://github.com/hharshitarora/callgrade"</code>
+  <a class="btn" href="#grid">Every run</a>
 </div>
+<div class="install mono"><span>$</span>pip install "callgrade[anthropic] @ git+https://github.com/hharshitarora/callgrade"</div>
+<div class="stats" id="stats"></div>
+</section>
 
 <h2>Watch it grade</h2>
-<p>Three calls from the held-out test set, with the verdict the default judge gave each one. Timing comes from the timestamps in plain code. The verdict comes from an LLM reading a rubric, and it has to say which turn before it gives a number.</p>
-<div class="tabs" role="tablist" id="tabs"></div>
+<p>Three calls from the held-out test set, with the verdict the default judge gave each one. The timing comes from timestamps in plain code. The verdict comes from an LLM reading a rubric, and it has to name the turn before it gives a number.</p>
+<div class="tabs" role="tablist" id="tabs"><div class="pill"></div></div>
 <p class="takeaway" id="takeaway"></p>
 <div class="stage">
-  <div class="card"><div id="transcript"></div><div class="ctl"><button id="replay">Replay</button><button id="skip">Show all</button></div></div>
+  <div class="card">
+    <h3>Call <small id="callid"></small></h3>
+    <svg class="timeline" id="timeline" viewBox="0 0 1000 64" preserveAspectRatio="none" aria-hidden="true"></svg>
+    <p class="tlkey"><i class="caller"></i>caller <i class="agent"></i>agent <i class="bad"></i>overlap, or silence over 3s</p>
+    <div class="transcript" id="transcript"></div>
+    <div class="ctl"><button id="replay">Replay</button><button id="skip">Show all</button></div>
+  </div>
   <div class="card verdict" id="verdict"></div>
 </div>
 
+<h2 id="grid">Every call, every run</h2>
+<p>Two judges graded every call three times. One square per run. A planted failure counts as caught only at the minimum score, the same bar that makes a clean call a false alarm, so a judge that merely docks a point for the planted failure does not get credit.</p>
+<div class="gridhead">
+  <div class="tabs" id="gridtabs"><div class="pill"></div><button class="tab" data-set="holdout" aria-selected="true">Held-out set</button><button class="tab" data-set="dev" aria-selected="false">Development set</button></div>
+  <div class="legend"><span><i class="caught"></i>caught</span><span><i class="marked"></i>marked down, not caught</span><span><i class="missed"></i>missed or false alarm</span><span><i class="clean"></i>clean call, no alarm</span></div>
+</div>
+<div class="gridwrap"><table class="grid" id="gridtable"></table></div>
+<p class="sub" id="gridnote"></p>
+
 <h2>How far to trust it</h2>
-<p>A judge is a model, so callgrade measures the judge. Each judge graded each set three times. A planted failure counts as caught only if every run caught it, and every rate carries a 95% interval, because 9 of 9 on a small set is a range, not a certainty.</p>
-<div class="tablewrap"><table id="numbers"></table></div>
-<p>How far the two judges agree with each other, as quadratic weighted kappa (1 is perfect, 0 is chance, 0.6 is a common bar for a judge that gates a release):</p>
-<div class="tablewrap"><table id="kappa"></table></div>
-<p>The held-out set was written after the rubrics were tuned on the development set, and committed before any judge saw it. No person has scored either set yet; that check exists in the tool and has not been run.</p>
+<p>Every rate carries a 95% interval, because 9 of 9 on a small set is a range, not a certainty. The held-out set was written after the rubrics were tuned on the development set, and committed before any judge saw it.</p>
+<div class="tablewrap"><table class="plain" id="numbers"></table></div>
+<p>How far the two judges agree with each other, as quadratic weighted kappa. 1 is perfect, 0 is chance, and 0.6 is a common bar for a judge that gates a release.</p>
+<div class="tablewrap"><table class="plain" id="kappa"></table></div>
+<p class="sub">No person has scored either set yet. That check exists in the tool (<code>callgrade agree --human</code>) and has not been run.</p>
 
 <h2>What it got wrong, so far</h2>
 <div class="miss">
@@ -113,24 +228,63 @@ footer { color: var(--muted); font-size: 0.9rem; margin-top: 64px; border-top: 1
   <p>In the run that scored a 1, the written reason describes a 0. The reason and the score disagree, which no rubric can fix. It is the argument for reading the reasons, not only the totals.</p>
 </div>
 
+<h2>Run it</h2>
+<p>What the command printed for the held-out set. The HTML report it links to is <a href="https://github.com/hharshitarora/callgrade/blob/main/results/holdout/claude-haiku-5-5/run-1/report.html">in the repo</a>.</p>
+<pre class="term" id="term"></pre>
+
 <h2>Where it came from</h2>
 <p>The first version was a sheet I filled in by hand to score test calls for a voice agent that qualified rental leads. The sheet became an LLM judge on four dimensions, and that judge is what moved the agent from "it feels off" to "it misreads intent when the caller says they need to think about it". This is the open version, with platform adapters, measured timing checks, and the agreement measurements the original never had.</p>
 <p>Design choices are in <a href="https://github.com/hharshitarora/callgrade/blob/main/DECISIONS.md">DECISIONS.md</a>. Every failure the test sets cover is in the <a href="https://github.com/hharshitarora/callgrade/blob/main/docs/failure-catalog.md">failure catalog</a>.</p>
 
-<footer>Every transcript, score, reason and rate on this page is read from the files in the repo at commit <code id="commit"></code>. MIT licensed. Built by <a href="https://github.com/hharshitarora">Harshit Arora</a>.</footer>
+<footer>Every transcript, score, reason and rate on this page is read from the files in the repo at commit <code id="commit"></code>, and a test fails if they drift. MIT licensed. Built by <a href="https://github.com/hharshitarora">Harshit Arora</a>.</footer>
 </main>
 <script>
 const $ = (s) => document.querySelector(s);
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const auto = new URLSearchParams(location.search).has("auto");
 let token = 0;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({"&": "&amp;", "<": "&lt;", ">": "&gt;"}[c]));
+const digits = (s) => String(s).split("").map((c) => `<span class="d">${c === " " ? "&nbsp;" : esc(c)}</span>`).join("");
 
-function esc(s) { return s.replace(/[&<>]/g, (c) => ({"&": "&amp;", "<": "&lt;", ">": "&gt;"}[c])); }
+function movePill(tabs, btn) {
+  const pill = tabs.querySelector(".pill");
+  pill.style.left = btn.offsetLeft + "px";
+  pill.style.width = btn.offsetWidth + "px";
+  [...tabs.querySelectorAll(".tab")].forEach((t) => t.setAttribute("aria-selected", t === btn));
+}
+
+function timeline(call) {
+  const svg = $("#timeline");
+  const dur = Math.max(...call.turns.map((t) => t.end));
+  const x = (s) => (s / dur) * 1000;
+  const lane = { caller: 14, agent: 38 };
+  let h = `<line class="lane" x1="0" y1="${lane.caller + 7}" x2="1000" y2="${lane.caller + 7}"/><line class="lane" x1="0" y1="${lane.agent + 7}" x2="1000" y2="${lane.agent + 7}"/>`;
+  const items = [];
+  call.turns.forEach((t, i) => {
+    if (i > 0) {
+      const prev = call.turns[i - 1];
+      const gap = t.start - prev.end;
+      if (gap > 3) h += `<rect class="gapbad" data-i="${i}" x="${x(prev.end)}" y="6" width="${x(gap)}" height="46"/>`;
+    }
+    h += `<rect class="bar ${t.speaker}" data-i="${i}" x="${x(t.start)}" y="${lane[t.speaker]}" width="${Math.max(2, x(t.end - t.start))}" height="14" rx="2"/>`;
+    if (i > 0 && t.speaker === "agent") {
+      const prev = call.turns[i - 1];
+      if (prev.speaker === "caller" && t.start < prev.end - 0.05) h += `<rect class="overlap" data-i="${i}" x="${x(t.start)}" y="${lane.caller}" width="${x(prev.end - t.start)}" height="38" rx="2"/>`;
+    }
+  });
+  h += `<line class="head" x1="0" y1="4" x2="0" y2="60"/>`;
+  svg.innerHTML = h;
+  return { x, svg };
+}
 
 function renderCall(call) {
   $("#takeaway").textContent = call.takeaway;
-  const flagged = new Set(call.dimensions.flatMap((d) => d.evidence_turns || []).filter((t) => call.dimensions.some((d) => d.score < 2 && (d.evidence_turns || []).includes(t))));
+  $("#callid").textContent = call.id;
+  const flagged = new Set();
+  call.dimensions.forEach((d) => { if (d.score < 2) (d.evidence_turns || []).forEach((t) => flagged.add(t)); });
   call.checks.forEach((c) => (c.turns || []).forEach((t) => flagged.add(t)));
+  const tl = timeline(call);
   const tr = $("#transcript");
   tr.innerHTML = "";
   const nodes = [];
@@ -139,46 +293,99 @@ function renderCall(call) {
       const gap = +(t.start - call.turns[i - 1].end).toFixed(1);
       const g = document.createElement("div");
       g.className = "gap" + (gap > 3 || gap < -0.5 ? " bad" : "");
-      g.textContent = gap < 0 ? `agent starts ${Math.abs(gap)}s before the caller finishes` : `${gap}s`;
-      if (Math.abs(gap) <= 1 && gap >= 0) g.textContent = "";
-      tr.appendChild(g); nodes.push({el: g, wait: 0});
+      g.textContent = gap < -0.05 ? `agent starts ${Math.abs(gap)}s before the caller finishes` : gap > 1 ? `${gap}s of silence` : "";
+      tr.appendChild(g); nodes.push({ els: [g], wait: 0 });
     }
     const d = document.createElement("div");
     d.className = `turn ${t.speaker}` + (flagged.has(i + 1) ? " flag" : "");
-    d.innerHTML = `<span class="who">${i + 1}</span><span>${esc(t.text)}</span>`;
-    tr.appendChild(d); nodes.push({el: d, wait: Math.min(1800, 250 + (t.end - t.start) * 180)});
+    d.innerHTML = `<span class="who">${t.speaker === "agent" ? "agent" : "caller"}<br>${i + 1}</span><span>${esc(t.text)}</span>`;
+    tr.appendChild(d);
+    const els = [d, ...tl.svg.querySelectorAll(`[data-i="${i}"]`)];
+    nodes.push({ els, wait: Math.min(1700, 250 + (t.end - t.start) * 170), headX: tl.x(t.end), scroll: d });
   });
   const v = $("#verdict");
-  v.innerHTML = "";
+  v.innerHTML = `<div class="group">Stopwatch, no model</div>`;
   const vnodes = [];
   call.checks.forEach((c) => {
     const d = document.createElement("div");
     d.className = "check";
-    d.innerHTML = `<span class="pill ${c.status}">${c.status}</span><span><b>${esc(c.name)}</b> <span style="color:var(--muted)">${esc(c.detail)}</span></span>`;
-    v.appendChild(d); vnodes.push({el: d, wait: 500});
+    d.innerHTML = `<span class="pill ${c.status}">${c.status}</span><span><b>${esc(c.name)}</b> <span class="sub">${esc(c.detail)}</span></span>`;
+    v.appendChild(d); vnodes.push({ els: [d], wait: 350 });
   });
+  const g2 = document.createElement("div"); g2.className = "group"; g2.textContent = "Judge, reading the rubric"; v.appendChild(g2);
+  const st = document.createElement("div"); st.className = "status"; st.textContent = `reading ${call.turns.length} turns against 5 dimensions`; v.appendChild(st);
+  vnodes.push({ els: [st], wait: 1400, live: st });
   call.dimensions.forEach((d) => {
     const el = document.createElement("div");
     el.className = `dim score${d.score}`;
-    const turns = (d.evidence_turns || []).length ? ` <span style="color:var(--muted)">turns ${d.evidence_turns.join(", ")}</span>` : "";
-    el.innerHTML = `<b>${d.score}</b> ${esc(d.name)}${turns}<p class="reason">${esc(d.reason)}</p>`;
-    v.appendChild(el); vnodes.push({el, wait: 1300});
+    const turns = (d.evidence_turns || []).length ? `<span class="turns">turns ${d.evidence_turns.join(", ")}</span>` : "";
+    el.innerHTML = `<span class="score">${d.score}</span><div><b>${esc(d.name)}</b>${turns}<p class="reason">${esc(d.reason)}</p></div>`;
+    v.appendChild(el); vnodes.push({ els: [el], wait: 1300 });
   });
   const tot = document.createElement("div");
   tot.className = "total";
-  tot.innerHTML = `<strong>${call.total} / ${call.max_total}</strong> ${esc(call.band)} <small>${call.flags.length ? esc(call.flags.join(", ")) : "no flags"}</small>`;
-  v.appendChild(tot); vnodes.push({el: tot, wait: 0});
-  return nodes.concat(vnodes);
+  const bandClass = call.total >= 9 ? "good" : call.total >= 6 ? "warn" : "bad";
+  tot.innerHTML = `<span class="big">${digits(call.total + " / " + call.max_total)}</span><span class="badge ${bandClass}">${esc(call.band)}</span><span class="flags">${call.flags.length ? esc(call.flags.join("  ")) : "no flags"}</span>`;
+  v.appendChild(tot); vnodes.push({ els: [tot], wait: 0 });
+  return { nodes, vnodes, head: tl.svg.querySelector(".head") };
 }
 
 async function play(call, instant) {
   const my = ++token;
-  const nodes = renderCall(call);
+  const { nodes, vnodes, head } = renderCall(call);
+  const fast = instant || reduced;
+  head.classList.add("on");
   for (const n of nodes) {
     if (my !== token) return;
-    n.el.classList.add("on");
-    if (!instant && !reduced && n.wait) await sleep(n.wait);
+    n.els.forEach((e) => e.classList.add("on"));
+    if (n.headX != null) head.style.transform = `translateX(${n.headX}px)`;
+    if (n.scroll && !fast) n.scroll.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    if (!fast && n.wait) await sleep(n.wait);
   }
+  for (const n of vnodes) {
+    if (my !== token) return;
+    n.els.forEach((e) => e.classList.add("on"));
+    if (auto) n.els[0].scrollIntoView({ block: "nearest", behavior: "smooth" });
+    if (n.live && !fast) { n.live.classList.add("live"); await sleep(n.wait); n.live.classList.remove("live"); n.live.textContent = "read " + n.live.textContent.slice(8); continue; }
+    if (!fast && n.wait) await sleep(n.wait);
+  }
+  if (my !== token) return;
+  $("#verdict .total").classList.add("on");
+}
+
+function stats(numbers) {
+  const h = numbers.holdout["claude-haiku-5-5"];
+  const pct = (x) => Math.round(x * 100) + "%";
+  const tiles = [
+    [h.caught_every_run, "planted failures caught, every run", `held-out set, default judge, 95% interval ${pct(h.caught_ci[0])} to ${pct(h.caught_ci[1])}`],
+    [h.false_alarms_per_run[0], "clean calls with a false alarm", "in each of three runs, both judges"],
+    ["2 × 3", "judges, runs each", "Claude and GPT, graded three times, with the agreement between them"],
+  ];
+  $("#stats").innerHTML = tiles.map(([n, what, ci]) => `<div class="stat"><div class="big">${digits(n)}</div><div class="what">${what}</div><div class="ci">${ci}</div></div>`).join("");
+  requestAnimationFrame(() => setTimeout(() => $("#stats").querySelectorAll(".stat").forEach((s, i) => setTimeout(() => s.classList.add("on"), i * 150)), 200));
+}
+
+function gridTable(set, data) {
+  const g = data.grid[set];
+  const short = { "claude-haiku-5-5": "claude-haiku-5-5", "gpt-5.4-mini": "gpt-5.4-mini" };
+  let h = `<tr><th></th>${g.judges.map((j) => `<th class="j" colspan="3">${short[j]}</th><th class="gapcol"></th>`).join("")}</tr>`;
+  h += `<tr><th>call</th>${g.judges.map(() => `<th>run 1</th><th>run 2</th><th>run 3</th><th class="gapcol"></th>`).join("")}</tr>`;
+  let seenClean = false;
+  g.calls.forEach((c) => {
+    const clean = !c.planted.length;
+    const sep = clean && !seenClean; if (clean) seenClean = true;
+    const what = clean ? "clean" : c.planted.map((p) => p.replace("dim:", "").replace("check:", "")).join(", ");
+    h += `<tr class="${sep ? "sep" : ""}"><td class="id">${c.id}<small>${what}</small></td>`;
+    g.judges.forEach((j) => {
+      c.cells[j].forEach((cell, i) => { h += `<td><span class="sq ${cell.status}" title="${esc(j)} run ${i + 1}: ${esc(cell.status)}, ${esc(cell.note)}"></span></td>`; });
+      h += `<td class="gapcol"></td>`;
+    });
+    h += "</tr>";
+  });
+  $("#gridtable").innerHTML = h;
+  const cells = g.calls.flatMap((c) => g.judges.flatMap((j) => c.cells[j]));
+  const n = (s) => cells.filter((c) => c.status === s).length;
+  $("#gridnote").textContent = `${g.calls.length} calls × ${g.judges.length} judges × 3 runs = ${cells.length} gradings: ${n("caught")} caught, ${n("marked")} marked down without being caught, ${n("missed")} missed, ${n("alarm")} false alarms, ${n("clean")} clean. Hover a square for the score.`;
 }
 
 function numbersTable(numbers) {
@@ -189,7 +396,7 @@ function numbersTable(numbers) {
   const row = (label, f) => "<tr><td>" + label + "</td>" + sets.map(([s]) => judges.map((j) => `<td class="num">${f(numbers[s][j])}</td>`).join("")).join("") + "</tr>";
   h += row("Planted failures caught in all 3 runs", (n) => n.caught_every_run);
   h += row("95% interval", (n) => `${pct(n.caught_ci[0])} to ${pct(n.caught_ci[1])}`);
-  h += row("Clean calls with a false alarm, per run", (n) => n.false_alarms_per_run.join(", "));
+  h += row("Clean calls with a false alarm", (n) => new Set(n.false_alarms_per_run).size === 1 ? `${n.false_alarms_per_run[0]}, every run` : n.false_alarms_per_run.join(", "));
   h += row("Scores identical across all 3 runs", (n) => pct(n.identical));
   $("#numbers").innerHTML = h;
 }
@@ -197,30 +404,66 @@ function numbersTable(numbers) {
 function kappaTable(kappa, names) {
   const dims = Object.keys(names);
   $("#kappa").innerHTML = "<tr><th></th>" + dims.map((d) => `<th>${names[d]}</th>`).join("") + "</tr>" +
-    [["holdout", "Held-out set"], ["dev", "Development set"]].map(([s, label]) => `<tr><td>${label}</td>` + dims.map((d) => `<td class="num">${kappa[s][d].toFixed(2)}</td>`).join("") + "</tr>").join("");
+    [["holdout", "Held-out set"], ["dev", "Development set"]].map(([s, label]) => `<tr><td>${label}</td>` + dims.map((d) => `<td class="num${kappa[s][d] < 0.6 ? " lo" : ""}">${kappa[s][d].toFixed(2)}</td>`).join("") + "</tr>").join("");
 }
 
-fetch("data.json").then((r) => r.json()).then((data) => {
+function terminal(text) {
+  const lines = text.split("\n").map((l) => {
+    if (!l.trim()) return "";
+    if (l.includes(" calls, mean ")) return `<span class="c">${esc(l)}</span>`;
+    const m = l.match(/^(\S+\s+)(\S+\/\S+ [a-z ]+?)(\s{2,})(.*)$/);
+    if (!m) return esc(l);
+    const flags = m[4] === "-" ? m[4] : m[4].split(", ").map((f) => `<span class="flag">${esc(f)}</span>`).join(", ");
+    return `${esc(m[1])}<span class="${m[2].startsWith("10/") ? "ok" : ""}">${esc(m[2])}</span>${m[3]}${flags}`;
+  });
+  $("#term").innerHTML = `<span class="prompt">$</span> <span class="cmd">callgrade grade examples/holdout/calls --judge anthropic --context examples/northgate-context.md</span>\n` + lines.join("\n");
+}
+
+fetch("data.json").then((r) => r.json()).then(async (data) => {
   $("#commit").textContent = data.commit;
+  stats(data.numbers);
   const tabs = $("#tabs");
   data.showcase.forEach((call, i) => {
     const b = document.createElement("button");
-    b.className = "tab"; b.role = "tab"; b.textContent = call.title;
+    b.className = "tab"; b.setAttribute("role", "tab"); b.textContent = call.title;
     b.setAttribute("aria-selected", i === 0);
-    b.onclick = () => { [...tabs.children].forEach((t) => t.setAttribute("aria-selected", t === b)); play(call); };
+    b.onclick = () => { movePill(tabs, b); play(call); };
     tabs.appendChild(b);
   });
-  let current = () => data.showcase[[...tabs.children].findIndex((t) => t.getAttribute("aria-selected") === "true")];
+  const current = () => data.showcase[[...tabs.querySelectorAll(".tab")].findIndex((t) => t.getAttribute("aria-selected") === "true")];
   $("#replay").onclick = () => play(current());
   $("#skip").onclick = () => play(current(), true);
-  play(data.showcase[0]);
+  movePill(tabs, tabs.querySelector(".tab"));
+  const gt = $("#gridtabs");
+  gt.querySelectorAll(".tab").forEach((b) => b.onclick = () => { movePill(gt, b); gridTable(b.dataset.set, data); });
+  movePill(gt, gt.querySelector(".tab"));
+  gridTable("holdout", data);
   numbersTable(data.numbers);
   kappaTable(data.kappa, data.dimension_names);
+  terminal(data.terminal);
   $("#c10").textContent = "“" + data.misses.c10.reason + "”";
   $("#p09").innerHTML = data.misses.p09.map((r) => {
     const mis = r.score > 0;
     return `<p><b>Run ${r.run}, scored ${r.score}${mis ? ' <span class="mismatch">reason says 0</span>' : ""}:</b> <span class="quote">“${esc(r.reason)}”</span></p>`;
   }).join("");
+  addEventListener("resize", () => { movePill(tabs, tabs.querySelector('[aria-selected="true"]')); movePill(gt, gt.querySelector('[aria-selected="true"]')); });
+  if (!auto) { play(data.showcase[0]); return; }
+  // ?auto plays the three calls back to back, then scrolls to the grid. Used to record the demo video.
+  await sleep(2500);
+  for (const [i, call] of data.showcase.entries()) {
+    const b = tabs.querySelectorAll(".tab")[i];
+    b.scrollIntoView({ block: "start", behavior: "smooth" });
+    movePill(tabs, b);
+    const t = token + 1;
+    await play(call);
+    if (token !== t) return;
+    await sleep(2500);
+  }
+  $("#grid").scrollIntoView({ behavior: "smooth" });
+  await sleep(5000);
+  $("#numbers").scrollIntoView({ block: "center", behavior: "smooth" });
+  await sleep(4000);
+  window.demoDone = true;
 });
 </script>
 </body>

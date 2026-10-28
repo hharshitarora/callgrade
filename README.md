@@ -6,6 +6,10 @@
 
 Demo, built from the files in this repo: [hharshitarora.github.io/callgrade](https://hharshitarora.github.io/callgrade/)
 
+[![callgrade grading a held-out call: the stopwatch checks pass, then the judge reads the rubric and scores each dimension with its reason](docs/demo.gif)](https://hharshitarora.github.io/callgrade/)
+
+The page plays three held-out calls, shows every run of both judges on every call, and owns up to the two misses. A 75-second recording of it is at [hharshitarora.github.io/callgrade/demo.mp4](https://hharshitarora.github.io/callgrade/demo.mp4), made by `scripts/record_demo.cjs` from the page itself, so it never drifts from the files.
+
 Most teams find out a voice agent is going wrong the slow way: someone listens
 to calls. That does not scale past a few a day, and it misses the failures that
 sound fine. A confident agent that promises a refund your policy does not

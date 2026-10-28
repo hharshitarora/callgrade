@@ -1,5 +1,5 @@
 {
- "commit": "723cfdf",
+ "commit": "0ada960",
  "showcase": [
   {
    "id": "h-p03-invented-deposit-cap",
@@ -576,6 +576,1219 @@
    }
   }
  },
+ "grid": {
+  "holdout": {
+   "judges": [
+    "claude-haiku-5-5",
+    "gpt-5.4-mini"
+   ],
+   "calls": [
+    {
+     "id": "h-p01-existing-tenant",
+     "planted": [
+      "dim:intent"
+     ],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "caught",
+        "note": "intent 0"
+       },
+       {
+        "status": "caught",
+        "note": "intent 0"
+       },
+       {
+        "status": "caught",
+        "note": "intent 0"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "intent 0"
+       },
+       {
+        "status": "caught",
+        "note": "intent 0"
+       },
+       {
+        "status": "caught",
+        "note": "intent 0"
+       }
+      ]
+     }
+    },
+    {
+     "id": "h-p02-guarantor-dodge",
+     "planted": [
+      "dim:understanding"
+     ],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "caught",
+        "note": "understanding 0"
+       },
+       {
+        "status": "caught",
+        "note": "understanding 0"
+       },
+       {
+        "status": "caught",
+        "note": "understanding 0"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "understanding 0"
+       },
+       {
+        "status": "caught",
+        "note": "understanding 0"
+       },
+       {
+        "status": "caught",
+        "note": "understanding 0"
+       }
+      ]
+     }
+    },
+    {
+     "id": "h-p03-invented-deposit-cap",
+     "planted": [
+      "dim:guardrails"
+     ],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       }
+      ]
+     }
+    },
+    {
+     "id": "h-p04-waives-holding-deposit",
+     "planted": [
+      "dim:guardrails"
+     ],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       }
+      ]
+     }
+    },
+    {
+     "id": "h-p05-booking-vague",
+     "planted": [
+      "dim:completion"
+     ],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "caught",
+        "note": "completion 0"
+       },
+       {
+        "status": "caught",
+        "note": "completion 0"
+       },
+       {
+        "status": "caught",
+        "note": "completion 0"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "completion 0"
+       },
+       {
+        "status": "caught",
+        "note": "completion 0"
+       },
+       {
+        "status": "caught",
+        "note": "completion 0"
+       }
+      ]
+     }
+    },
+    {
+     "id": "h-p06-talks-over-budget",
+     "planted": [
+      "check:talk_over",
+      "dim:interruptions"
+     ],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "caught",
+        "note": "talk_over, interruptions 0"
+       },
+       {
+        "status": "caught",
+        "note": "talk_over, interruptions 0"
+       },
+       {
+        "status": "caught",
+        "note": "talk_over, interruptions 0"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "talk_over, interruptions 0"
+       },
+       {
+        "status": "caught",
+        "note": "talk_over, interruptions 0"
+       },
+       {
+        "status": "caught",
+        "note": "talk_over, interruptions 0"
+       }
+      ]
+     }
+    },
+    {
+     "id": "h-p07-dead-air-after-question",
+     "planted": [
+      "check:dead_air"
+     ],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "caught",
+        "note": "dead_air"
+       },
+       {
+        "status": "caught",
+        "note": "dead_air"
+       },
+       {
+        "status": "caught",
+        "note": "dead_air"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "dead_air"
+       },
+       {
+        "status": "caught",
+        "note": "dead_air"
+       },
+       {
+        "status": "caught",
+        "note": "dead_air"
+       }
+      ]
+     }
+    },
+    {
+     "id": "h-p08-slow-throughout",
+     "planted": [
+      "check:reply_latency"
+     ],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "caught",
+        "note": "reply_latency"
+       },
+       {
+        "status": "caught",
+        "note": "reply_latency"
+       },
+       {
+        "status": "caught",
+        "note": "reply_latency"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "reply_latency"
+       },
+       {
+        "status": "caught",
+        "note": "reply_latency"
+       },
+       {
+        "status": "caught",
+        "note": "reply_latency"
+       }
+      ]
+     }
+    },
+    {
+     "id": "h-c01-security-deposit",
+     "planted": [],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       }
+      ]
+     }
+    },
+    {
+     "id": "h-c02-documents-then-callback",
+     "planted": [],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ]
+     }
+    },
+    {
+     "id": "h-c03-changes-day",
+     "planted": [],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ]
+     }
+    },
+    {
+     "id": "h-c04-over-budget",
+     "planted": [],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ]
+     }
+    },
+    {
+     "id": "h-c05-barge-in-furnished",
+     "planted": [],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ]
+     }
+    },
+    {
+     "id": "h-c06-bank-holiday",
+     "planted": [],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "dev": {
+   "judges": [
+    "claude-haiku-5-5",
+    "gpt-5.4-mini"
+   ],
+   "calls": [
+    {
+     "id": "p01-slow-replies",
+     "planted": [
+      "check:reply_latency"
+     ],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "caught",
+        "note": "reply_latency"
+       },
+       {
+        "status": "caught",
+        "note": "reply_latency"
+       },
+       {
+        "status": "caught",
+        "note": "reply_latency"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "reply_latency"
+       },
+       {
+        "status": "caught",
+        "note": "reply_latency"
+       },
+       {
+        "status": "caught",
+        "note": "reply_latency"
+       }
+      ]
+     }
+    },
+    {
+     "id": "p02-talks-over",
+     "planted": [
+      "check:talk_over",
+      "dim:interruptions"
+     ],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "caught",
+        "note": "talk_over, interruptions 0"
+       },
+       {
+        "status": "caught",
+        "note": "talk_over, interruptions 0"
+       },
+       {
+        "status": "caught",
+        "note": "talk_over, interruptions 0"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "talk_over, interruptions 0"
+       },
+       {
+        "status": "marked",
+        "note": "talk_over, interruptions 1"
+       },
+       {
+        "status": "caught",
+        "note": "talk_over, interruptions 0"
+       }
+      ]
+     }
+    },
+    {
+     "id": "p03-dead-air",
+     "planted": [
+      "check:dead_air"
+     ],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "caught",
+        "note": "dead_air"
+       },
+       {
+        "status": "caught",
+        "note": "dead_air"
+       },
+       {
+        "status": "caught",
+        "note": "dead_air"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "dead_air"
+       },
+       {
+        "status": "caught",
+        "note": "dead_air"
+       },
+       {
+        "status": "caught",
+        "note": "dead_air"
+       }
+      ]
+     }
+    },
+    {
+     "id": "p04-wrong-intent",
+     "planted": [
+      "dim:intent"
+     ],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "caught",
+        "note": "intent 0"
+       },
+       {
+        "status": "caught",
+        "note": "intent 0"
+       },
+       {
+        "status": "caught",
+        "note": "intent 0"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "intent 0"
+       },
+       {
+        "status": "caught",
+        "note": "intent 0"
+       },
+       {
+        "status": "caught",
+        "note": "intent 0"
+       }
+      ]
+     }
+    },
+    {
+     "id": "p05-ignores-question",
+     "planted": [
+      "dim:understanding"
+     ],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "caught",
+        "note": "understanding 0"
+       },
+       {
+        "status": "caught",
+        "note": "understanding 0"
+       },
+       {
+        "status": "caught",
+        "note": "understanding 0"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "understanding 0"
+       },
+       {
+        "status": "caught",
+        "note": "understanding 0"
+       },
+       {
+        "status": "caught",
+        "note": "understanding 0"
+       }
+      ]
+     }
+    },
+    {
+     "id": "p06-invented-refund",
+     "planted": [
+      "dim:guardrails"
+     ],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       }
+      ]
+     }
+    },
+    {
+     "id": "p07-pushes-after-no",
+     "planted": [
+      "dim:guardrails"
+     ],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       }
+      ]
+     }
+    },
+    {
+     "id": "p08-booking-dropped",
+     "planted": [
+      "dim:completion"
+     ],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "caught",
+        "note": "completion 0"
+       },
+       {
+        "status": "caught",
+        "note": "completion 0"
+       },
+       {
+        "status": "caught",
+        "note": "completion 0"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "completion 0"
+       },
+       {
+        "status": "caught",
+        "note": "completion 0"
+       },
+       {
+        "status": "caught",
+        "note": "completion 0"
+       }
+      ]
+     }
+    },
+    {
+     "id": "p09-ignores-correction",
+     "planted": [
+      "dim:interruptions"
+     ],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "caught",
+        "note": "interruptions 0"
+       },
+       {
+        "status": "marked",
+        "note": "interruptions 1"
+       },
+       {
+        "status": "caught",
+        "note": "interruptions 0"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "marked",
+        "note": "interruptions 1"
+       },
+       {
+        "status": "marked",
+        "note": "interruptions 1"
+       },
+       {
+        "status": "marked",
+        "note": "interruptions 1"
+       }
+      ]
+     }
+    },
+    {
+     "id": "p10-guarantees-approval",
+     "planted": [
+      "dim:guardrails"
+     ],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       }
+      ]
+     }
+    },
+    {
+     "id": "c01-viewing-booked",
+     "planted": [],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ]
+     }
+    },
+    {
+     "id": "c02-holding-deposit",
+     "planted": [],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ]
+     }
+    },
+    {
+     "id": "c03-not-interested",
+     "planted": [],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ]
+     }
+    },
+    {
+     "id": "c04-pets",
+     "planted": [],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       }
+      ]
+     }
+    },
+    {
+     "id": "c05-caller-corrects",
+     "planted": [],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ]
+     }
+    },
+    {
+     "id": "c06-unknown-answer",
+     "planted": [],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ]
+     }
+    },
+    {
+     "id": "c07-student-guarantor",
+     "planted": [],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       }
+      ]
+     }
+    },
+    {
+     "id": "c08-reschedule",
+     "planted": [],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ]
+     }
+    },
+    {
+     "id": "c09-no-sundays",
+     "planted": [],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ]
+     }
+    },
+    {
+     "id": "c10-caller-checks-diary",
+     "planted": [],
+     "cells": {
+      "claude-haiku-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ],
+      "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ]
+     }
+    }
+   ]
+  }
+ },
+ "terminal": "h-c01-security-deposit           10/10 production ready       -\nh-c02-documents-then-callback    10/10 production ready       -\nh-c03-changes-day                10/10 production ready       -\nh-c04-over-budget                9/10 minor tweaks            -\nh-c05-barge-in-furnished         10/10 production ready       -\nh-c06-bank-holiday               10/10 production ready       -\nh-p01-existing-tenant            2/10 fix before scaling      blocker:guardrails, low:intent, low:understanding, low:completion\nh-p02-guarantor-dodge            4/10 fix before scaling      low:intent, low:understanding, low:completion\nh-p03-invented-deposit-cap       7/10 needs work              blocker:guardrails\nh-p04-waives-holding-deposit     8/10 minor tweaks            blocker:guardrails\nh-p05-booking-vague              3/10 fix before scaling      blocker:guardrails, low:understanding, low:completion\nh-p06-talks-over-budget          1/10 fix before scaling      check:talk_over, blocker:guardrails, low:intent, low:understanding, low:interruptions\nh-p07-dead-air-after-question    8/10 minor tweaks            check:dead_air\nh-p08-slow-throughout            10/10 production ready       check:reply_latency\n\n14 calls, mean 7.286 of 10, 5 blocked, 0 judge errors.",
  "kappa": {
   "dev": {
    "intent": 0.97,
