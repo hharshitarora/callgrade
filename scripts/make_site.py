@@ -64,7 +64,7 @@ def main() -> None:
             "identical": a["scores_identical_in_every_run"],
         }
 
-    judges = ("claude-haiku-5-5", "gpt-5.4-mini")
+    judges = ("claude-haiku-5-5", "gpt-5.4-mini", "claude-sonnet-5-5")
     numbers = {s: {j: summary(RESULTS / s / j) for j in judges} for s in ("dev", "holdout")}
     kappa = json.loads((RESULTS / "judges-compared.json").read_text(encoding="utf-8"))
 
@@ -113,6 +113,9 @@ def main() -> None:
         d = r["dimensions"]["interruptions"]
         p09.append({"run": i, "score": d["score"], "reason": d["reason"]})
 
+    # The bigger judge flags a clean development call every run; the other two let it pass.
+    c04 = pick(load_jsonl(RESULTS / "dev" / "claude-sonnet-5-5" / "run-1" / "results.jsonl"), "c04-pets")["dimensions"]["guardrails"]
+
     commit = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
     data = {
         "commit": commit,
@@ -125,6 +128,7 @@ def main() -> None:
         "misses": {
             "c10": {"score": c10_first["dimensions"]["guardrails"]["score"], "reason": c10_first["dimensions"]["guardrails"]["reason"]},
             "p09": p09,
+            "c04": {"score": c04["score"], "reason": c04["reason"]},
         },
     }
     SITE.mkdir(exist_ok=True)

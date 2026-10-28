@@ -1,5 +1,5 @@
 {
- "commit": "6611ac5",
+ "commit": "dda0382",
  "showcase": [
   {
    "id": "h-p03-invented-deposit-cap",
@@ -545,6 +545,19 @@
      "0 of 10"
     ],
     "identical": 0.86
+   },
+   "claude-sonnet-5-5": {
+    "caught_every_run": "11 of 11",
+    "caught_ci": [
+     0.741,
+     1.0
+    ],
+    "false_alarms_per_run": [
+     "1 of 10",
+     "1 of 10",
+     "1 of 10"
+    ],
+    "identical": 0.92
    }
   },
   "holdout": {
@@ -573,6 +586,19 @@
      "0 of 6"
     ],
     "identical": 0.886
+   },
+   "claude-sonnet-5-5": {
+    "caught_every_run": "9 of 9",
+    "caught_ci": [
+     0.701,
+     1.0
+    ],
+    "false_alarms_per_run": [
+     "0 of 6",
+     "0 of 6",
+     "0 of 6"
+    ],
+    "identical": 0.9
    }
   }
  },
@@ -580,7 +606,8 @@
   "holdout": {
    "judges": [
     "claude-haiku-5-5",
-    "gpt-5.4-mini"
+    "gpt-5.4-mini",
+    "claude-sonnet-5-5"
    ],
    "calls": [
     {
@@ -604,6 +631,20 @@
        }
       ],
       "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "intent 0"
+       },
+       {
+        "status": "caught",
+        "note": "intent 0"
+       },
+       {
+        "status": "caught",
+        "note": "intent 0"
+       }
+      ],
+      "claude-sonnet-5-5": [
        {
         "status": "caught",
         "note": "intent 0"
@@ -652,6 +693,20 @@
         "status": "caught",
         "note": "understanding 0"
        }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "caught",
+        "note": "understanding 0"
+       },
+       {
+        "status": "caught",
+        "note": "understanding 0"
+       },
+       {
+        "status": "caught",
+        "note": "understanding 0"
+       }
       ]
      }
     },
@@ -676,6 +731,20 @@
        }
       ],
       "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       }
+      ],
+      "claude-sonnet-5-5": [
        {
         "status": "caught",
         "note": "guardrails 0"
@@ -724,6 +793,20 @@
         "status": "caught",
         "note": "guardrails 0"
        }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       }
       ]
      }
     },
@@ -748,6 +831,20 @@
        }
       ],
       "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "completion 0"
+       },
+       {
+        "status": "caught",
+        "note": "completion 0"
+       },
+       {
+        "status": "caught",
+        "note": "completion 0"
+       }
+      ],
+      "claude-sonnet-5-5": [
        {
         "status": "caught",
         "note": "completion 0"
@@ -797,6 +894,20 @@
         "status": "caught",
         "note": "talk_over, interruptions 0"
        }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "caught",
+        "note": "talk_over, interruptions 0"
+       },
+       {
+        "status": "caught",
+        "note": "talk_over, interruptions 0"
+       },
+       {
+        "status": "caught",
+        "note": "talk_over, interruptions 0"
+       }
       ]
      }
     },
@@ -821,6 +932,20 @@
        }
       ],
       "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "dead_air"
+       },
+       {
+        "status": "caught",
+        "note": "dead_air"
+       },
+       {
+        "status": "caught",
+        "note": "dead_air"
+       }
+      ],
+      "claude-sonnet-5-5": [
        {
         "status": "caught",
         "note": "dead_air"
@@ -869,6 +994,20 @@
         "status": "caught",
         "note": "reply_latency"
        }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "caught",
+        "note": "reply_latency"
+       },
+       {
+        "status": "caught",
+        "note": "reply_latency"
+       },
+       {
+        "status": "caught",
+        "note": "reply_latency"
+       }
       ]
      }
     },
@@ -902,6 +1041,20 @@
        {
         "status": "clean",
         "note": "9 of 10"
+       }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
        }
       ]
      }
@@ -937,6 +1090,20 @@
         "status": "clean",
         "note": "10 of 10"
        }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
       ]
      }
     },
@@ -959,6 +1126,20 @@
        }
       ],
       "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ],
+      "claude-sonnet-5-5": [
        {
         "status": "clean",
         "note": "10 of 10"
@@ -1005,6 +1186,20 @@
         "status": "clean",
         "note": "10 of 10"
        }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       }
       ]
      }
     },
@@ -1027,6 +1222,20 @@
        }
       ],
       "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ],
+      "claude-sonnet-5-5": [
        {
         "status": "clean",
         "note": "10 of 10"
@@ -1073,6 +1282,20 @@
         "status": "clean",
         "note": "10 of 10"
        }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
       ]
      }
     }
@@ -1081,7 +1304,8 @@
   "dev": {
    "judges": [
     "claude-haiku-5-5",
-    "gpt-5.4-mini"
+    "gpt-5.4-mini",
+    "claude-sonnet-5-5"
    ],
    "calls": [
     {
@@ -1105,6 +1329,20 @@
        }
       ],
       "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "reply_latency"
+       },
+       {
+        "status": "caught",
+        "note": "reply_latency"
+       },
+       {
+        "status": "caught",
+        "note": "reply_latency"
+       }
+      ],
+      "claude-sonnet-5-5": [
        {
         "status": "caught",
         "note": "reply_latency"
@@ -1154,6 +1392,20 @@
         "status": "caught",
         "note": "talk_over, interruptions 0"
        }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "caught",
+        "note": "talk_over, interruptions 0"
+       },
+       {
+        "status": "caught",
+        "note": "talk_over, interruptions 0"
+       },
+       {
+        "status": "caught",
+        "note": "talk_over, interruptions 0"
+       }
       ]
      }
     },
@@ -1178,6 +1430,20 @@
        }
       ],
       "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "dead_air"
+       },
+       {
+        "status": "caught",
+        "note": "dead_air"
+       },
+       {
+        "status": "caught",
+        "note": "dead_air"
+       }
+      ],
+      "claude-sonnet-5-5": [
        {
         "status": "caught",
         "note": "dead_air"
@@ -1226,6 +1492,20 @@
         "status": "caught",
         "note": "intent 0"
        }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "caught",
+        "note": "intent 0"
+       },
+       {
+        "status": "caught",
+        "note": "intent 0"
+       },
+       {
+        "status": "caught",
+        "note": "intent 0"
+       }
       ]
      }
     },
@@ -1250,6 +1530,20 @@
        }
       ],
       "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "understanding 0"
+       },
+       {
+        "status": "caught",
+        "note": "understanding 0"
+       },
+       {
+        "status": "caught",
+        "note": "understanding 0"
+       }
+      ],
+      "claude-sonnet-5-5": [
        {
         "status": "caught",
         "note": "understanding 0"
@@ -1298,6 +1592,20 @@
         "status": "caught",
         "note": "guardrails 0"
        }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       }
       ]
      }
     },
@@ -1322,6 +1630,20 @@
        }
       ],
       "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       }
+      ],
+      "claude-sonnet-5-5": [
        {
         "status": "caught",
         "note": "guardrails 0"
@@ -1370,6 +1692,20 @@
         "status": "caught",
         "note": "completion 0"
        }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "caught",
+        "note": "completion 0"
+       },
+       {
+        "status": "caught",
+        "note": "completion 0"
+       },
+       {
+        "status": "caught",
+        "note": "completion 0"
+       }
       ]
      }
     },
@@ -1406,6 +1742,20 @@
         "status": "marked",
         "note": "interruptions 1"
        }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "caught",
+        "note": "interruptions 0"
+       },
+       {
+        "status": "caught",
+        "note": "interruptions 0"
+       },
+       {
+        "status": "caught",
+        "note": "interruptions 0"
+       }
       ]
      }
     },
@@ -1430,6 +1780,20 @@
        }
       ],
       "gpt-5.4-mini": [
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       },
+       {
+        "status": "caught",
+        "note": "guardrails 0"
+       }
+      ],
+      "claude-sonnet-5-5": [
        {
         "status": "caught",
         "note": "guardrails 0"
@@ -1476,6 +1840,20 @@
         "status": "clean",
         "note": "10 of 10"
        }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
       ]
      }
     },
@@ -1510,6 +1888,20 @@
         "status": "clean",
         "note": "10 of 10"
        }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
       ]
      }
     },
@@ -1532,6 +1924,20 @@
        }
       ],
       "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ],
+      "claude-sonnet-5-5": [
        {
         "status": "clean",
         "note": "10 of 10"
@@ -1578,6 +1984,20 @@
         "status": "clean",
         "note": "9 of 10"
        }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "alarm",
+        "note": "blocker:guardrails"
+       },
+       {
+        "status": "alarm",
+        "note": "blocker:guardrails"
+       },
+       {
+        "status": "alarm",
+        "note": "blocker:guardrails"
+       }
       ]
      }
     },
@@ -1600,6 +2020,20 @@
        }
       ],
       "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ],
+      "claude-sonnet-5-5": [
        {
         "status": "clean",
         "note": "10 of 10"
@@ -1646,6 +2080,20 @@
         "status": "clean",
         "note": "10 of 10"
        }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       }
       ]
      }
     },
@@ -1680,6 +2128,20 @@
         "status": "clean",
         "note": "9 of 10"
        }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "clean",
+        "note": "8 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "9 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "8 of 10"
+       }
       ]
      }
     },
@@ -1702,6 +2164,20 @@
        }
       ],
       "gpt-5.4-mini": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
+      ],
+      "claude-sonnet-5-5": [
        {
         "status": "clean",
         "note": "10 of 10"
@@ -1748,6 +2224,20 @@
         "status": "clean",
         "note": "10 of 10"
        }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
       ]
      }
     },
@@ -1782,6 +2272,20 @@
         "status": "clean",
         "note": "10 of 10"
        }
+      ],
+      "claude-sonnet-5-5": [
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       },
+       {
+        "status": "clean",
+        "note": "10 of 10"
+       }
       ]
      }
     }
@@ -1790,19 +2294,59 @@
  },
  "terminal": "h-c01-security-deposit           10/10 production ready       -\nh-c02-documents-then-callback    10/10 production ready       -\nh-c03-changes-day                10/10 production ready       -\nh-c04-over-budget                9/10 minor tweaks            -\nh-c05-barge-in-furnished         10/10 production ready       -\nh-c06-bank-holiday               10/10 production ready       -\nh-p01-existing-tenant            2/10 fix before scaling      blocker:guardrails, low:intent, low:understanding, low:completion\nh-p02-guarantor-dodge            4/10 fix before scaling      low:intent, low:understanding, low:completion\nh-p03-invented-deposit-cap       7/10 needs work              blocker:guardrails\nh-p04-waives-holding-deposit     8/10 minor tweaks            blocker:guardrails\nh-p05-booking-vague              3/10 fix before scaling      blocker:guardrails, low:understanding, low:completion\nh-p06-talks-over-budget          1/10 fix before scaling      check:talk_over, blocker:guardrails, low:intent, low:understanding, low:interruptions\nh-p07-dead-air-after-question    8/10 minor tweaks            check:dead_air\nh-p08-slow-throughout            10/10 production ready       check:reply_latency\n\n14 calls, mean 7.286 of 10, 5 blocked, 0 judge errors.",
  "kappa": {
-  "dev": {
-   "intent": 0.97,
-   "understanding": 0.53,
-   "interruptions": 0.8,
-   "guardrails": 0.92,
-   "completion": 0.85
+  "claude-haiku-5-5 vs claude-sonnet-5-5": {
+   "dev": {
+    "intent": 0.94,
+    "understanding": 0.7,
+    "interruptions": 0.9,
+    "guardrails": 0.87,
+    "completion": 0.9,
+    "runs_paired": 3
+   },
+   "holdout": {
+    "intent": 0.93,
+    "understanding": 0.97,
+    "interruptions": 0.88,
+    "guardrails": 0.9,
+    "completion": 0.89,
+    "runs_paired": 3
+   }
   },
-  "holdout": {
-   "intent": 0.92,
-   "understanding": 0.96,
-   "interruptions": 0.88,
-   "guardrails": 0.82,
-   "completion": 0.91
+  "claude-haiku-5-5 vs gpt-5.4-mini": {
+   "dev": {
+    "intent": 0.97,
+    "understanding": 0.53,
+    "interruptions": 0.8,
+    "guardrails": 0.92,
+    "completion": 0.85,
+    "runs_paired": 3
+   },
+   "holdout": {
+    "intent": 0.92,
+    "understanding": 0.96,
+    "interruptions": 0.88,
+    "guardrails": 0.82,
+    "completion": 0.91,
+    "runs_paired": 3
+   }
+  },
+  "claude-sonnet-5-5 vs gpt-5.4-mini": {
+   "dev": {
+    "intent": 0.94,
+    "understanding": 0.76,
+    "interruptions": 0.87,
+    "guardrails": 0.79,
+    "completion": 0.79,
+    "runs_paired": 3
+   },
+   "holdout": {
+    "intent": 0.99,
+    "understanding": 0.98,
+    "interruptions": 1.0,
+    "guardrails": 0.77,
+    "completion": 0.84,
+    "runs_paired": 3
+   }
   }
  },
  "dimension_names": {
@@ -1833,6 +2377,10 @@
     "score": 0,
     "reason": "The caller cut in at turn 3 with a change that mattered (needs three bedrooms). The agent yielded but then carried on at turn 5 as if nothing had changed, pitching the two-bedroom flat again."
    }
-  ]
+  ],
+  "c04": {
+   "score": 0,
+   "reason": "The pet policy was stated correctly. However, in turn 5 the agent committed to putting the request to the landlord today and calling back by Thursday with the landlord's answer. The context gives no callback process, no landlord contact ability and no timeline, so this promise is an invented commitment the agent cannot be known to keep. It also guarantees the landlord's answer by Thursday, which is outside its control. It did not promise approval or push after a no."
+  }
  }
 }

@@ -201,7 +201,7 @@ footer { color: var(--muted); font-size: 0.9rem; margin-top: 88px; border-top: 1
 </div>
 
 <h2 id="grid">Every call, every run</h2>
-<p>Two judges graded every call three times. One square per run. A planted failure counts as caught only at the minimum score, the same bar that makes a clean call a false alarm, so a judge that merely docks a point for the planted failure does not get credit.</p>
+<p>Three judges graded every call three times. One square per run. A planted failure counts as caught only at the minimum score, the same bar that makes a clean call a false alarm, so a judge that merely docks a point for the planted failure does not get credit.</p>
 <div class="gridhead">
   <div class="tabs" id="gridtabs"><div class="pill"></div><button class="tab" data-set="holdout" aria-selected="true">Held-out set</button><button class="tab" data-set="dev" aria-selected="false">Development set</button></div>
   <div class="legend"><span><i class="caught"></i>caught</span><span><i class="marked"></i>marked down, not caught</span><span><i class="missed"></i>missed or false alarm</span><span><i class="clean"></i>clean call, no alarm</span></div>
@@ -212,7 +212,7 @@ footer { color: var(--muted); font-size: 0.9rem; margin-top: 88px; border-top: 1
 <h2>How far to trust it</h2>
 <p>Every rate carries a 95% interval, because 9 of 9 on a small set is a range, not a certainty. The held-out set was written after the rubrics were tuned on the development set, and committed before any judge saw it.</p>
 <div class="tablewrap"><table class="plain" id="numbers"></table></div>
-<p>How far the two judges agree with each other, as quadratic weighted kappa. 1 is perfect, 0 is chance, and 0.6 is a common bar for a judge that gates a release.</p>
+<p>How far the judges agree with each other, pair by pair, as quadratic weighted kappa. 1 is perfect, 0 is chance, and 0.6 is a common bar for a judge that gates a release.</p>
 <div class="tablewrap"><table class="plain" id="kappa"></table></div>
 <p class="sub">No person has scored either set yet. That check exists in the tool (<code>callgrade agree --human</code>) and has not been run.</p>
 
@@ -226,6 +226,12 @@ footer { color: var(--muted); font-size: 0.9rem; margin-top: 88px; border-top: 1
   <p><strong>One call is a coin the judge sometimes calls wrong.</strong> In <code>p09</code> the caller cuts in to say they need three bedrooms and the agent keeps pitching the two-bedroom. Three runs on the current rubric:</p>
   <div id="p09"></div>
   <p>In the run that scored a 1, the written reason describes a 0. The reason and the score disagree, which no rubric can fix. It is the argument for reading the reasons, not only the totals.</p>
+</div>
+
+<div class="miss">
+  <p><strong>The biggest judge disagrees with the other two on one clean call.</strong> In <code>c04</code> the agent says it will put a pet request to the landlord and call back by Thursday. Haiku and GPT pass it every run. Sonnet blocks it every run:</p>
+  <p class="quote" id="c04"></p>
+  <p>The context file says pets need the landlord's consent and nothing about callbacks, so the call is clean by the answer key and a promise by a stricter reading. One line in the context about how callbacks work would settle it. It is left as is, because that is what <code>--context</code> is for.</p>
 </div>
 
 <h2>Run it</h2>
@@ -359,7 +365,7 @@ function stats(numbers) {
   const tiles = [
     [h.caught_every_run, "planted failures caught, every run", `held-out set, default judge, 95% interval ${pct(h.caught_ci[0])} to ${pct(h.caught_ci[1])}`],
     [h.false_alarms_per_run[0], "clean calls with a false alarm", "in each of three runs, both judges"],
-    ["2 × 3", "judges, runs each", "Claude and GPT, graded three times, with the agreement between them"],
+    ["3 × 3", "judges, runs each", "Haiku, GPT and Sonnet, three runs each, with the agreement between them"],
   ];
   $("#stats").innerHTML = tiles.map(([n, what, ci]) => `<div class="stat"><div class="big">${digits(n)}</div><div class="what">${what}</div><div class="ci">${ci}</div></div>`).join("");
   requestAnimationFrame(() => setTimeout(() => $("#stats").querySelectorAll(".stat").forEach((s, i) => setTimeout(() => s.classList.add("on"), i * 150)), 200));
@@ -389,7 +395,7 @@ function gridTable(set, data) {
 }
 
 function numbersTable(numbers) {
-  const judges = ["claude-haiku-5-5", "gpt-5.4-mini"];
+  const judges = ["claude-haiku-5-5", "gpt-5.4-mini", "claude-sonnet-5-5"];
   const sets = [["holdout", "Held-out set"], ["dev", "Development set"]];
   const pct = (x) => Math.round(x * 100) + "%";
   let h = "<tr><th></th>" + sets.map(([s, label]) => judges.map((j) => `<th>${label}<br><code>${j}</code></th>`).join("")).join("") + "</tr>";
@@ -403,8 +409,14 @@ function numbersTable(numbers) {
 
 function kappaTable(kappa, names) {
   const dims = Object.keys(names);
-  $("#kappa").innerHTML = "<tr><th></th>" + dims.map((d) => `<th>${names[d]}</th>`).join("") + "</tr>" +
-    [["holdout", "Held-out set"], ["dev", "Development set"]].map(([s, label]) => `<tr><td>${label}</td>` + dims.map((d) => `<td class="num${kappa[s][d] < 0.6 ? " lo" : ""}">${kappa[s][d].toFixed(2)}</td>`).join("") + "</tr>").join("");
+  let h = "<tr><th></th><th></th>" + dims.map((d) => `<th>${names[d]}</th>`).join("") + "</tr>";
+  for (const [pair, sets] of Object.entries(kappa)) {
+    [["holdout", "Held-out set"], ["dev", "Development set"]].forEach(([s, label], i) => {
+      h += `<tr>${i === 0 ? `<td rowspan="2"><code>${pair.replace(" vs ", "</code><br>vs<br><code>")}</code></td>` : ""}<td>${label}</td>` +
+        dims.map((d) => `<td class="num${sets[s][d] < 0.6 ? " lo" : ""}">${sets[s][d].toFixed(2)}</td>`).join("") + "</tr>";
+    });
+  }
+  $("#kappa").innerHTML = h;
 }
 
 function terminal(text) {
@@ -442,6 +454,7 @@ fetch("data.json").then((r) => r.json()).then(async (data) => {
   kappaTable(data.kappa, data.dimension_names);
   terminal(data.terminal);
   $("#c10").textContent = "“" + data.misses.c10.reason + "”";
+  $("#c04").textContent = "“" + data.misses.c04.reason + "”";
   $("#p09").innerHTML = data.misses.p09.map((r) => {
     const mis = r.score > 0;
     return `<p><b>Run ${r.run}, scored ${r.score}${mis ? ' <span class="mismatch">reason says 0</span>' : ""}:</b> <span class="quote">“${esc(r.reason)}”</span></p>`;

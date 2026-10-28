@@ -187,33 +187,40 @@ There are two sets. `examples/calls` is the development set: 20 calls, 10
 clean and 10 with a planted failure, and the rubrics were tuned against it.
 `examples/holdout/calls` is the held-out set: 14 calls, 6 clean and 8 planted,
 written after that tuning and committed before any judge saw them, so its
-numbers are the ones to trust. Both judges graded both sets three times on
-2026-10-27. A planted failure counts as caught only when the judge gives it
+numbers are the ones to trust. Haiku and GPT graded both sets three times on
+2026-10-27, Sonnet on 2026-10-28. A planted failure counts as caught only when the judge gives it
 the minimum score, the same bar that makes a clean call a false alarm. Every
 file, including the HTML reports, is under [results/](results).
 
-| | Development set | | Held-out set | |
-|---|---|---|---|---|
-| | claude-haiku-5-5 | gpt-5.4-mini | claude-haiku-5-5 | gpt-5.4-mini |
-| Planted failures caught in all 3 runs | 10 of 11 | 9 of 11 | 9 of 9 | 9 of 9 |
-| 95% interval | 62% to 98% | 52% to 95% | 70% to 100% | 70% to 100% |
-| Clean calls with a false alarm | 0 of 10, every run | 0 of 10, every run | 0 of 6, every run | 0 of 6, every run |
-| Scores identical across all 3 runs | 90% | 86% | 87% | 89% |
-| Judge errors | 0 | 0 | 0 | 0 |
+| | Development set | | | Held-out set | | |
+|---|---|---|---|---|---|---|
+| | claude-haiku-5-5 | gpt-5.4-mini | claude-sonnet-5-5 | claude-haiku-5-5 | gpt-5.4-mini | claude-sonnet-5-5 |
+| Planted failures caught in all 3 runs | 10 of 11 | 9 of 11 | 11 of 11 | 9 of 9 | 9 of 9 | 9 of 9 |
+| 95% interval | 62% to 98% | 52% to 95% | 74% to 100% | 70% to 100% | 70% to 100% | 70% to 100% |
+| Clean calls with a false alarm | 0 of 10, every run | 0 of 10, every run | 1 of 10, every run | 0 of 6, every run | 0 of 6, every run | 0 of 6, every run |
+| Scores identical across all 3 runs | 90% | 86% | 92% | 87% | 89% | 90% |
+| Judge errors | 0 | 0 | 0 | 0 | 0 | 0 |
 
-How far the two judges agree with each other, as quadratic weighted kappa
-averaged over the three paired runs
-([results/judges-compared.json](results/judges-compared.json)):
+How far the judges agree with each other, pair by pair, as quadratic
+weighted kappa averaged over the three paired runs
+([results/judges-compared.json](results/judges-compared.json), made by
+`scripts/compare_judges.py`):
 
-| | Intent | Understanding | Interruptions | Guardrails | Completion |
-|---|---|---|---|---|---|
-| Development set | 0.97 | 0.53 | 0.80 | 0.92 | 0.85 |
-| Held-out set | 0.92 | 0.96 | 0.88 | 0.82 | 0.91 |
+| | | Intent | Understanding | Interruptions | Guardrails | Completion |
+|---|---|---|---|---|---|---|
+| Haiku vs Sonnet | Development | 0.94 | 0.70 | 0.90 | 0.87 | 0.90 |
+| | Held-out | 0.93 | 0.97 | 0.88 | 0.90 | 0.89 |
+| Haiku vs GPT | Development | 0.97 | 0.53 | 0.80 | 0.92 | 0.85 |
+| | Held-out | 0.92 | 0.96 | 0.88 | 0.82 | 0.91 |
+| Sonnet vs GPT | Development | 0.94 | 0.76 | 0.87 | 0.79 | 0.79 |
+| | Held-out | 0.99 | 0.98 | 1.00 | 0.77 | 0.84 |
 
 0.6 is a common bar for a judge allowed to gate a release. Question
-understanding on the development set is the one number under it: the two
-judges read `p05`, where the caller asks about the deposit twice and gets a
-viewing slot both times, differently every run.
+understanding on the development set, Haiku against GPT, is the one number
+under it: the two judges read `p05`, where the caller asks about the deposit
+twice and gets a viewing slot both times, differently every run. Sonnet
+sits between them on that dimension and agrees with GPT almost perfectly on
+the held-out set.
 
 How the development set got here, with every earlier run kept in
 [results/history](results/history):
@@ -248,6 +255,16 @@ What these numbers do not show:
   caught every interruption failure on the held-out set, where the agent
   talks over the caller twice. A milder version of the same failure splits
   the judges.
+- **The biggest judge is stricter than the other two on one clean call.**
+  Sonnet 5.5 catches every planted failure on both sets and blocks clean call
+  `c04` in every run: the agent says it will put a pet request to the
+  landlord and "call you back by Thursday", and the context says nothing
+  about callbacks, so Sonnet reads the Thursday as an invented commitment.
+  Haiku and GPT pass it every run. By the answer key it is a false alarm; by
+  a strict reading of the rubric it is a promise the agent cannot keep. One
+  line in the context about how callbacks work would settle it either way,
+  which is the point of `--context`. The call and the context are left as
+  they are. Sonnet also costs about ten times Haiku per call.
 - **The held-out set is small.** 0 false alarms on 6 clean calls means
   "somewhere between 0% and 39%". 9 of 9 means 70% to 100%. Both sets were
   written by the same person for the same made-up agency, so a judge that

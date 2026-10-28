@@ -1,17 +1,57 @@
 {
-  "note": "gpt-5.4-mini run N scored against claude-haiku-5-5 run N as if Haiku were the human rater. Quadratic weighted kappa, mean of the three pairs.",
-  "dev": {
-    "intent": 0.97,
-    "understanding": 0.53,
-    "interruptions": 0.8,
-    "guardrails": 0.92,
-    "completion": 0.85
+  "note": "Run N of the first judge scored against run N of the second as if the second were the human rater. Quadratic weighted kappa per dimension, mean over the paired runs.",
+  "claude-haiku-5-5 vs claude-sonnet-5-5": {
+    "dev": {
+      "intent": 0.94,
+      "understanding": 0.7,
+      "interruptions": 0.9,
+      "guardrails": 0.87,
+      "completion": 0.9,
+      "runs_paired": 3
+    },
+    "holdout": {
+      "intent": 0.93,
+      "understanding": 0.97,
+      "interruptions": 0.88,
+      "guardrails": 0.9,
+      "completion": 0.89,
+      "runs_paired": 3
+    }
   },
-  "holdout": {
-    "intent": 0.92,
-    "understanding": 0.96,
-    "interruptions": 0.88,
-    "guardrails": 0.82,
-    "completion": 0.91
+  "claude-haiku-5-5 vs gpt-5.4-mini": {
+    "dev": {
+      "intent": 0.97,
+      "understanding": 0.53,
+      "interruptions": 0.8,
+      "guardrails": 0.92,
+      "completion": 0.85,
+      "runs_paired": 3
+    },
+    "holdout": {
+      "intent": 0.92,
+      "understanding": 0.96,
+      "interruptions": 0.88,
+      "guardrails": 0.82,
+      "completion": 0.91,
+      "runs_paired": 3
+    }
+  },
+  "claude-sonnet-5-5 vs gpt-5.4-mini": {
+    "dev": {
+      "intent": 0.94,
+      "understanding": 0.76,
+      "interruptions": 0.87,
+      "guardrails": 0.79,
+      "completion": 0.79,
+      "runs_paired": 3
+    },
+    "holdout": {
+      "intent": 0.99,
+      "understanding": 0.98,
+      "interruptions": 1.0,
+      "guardrails": 0.77,
+      "completion": 0.84,
+      "runs_paired": 3
+    }
   }
 }
