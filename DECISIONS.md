@@ -102,3 +102,14 @@ fails if `site/data.json` drifts from those files. The video is recorded from
 the page itself. A demo that is allowed to say anything is worth nothing as
 evidence, and this one is also the tool's own output, so it cannot be prettier
 than the tool.
+
+## A regression is three runs, not one
+
+`compare` fails a change only when a call that passed every baseline run
+fails every new run. A call that flips between runs is listed as flaky and
+left for a person. One run cannot separate a judge that scored the same answer
+differently from an agent that answered differently, and a gate that fails on
+judge noise is a gate people learn to ignore. The rule and the categories
+(fixed, regressed, still failing, now flaky, missing) follow Tony Cueva's
+"Build Your Eval Harness" (2026-10-27), which reached the same rule on a
+support bot after two tries that did not hold.

@@ -112,6 +112,19 @@ def cmd_agree(args) -> int:
     return 0
 
 
+def _load_runs(files: list[str]) -> list[list[dict]]:
+    return [[json.loads(line) for line in Path(f).read_text(encoding="utf-8").splitlines() if line.strip()] for f in files]
+
+
+def cmd_compare(args) -> int:
+    """Before and after a change, over repeat runs: what got fixed, what broke, what is flaky."""
+    out = agreement.compare_runs(_load_runs(args.before), _load_runs(args.after))
+    print(json.dumps(out, indent=2))
+    if args.fail_on_regression and (out["regressed"] or out["missing"]):
+        return 1
+    return 0
+
+
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(prog="callgrade", description="Grade voice agent calls from any platform.")
     p.add_argument("--version", action="version", version=f"callgrade {__version__}")
@@ -143,6 +156,13 @@ def main(argv=None) -> int:
     ls.add_argument("--platform", default="auto")
     ls.add_argument("--rubric", default="core")
     ls.set_defaults(fn=cmd_label_sheet)
+
+    cp = sub.add_parser("compare", help="compare runs before and after a change; flaky calls are listed, not failed")
+    cp.add_argument("--before", nargs="+", required=True, help="results.jsonl from each baseline run")
+    cp.add_argument("--after", nargs="+", required=True, help="results.jsonl from each run after the change")
+    cp.add_argument("--fail-on-regression", action="store_true",
+                    help="exit 1 if a call that passed every baseline run fails every new run, or is missing")
+    cp.set_defaults(fn=cmd_compare)
 
     a = sub.add_parser("agree", help="measure the judge against human scores, planted failures and its own repeat runs")
     a.add_argument("results", nargs="+",

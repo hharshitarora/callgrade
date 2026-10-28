@@ -65,3 +65,19 @@ def test_across_runs_counts_a_failure_only_if_caught_every_time():
     assert out["planted_caught_every_run"] == "0 of 1" and out["planted_missed_in_some_run"] == ["bad dim:intent"]
     assert out["identical_by_dimension"]["intent"] == 0.5 and out["identical_by_dimension"]["guardrails"] == 1.0
     assert out["scores_identical_in_every_run"] == 0.9
+
+
+def test_compare_runs_fails_only_on_always_pass_to_always_fail():
+    ok = lambda c: {"call_id": c, "flags": [], "dimensions": {"intent": {"score": 2}}}
+    bad = lambda c: {"call_id": c, "flags": ["low:intent"], "dimensions": {"intent": {"score": 0}}}
+    before = [[ok("a"), ok("b"), bad("c"), ok("d")], [ok("a"), ok("b"), bad("c"), bad("d")]]
+    after = [[bad("a"), ok("b"), ok("c"), ok("d")], [bad("a"), bad("b"), ok("c"), ok("d")]]
+    out = agreement.compare_runs(before, after)
+    assert out["regressed"] == ["a"]          # passed every run, now fails every run
+    assert out["now_flaky"] == ["b"]          # fails in one new run: listed, not a regression
+    assert out["fixed"] == ["c"]
+    assert out["flaky_before"] == ["d"] and "d" not in out["regressed"]
+    assert out["missing"] == []
+    assert out["pass_rate_before"] == 0.625 and out["pass_rate_after"] == 0.625
+    gone = agreement.compare_runs(before, [[ok("a"), ok("b"), ok("c")]])
+    assert gone["missing"] == ["d"]

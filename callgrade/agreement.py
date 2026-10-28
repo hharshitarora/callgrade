@@ -164,3 +164,50 @@ def across_runs(runs: list[list[dict]], planted: dict[str, list[str]] | None, ru
         out["planted_missed_in_some_run"] = [t for t in targets if t not in every]
         out["clean_calls_with_a_false_alarm_per_run"] = [p["clean_calls_with_a_false_alarm"] for p in per_run]
     return out
+
+
+def _failed(result: dict) -> bool | None:
+    """A call fails a run when it carries any flag: a blocker, a minimum score, or a failed check."""
+    if result.get("error") and not result.get("dimensions"):
+        return None
+    return any(f.startswith(("blocker:", "low:", "check:")) for f in result.get("flags", []))
+
+
+def compare_runs(before: list[list[dict]], after: list[list[dict]]) -> dict:
+    """Two sets of repeat runs, before and after a change. A call that always passed and now
+    always fails is a regression. A call that fails in some runs but not others is flaky and is
+    listed for a person to read, never counted as a regression. Missing results count as failures."""
+    def status(runs: list[list[dict]], call_id: str) -> str:
+        outcomes = []
+        for run in runs:
+            r = next((x for x in run if x["call_id"] == call_id), None)
+            outcomes.append(None if r is None else _failed(r))
+        if any(o is None for o in outcomes):
+            return "missing"
+        if not any(outcomes):
+            return "always_pass"
+        if all(outcomes):
+            return "always_fail"
+        return "flaky"
+
+    ids = sorted({r["call_id"] for run in before + after for r in run})
+    rows = {c: (status(before, c), status(after, c)) for c in ids}
+    pick = lambda cond: [c for c, (b, a) in rows.items() if cond(b, a)]
+    out = {
+        "runs_before": len(before), "runs_after": len(after), "calls": len(ids),
+        "regressed": pick(lambda b, a: b == "always_pass" and a == "always_fail"),
+        "fixed": pick(lambda b, a: b == "always_fail" and a == "always_pass"),
+        "still_failing": pick(lambda b, a: b == "always_fail" and a == "always_fail"),
+        "now_flaky": pick(lambda b, a: b != "flaky" and a == "flaky"),
+        "flaky_before": pick(lambda b, a: b == "flaky"),
+        "missing": pick(lambda b, a: a == "missing"),
+        "by_call": {c: {"before": b, "after": a} for c, (b, a) in rows.items()},
+    }
+    out["pass_rate_before"] = _pass_rate(before)
+    out["pass_rate_after"] = _pass_rate(after)
+    return out
+
+
+def _pass_rate(runs: list[list[dict]]) -> float | None:
+    graded = [r for run in runs for r in run if _failed(r) is not None]
+    return round(sum(not _failed(r) for r in graded) / len(graded), 3) if graded else None

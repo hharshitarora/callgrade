@@ -270,6 +270,26 @@ Fail a build when a prompt change makes calls worse:
 `--fail-on-blocker` exits 1 if any call breaks a guardrail. `--fail-under`
 exits 1 if the mean total drops below the number you set.
 
+A pass rate hides what moved. `compare` reads repeat runs from before and
+after a change and names the calls that got fixed, the calls that broke, and
+the calls that flip between runs:
+
+```
+callgrade grade calls/ --context agent-policy.md --out after/run-1   # three times
+callgrade compare --before before/run-*/results.jsonl --after after/run-*/results.jsonl --fail-on-regression
+```
+
+A call fails a run when it carries any flag: a blocker, a minimum score or a
+failed check. `--fail-on-regression` exits 1 only when a call that passed
+every baseline run fails every new run, or is missing from a run. A call that
+fails in some runs and not others is listed under `now_flaky` for a person to
+read, because one run cannot tell a judge's bad day from a real regression.
+Run on the development set across the completion rubric rewrite
+([history](results/history/2026-10-26-old-completion-rubric) to
+[now](results/dev/claude-haiku-5-5)), it reports 0 regressed, 0 fixed, 0
+flaky, and the 10 planted calls still failing, which is what a rubric change
+that only moved scores should look like.
+
 ## What it cannot see
 
 - **Audio.** callgrade reads transcripts. A mumbled word the speech-to-text got
