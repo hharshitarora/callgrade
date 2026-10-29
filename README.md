@@ -8,19 +8,20 @@ Demo, built from the files in this repo: [hharshitarora.github.io/callgrade](htt
 
 [![callgrade grading a held-out call: the stopwatch checks pass, then the judge reads the rubric and scores each dimension with its reason](docs/demo.gif)](https://hharshitarora.github.io/callgrade/)
 
-The page plays three held-out calls, shows every run of both judges on every call, and owns up to the two misses. A 75-second recording of it is at [hharshitarora.github.io/callgrade/demo.mp4](https://hharshitarora.github.io/callgrade/demo.mp4), made by `scripts/record_demo.cjs` from the page itself, so it never drifts from the files.
+The page plays three held-out calls, shows every run of all three judges on every call, and owns up to what went wrong. A 75-second recording of it is at [hharshitarora.github.io/callgrade/demo.mp4](https://hharshitarora.github.io/callgrade/demo.mp4), made by `scripts/record_demo.cjs` from the page itself, so it never drifts from the files.
 
 There is also a 26-second launch cut, [launch.mp4](https://hharshitarora.github.io/callgrade/launch.mp4), built with the open-source [/brag](https://github.com/latent-spaces/brag) skill and HyperFrames from the same result files. Music: Sascha Ende, [ende.app](https://ende.app) (CC BY 4.0).
 
-Most teams find out a voice agent is going wrong the slow way: someone listens
-to calls. That does not scale past a few a day, and it misses the failures that
-sound fine. A confident agent that promises a refund your policy does not
-allow sounds great on the recording.
+Most teams find out a voice agent is going wrong the slow way: someone sits
+and listens to calls. That doesn't scale past a handful a day, and it misses
+the failures that sound fine. An agent that confidently promises a refund your
+policy doesn't allow sounds great on the recording.
 
 callgrade reads the calls you already have, from whatever platform made them,
-and gives each one a score, a reason per dimension, and the exact turns that
-went wrong. Then it measures the thing most eval tools skip: whether its own
-judge agrees with people.
+and gives each one a score, a reason per dimension, and the turns that went
+wrong. Then it does the part most eval tools skip. It measures its own judge:
+three runs, three models, error bars, and a held-out set the rubrics were
+never tuned on.
 
 ```
 $ callgrade grade examples/calls --judge none
@@ -34,9 +35,9 @@ p03-dead-air                     checks only                  check:dead_air
 ```
 
 That run used no model. Add a judge and every call also gets a score, a band
-and a reason per dimension. With the default judge, callgrade caught every
-planted failure in a held-out set of calls in each of three runs, with no
-false alarms, and the numbers come with their error bars
+and a reason per dimension. The default judge caught every planted failure in
+the held-out set in each of three runs, with no false alarms. 9 of 9 on 9
+calls is 70% to 100%, and the page says so
 ([results](#results-on-the-test-sets)).
 
 ## How it grades
@@ -295,10 +296,11 @@ What happened:
   calling from changed between them. Graded against the agent's current
   prompt, 35 calls were blocked, 34 of them for naming the wrong company.
   Against the older prompt, 73. Against the prompt that matched each call's
-  version, 2: one agent that kept pitching after three clear refusals, and one
-  that resumed the pitch after a no and switched language against its own
-  rules. The blocker count was measuring prompt drift, not the agent, until
-  the context was right.
+  version, 2: one call where the agent kept pitching after three clear
+  refusals, and one where it resumed the pitch after a no and switched language
+  against its own rules. Until the context was right, the blocker count was
+  measuring how much the prompt had changed since February. It said nothing
+  about the agent.
 - **With matched context**: mean 7.6 of 10; 13 calls production ready, 44
   minor tweaks, 40 needs work, 5 fix before scaling. Intent and completion
   were the weak dimensions (1.2 of 2 each): the agent often did not take the

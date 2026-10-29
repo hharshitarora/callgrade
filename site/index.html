@@ -4,245 +4,286 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>callgrade</title>
-<meta name="description" content="Grade your voice agent's calls from any platform, and measure whether the grade can be trusted. Open source.">
+<meta name="description" content="Grades voice agent calls from any platform, and measures how far the grade can be trusted. Open source, MIT.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f6f4ef; --fg: #17161a; --muted: #6a665f; --line: #dedad2; --card: #fffdf9; --soft: #efece5;
-  --accent: #c2410c; --accent-soft: #fde8dc; --good: #1f7a44; --good-soft: #dcf2e3; --bad: #b3261e; --bad-soft: #fadcd9;
-  --warn: #9a6400; --warn-soft: #fbedc8; --caller: #5b6477; --mark: #fff1c9; --ink: #17161a;
-  --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
-  --sans: -apple-system, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+  --paper: #f3eee3; --ink: #1b1813; --muted: #6d6659; --rule: #c9c0ad; --rule-soft: #ddd6c6;
+  --accent: #b23a16; --good: #2a6b3f; --bad: #a9281b; --warn: #8a5a00; --caller: #4c5566; --mark: #f7e9c3;
+  --term: #15130f; --term-ink: #d8d1c0;
+  --serif: "EB Garamond", Garamond, "Times New Roman", serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #121216; --fg: #ebe8e2; --muted: #9a958d; --line: #2a2930; --card: #1a1a20; --soft: #202027;
-  --accent: #f28b5c; --accent-soft: #3a2218; --good: #6cc48a; --good-soft: #17301f; --bad: #ef6b63; --bad-soft: #3a1c1a;
-  --warn: #e2b14a; --warn-soft: #372b12; --caller: #a9b1c3; --mark: #3b3420; --ink: #ebe8e2;
+  --paper: #161411; --ink: #e9e2d3; --muted: #9c948a; --rule: #3a3530; --rule-soft: #2b2724;
+  --accent: #e8743f; --good: #6cc48a; --bad: #ef6b63; --warn: #e2b14a; --caller: #a9b1c3; --mark: #3b3420;
+  --term: #0f0e0c; --term-ink: #d8d1c0;
 }}
 :root[data-theme="dark"] {
-  --bg: #121216; --fg: #ebe8e2; --muted: #9a958d; --line: #2a2930; --card: #1a1a20; --soft: #202027;
-  --accent: #f28b5c; --accent-soft: #3a2218; --good: #6cc48a; --good-soft: #17301f; --bad: #ef6b63; --bad-soft: #3a1c1a;
-  --warn: #e2b14a; --warn-soft: #372b12; --caller: #a9b1c3; --mark: #3b3420; --ink: #ebe8e2;
+  --paper: #161411; --ink: #e9e2d3; --muted: #9c948a; --rule: #3a3530; --rule-soft: #2b2724;
+  --accent: #e8743f; --good: #6cc48a; --bad: #ef6b63; --warn: #e2b14a; --caller: #a9b1c3; --mark: #3b3420;
+  --term: #0f0e0c; --term-ink: #d8d1c0;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
-main { max-width: 960px; margin: 0 auto; padding: 0 16px 96px; }
-a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
-code, pre, .mono { font-family: var(--mono); font-size: 0.9em; }
-h2 { font-size: 1.7rem; line-height: 1.2; margin: 88px 0 10px; letter-spacing: -0.015em; }
-h2 + p { margin-top: 0; max-width: 680px; }
-.sub { color: var(--muted); }
-.eyebrow { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 19px/1.5 var(--serif); -webkit-font-smoothing: antialiased; }
+main { max-width: 1080px; margin: 0 auto; padding: 0 20px 96px; }
+a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--accent); }
+code { font-family: var(--mono); font-size: 0.82em; }
+.k { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+p { margin: 0 0 1em; max-width: 68ch; }
+strong { font-weight: 600; }
 
-/* hero */
-.hero { padding-top: 72px; }
-.hero .eyebrow { margin-top: 0; }
-h1 { font-size: clamp(2.3rem, 6vw, 3.6rem); line-height: 1.04; letter-spacing: -0.03em; margin: 0 0 16px; max-width: 760px; }
-h1 em { font-style: normal; color: var(--accent); }
-.lede { font-size: 1.2rem; color: var(--muted); max-width: 620px; margin: 0 0 24px; }
-.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 1px solid var(--line); border-radius: 10px; color: var(--fg); text-decoration: none; background: var(--card); font-weight: 500; }
-.btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.btn:hover { border-color: var(--accent); }
-.install { margin-top: 14px; display: inline-flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; max-width: 100%; overflow-x: auto; white-space: nowrap; }
-.install span { color: var(--muted); }
-.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 40px 0 0; }
-@media (max-width: 700px) { .stats { grid-template-columns: 1fr; } }
-.stat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 18px 16px; }
-.stat .big { font-size: 2.2rem; font-weight: 650; letter-spacing: -0.03em; line-height: 1; display: flex; gap: 0; }
-.stat .big .d { display: inline-block; opacity: 0; transform: translateY(14px); filter: blur(4px); transition: opacity .5s, transform .5s cubic-bezier(.2,.8,.2,1), filter .5s; }
-.stat.on .big .d { opacity: 1; transform: none; filter: none; }
-.stat .big .d:nth-child(1) { transition-delay: .05s } .stat .big .d:nth-child(2) { transition-delay: .12s } .stat .big .d:nth-child(3) { transition-delay: .19s } .stat .big .d:nth-child(4) { transition-delay: .26s } .stat .big .d:nth-child(5) { transition-delay: .33s } .stat .big .d:nth-child(6) { transition-delay: .40s } .stat .big .d:nth-child(7) { transition-delay: .47s }
-.stat .what { margin: 8px 0 2px; font-weight: 500; }
-.stat .ci { color: var(--muted); font-size: 0.9rem; }
+.mast { display: flex; justify-content: space-between; align-items: baseline; padding: 22px 0 10px; border-bottom: 1px solid var(--ink); gap: 16px; flex-wrap: wrap; }
+.mast .name { font-weight: 600; font-size: 1.1rem; letter-spacing: -0.01em; text-decoration: none; }
+.mast nav { display: flex; gap: 22px; flex-wrap: wrap; }
+.mast nav a { text-decoration: none; }
+.mast nav a:hover { text-decoration: underline; }
 
-/* tabs */
-.tabs { position: relative; display: inline-flex; gap: 2px; background: var(--soft); border: 1px solid var(--line); border-radius: 12px; padding: 3px; margin: 18px 0 10px; max-width: 100%; overflow-x: auto; }
-.tab { position: relative; z-index: 1; padding: 8px 14px; border: 0; border-radius: 9px; background: transparent; color: var(--muted); cursor: pointer; font: inherit; font-size: 0.95rem; white-space: nowrap; }
-.tab[aria-selected="true"] { color: var(--fg); }
-.tabs .pill { position: absolute; top: 3px; left: 0; height: calc(100% - 6px); background: var(--card); border: 1px solid var(--line); border-radius: 9px; transition: left .3s cubic-bezier(.2,.8,.2,1), width .3s cubic-bezier(.2,.8,.2,1); z-index: 0; }
-.takeaway { color: var(--muted); margin: 0 0 14px; max-width: 720px; }
+.hero { padding: 64px 0 40px; border-bottom: 1px solid var(--rule); }
+h1 { font-family: var(--serif); font-weight: 500; font-size: clamp(2.5rem, 6.4vw, 4.4rem); line-height: 1.02; letter-spacing: -0.015em; margin: 0 0 22px; max-width: 18ch; }
+h1 em { font-style: italic; color: var(--accent); }
+.lede { font-size: 1.3rem; line-height: 1.4; max-width: 60ch; margin: 0 0 28px; }
+.row { display: flex; flex-wrap: wrap; gap: 10px 26px; align-items: center; }
+.btn { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+.btn.primary { background: var(--ink); color: var(--paper); padding: 10px 16px; border: 0; }
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.primary:hover { color: var(--paper); background: var(--accent); }
+.install { margin-top: 26px; font-family: var(--mono); font-size: 0.85rem; color: var(--muted); overflow-x: auto; white-space: nowrap; }
+.install b { color: var(--ink); font-weight: 500; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); margin: 44px 0 0; border-top: 1px solid var(--rule); }
+.stat { padding: 18px 20px 18px 0; border-right: 1px solid var(--rule-soft); }
+.stat + .stat { padding-left: 20px; }
+.stat:last-child { border-right: 0; }
+@media (max-width: 700px) { .stats { grid-template-columns: 1fr; } .stat { border-right: 0; border-bottom: 1px solid var(--rule-soft); padding-left: 0 !important; } }
+.stat .big { font-size: 3.2rem; line-height: 1; font-weight: 500; letter-spacing: -0.03em; display: flex; font-variant-numeric: tabular-nums; }
+.stat .big .d { display: inline-block; opacity: 0; transform: translateY(10px); transition: opacity .45s, transform .45s cubic-bezier(.2,.8,.2,1); }
+.stat.on .big .d { opacity: 1; transform: none; }
+.stat .big .d:nth-child(1) { transition-delay: .05s } .stat .big .d:nth-child(2) { transition-delay: .11s } .stat .big .d:nth-child(3) { transition-delay: .17s } .stat .big .d:nth-child(4) { transition-delay: .23s } .stat .big .d:nth-child(5) { transition-delay: .29s } .stat .big .d:nth-child(6) { transition-delay: .35s } .stat .big .d:nth-child(7) { transition-delay: .41s }
+.stat .what { margin: 10px 0 2px; font-size: 1.05rem; }
+.stat .ci { font-family: var(--mono); font-size: 0.74rem; color: var(--muted); }
 
-/* stage */
-.stage { display: grid; grid-template-columns: 1.1fr 1fr; gap: 14px; align-items: start; }
-@media (max-width: 760px) { .stage { grid-template-columns: 1fr; } }
-.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
-.card h3 { margin: 0 0 10px; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; display: flex; justify-content: space-between; align-items: baseline; }
-.card h3 small { font-family: var(--mono); text-transform: none; letter-spacing: 0; font-weight: 400; }
-.timeline { width: 100%; height: 56px; display: block; margin: 0 0 10px; }
+.sec { display: grid; grid-template-columns: 150px 1fr; gap: 0 36px; padding: 44px 0 10px; border-top: 1px solid var(--rule); margin-top: 44px; }
+.sec .mark { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding-top: 4px; line-height: 1.7; }
+.sec .mark b { display: block; color: var(--ink); font-weight: 600; }
+.sec > *, .stage > *, .miss > * { min-width: 0; }
+.hero { border-bottom: 0; padding-bottom: 0; }
+.hero + .sec { margin-top: 36px; }
+@media (max-width: 760px) { .sec { grid-template-columns: 1fr; gap: 10px; } }
+
+.tabs { position: relative; display: flex; gap: 26px; margin: 18px 0 14px; border-bottom: 1px solid var(--rule); max-width: 100%; overflow-x: auto; }
+.tab { padding: 8px 0 10px; border: 0; background: transparent; color: var(--muted); cursor: pointer; font: inherit; font-size: 1rem; white-space: nowrap; font-style: italic; }
+.tab[aria-selected="true"] { color: var(--ink); font-style: normal; }
+.tabs .pill { position: absolute; bottom: -1px; left: 0; height: 2px; background: var(--accent); transition: left .3s cubic-bezier(.2,.8,.2,1), width .3s cubic-bezier(.2,.8,.2,1); }
+.takeaway { font-style: italic; color: var(--muted); margin: 0 0 18px; max-width: 70ch; }
+
+.stage { display: grid; grid-template-columns: 1.1fr 1fr; gap: 0 40px; }
+@media (max-width: 860px) { .stage { grid-template-columns: 1fr; gap: 28px; } }
+.panel h3 { margin: 0 0 12px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 500; display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--rule); padding-bottom: 8px; gap: 10px; }
+.panel h3 small { text-transform: none; letter-spacing: 0; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.timeline { width: 100%; height: 72px; display: block; margin: 4px 0 2px; }
 .timeline .bar { opacity: .18; transition: opacity .3s; }
 .timeline .bar.on { opacity: 1; }
 .timeline .bar.caller { fill: var(--caller); } .timeline .bar.agent { fill: var(--accent); }
 .timeline .overlap { fill: var(--bad); opacity: 0; transition: opacity .3s; } .timeline .overlap.on { opacity: .95; }
-.timeline .gapbad { fill: var(--bad); opacity: 0; transition: opacity .3s; } .timeline .gapbad.on { opacity: .18; }
-.timeline .lane { fill: none; stroke: var(--line); stroke-dasharray: 2 3; }
-.timeline .label { font: 10px var(--mono); fill: var(--muted); }
-.timeline .head { stroke: var(--fg); stroke-width: 1.5; opacity: 0; transition: transform .35s linear, opacity .3s; }
-.timeline .head.on { opacity: .8; }
-.tlkey { margin: -4px 0 10px; font-size: 0.78rem; color: var(--muted); font-family: var(--mono); }
-.tlkey i { display: inline-block; width: 14px; height: 8px; border-radius: 2px; margin: 0 4px 0 8px; vertical-align: 0; }
+.timeline .gapbad { fill: var(--bad); opacity: 0; transition: opacity .3s; } .timeline .gapbad.on { opacity: .14; }
+.timeline .lane { fill: none; stroke: var(--rule); }
+.timeline .tick { stroke: var(--rule); }
+.timeline .head { stroke: var(--ink); stroke-width: 1; opacity: 0; transition: transform .35s linear, opacity .3s; }
+.timeline .head.on { opacity: .9; }
+.tlkey { margin: 0 0 14px; font-family: var(--mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.04em; }
+.tlkey i { display: inline-block; width: 14px; height: 7px; margin: 0 5px 0 12px; vertical-align: 1px; }
+.tlkey i:first-child { margin-left: 0; }
 .tlkey i.caller { background: var(--caller); } .tlkey i.agent { background: var(--accent); } .tlkey i.bad { background: var(--bad); }
-.transcript { max-height: 420px; overflow-y: auto; padding-right: 4px; }
-.turn { display: grid; grid-template-columns: 2.6rem 1fr; gap: 8px; padding: 7px 8px; border-radius: 8px; opacity: 0; transform: translateY(5px); transition: opacity .3s, transform .3s; }
+.transcript { max-height: 440px; overflow-y: auto; padding-right: 6px; }
+.turn { display: grid; grid-template-columns: 3.4rem 1fr; gap: 10px; padding: 6px 0 6px 10px; border-left: 2px solid transparent; opacity: 0; transform: translateY(4px); transition: opacity .3s, transform .3s; }
 .turn.on { opacity: 1; transform: none; }
-.turn.flag { background: var(--mark); }
-.turn .who { color: var(--muted); font-family: var(--mono); font-size: 0.75rem; padding-top: 5px; }
+.turn.flag { border-left-color: var(--accent); background: linear-gradient(90deg, var(--mark), transparent 75%); }
+.turn .who { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding-top: 7px; line-height: 1.5; }
 .turn.agent .who { color: var(--accent); }
 .turn.caller .who { color: var(--caller); }
-.gap { font-family: var(--mono); font-size: 0.76rem; color: var(--muted); padding: 1px 8px 1px 3.4rem; opacity: 0; transition: opacity .25s; }
+.turn > span:last-child { font-size: 1.05rem; line-height: 1.4; }
+.gap { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); padding: 2px 0 2px 4.3rem; opacity: 0; transition: opacity .25s; letter-spacing: 0.03em; }
 .gap.on { opacity: 1; }
-.gap.bad { color: var(--bad); font-weight: 600; }
-.ctl { display: flex; gap: 8px; margin: 12px 0 0; }
-.ctl button { font: inherit; font-size: 0.88rem; padding: 6px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--fg); cursor: pointer; }
-.ctl button:hover { border-color: var(--accent); }
+.gap.bad { color: var(--bad); }
+.ctl { display: flex; gap: 22px; margin: 14px 0 0; }
+.ctl button { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0 0 2px; border: 0; border-bottom: 1px solid var(--ink); background: none; color: var(--ink); cursor: pointer; }
+.ctl button:hover { color: var(--accent); border-color: var(--accent); }
 
-.verdict { display: flex; flex-direction: column; gap: 8px; }
-.group { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 6px 0 2px; }
+.verdict { display: flex; flex-direction: column; }
+.group { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 16px 0 6px; }
+.group:first-child { margin-top: 0; border-bottom: 1px solid var(--rule); padding-bottom: 8px; }
 .check, .dim { opacity: 0; transform: translateY(4px); transition: opacity .3s, transform .3s; }
 .check.on, .dim.on { opacity: 1; transform: none; }
-.check { display: flex; gap: 10px; align-items: baseline; font-size: 0.95rem; }
-.pill { font-family: var(--mono); font-size: 0.72rem; padding: 2px 8px; border-radius: 999px; white-space: nowrap; font-weight: 600; }
-.pill.pass { color: var(--good); background: var(--good-soft); }
-.pill.fail { color: var(--bad); background: var(--bad-soft); }
-.pill.unmeasured { color: var(--muted); background: var(--soft); }
-.status { font-size: 0.9rem; color: var(--muted); padding: 6px 0; opacity: 0; transition: opacity .3s; position: relative; }
+.check { display: grid; grid-template-columns: 3.4rem 1fr; gap: 10px; padding: 5px 0; border-bottom: 1px solid var(--rule-soft); font-size: 0.98rem; }
+.pill { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; padding-top: 6px; font-weight: 600; }
+.pill.pass { color: var(--good); } .pill.fail { color: var(--bad); } .pill.unmeasured { color: var(--muted); }
+.check b { font-weight: 600; }
+.sub { color: var(--muted); }
+.status { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); padding: 4px 0 8px; opacity: 0; transition: opacity .3s; letter-spacing: 0.03em; }
 .status.on { opacity: 1; }
-.status.live { background: linear-gradient(90deg, var(--muted) 0%, var(--fg) 50%, var(--muted) 100%); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmer 1.4s linear infinite; }
+.status.live { background: linear-gradient(90deg, var(--muted) 0%, var(--ink) 50%, var(--muted) 100%); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmer 1.4s linear infinite; }
 @keyframes shimmer { from { background-position: 200% 0 } to { background-position: -200% 0 } }
-.dim { border-top: 1px solid var(--line); padding-top: 9px; display: grid; grid-template-columns: 2rem 1fr; gap: 8px; }
-.dim .score { font-weight: 700; font-size: 1.1rem; line-height: 1.3; }
-.dim .reason { color: var(--muted); font-size: 0.92rem; margin: 2px 0 0; }
-.dim .turns { color: var(--muted); font-family: var(--mono); font-size: 0.78rem; margin-left: 6px; }
+.dim { display: grid; grid-template-columns: 3.4rem 1fr; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--rule-soft); }
+.dim .score { font-size: 1.9rem; line-height: 1.1; font-weight: 500; font-variant-numeric: tabular-nums; }
+.dim b { font-weight: 600; }
+.dim .reason { color: var(--muted); font-size: 0.98rem; margin: 2px 0 0; max-width: none; }
+.dim .turns { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); margin-left: 8px; letter-spacing: 0.04em; }
 .score0 .score { color: var(--bad); } .score1 .score { color: var(--warn); } .score2 .score { color: var(--good); }
-.total { border-top: 2px solid var(--fg); margin-top: 4px; padding-top: 10px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; opacity: 0; transition: opacity .3s; }
+.total { border-top: 1px solid var(--ink); margin-top: 6px; padding-top: 10px; display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; align-items: baseline; opacity: 0; transition: opacity .3s; }
 .total.on { opacity: 1; }
-.total .big { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.03em; display: flex; }
-.total .big .d { display: inline-block; opacity: 0; transform: translateY(12px); transition: opacity .4s, transform .4s cubic-bezier(.2,.8,.2,1); }
+.total .big { font-size: 2.6rem; font-weight: 500; letter-spacing: -0.03em; display: flex; line-height: 1; font-variant-numeric: tabular-nums; }
+.total .big .d { display: inline-block; opacity: 0; transform: translateY(10px); transition: opacity .4s, transform .4s cubic-bezier(.2,.8,.2,1); }
 .total.on .big .d { opacity: 1; transform: none; }
-.total .band { font-weight: 600; }
-.total .flags { color: var(--muted); font-family: var(--mono); font-size: 0.8rem; width: 100%; }
-.badge { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 0.85rem; font-weight: 600; }
-.badge.good { color: var(--good); background: var(--good-soft); } .badge.bad { color: var(--bad); background: var(--bad-soft); } .badge.warn { color: var(--warn); background: var(--warn-soft); }
+.total .band { font-style: italic; font-size: 1.1rem; }
+.total .flags { grid-column: 1 / -1; font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.03em; }
+.badge.good { color: var(--good); } .badge.bad { color: var(--bad); } .badge.warn { color: var(--warn); }
 
-/* grid */
-.gridhead { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin: 14px 0 10px; }
-.legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.85rem; color: var(--muted); }
-.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 5px; }
+.gridhead { display: flex; flex-wrap: wrap; gap: 10px 26px; align-items: end; margin: 6px 0 10px; justify-content: space-between; }
+.gridhead .tabs { margin: 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.03em; padding-bottom: 10px; }
+.legend i { display: inline-block; width: 10px; height: 10px; vertical-align: -1px; margin-right: 6px; }
 .sq.caught, .legend i.caught, .sq.clean, .legend i.clean { background: var(--good); }
-.sq.clean, .legend i.clean { opacity: .45; }
+.sq.clean, .legend i.clean { opacity: .38; }
 .sq.marked, .legend i.marked { background: var(--warn); }
 .sq.missed, .legend i.missed, .sq.alarm, .legend i.alarm { background: var(--bad); }
-.gridwrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--card); padding: 10px 12px; }
-table.grid { border-collapse: separate; border-spacing: 0; font-size: 0.85rem; }
-table.grid th { text-align: left; font-weight: 500; color: var(--muted); padding: 4px 6px; font-family: var(--mono); font-size: 0.78rem; white-space: nowrap; }
-table.grid th.j { text-align: center; border-bottom: 1px solid var(--line); }
-table.grid td { padding: 3px 6px; white-space: nowrap; }
-table.grid td.id { font-family: var(--mono); font-size: 0.8rem; }
-table.grid td.id small { color: var(--muted); margin-left: 6px; }
-table.grid tr.sep td { padding-top: 10px; }
-.sq { display: inline-block; width: 18px; height: 18px; border-radius: 4px; margin: 0 2px; cursor: default; }
-td.gapcol { width: 14px; }
+.gridwrap { overflow-x: auto; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule); padding: 6px 0; }
+table.grid { border-collapse: collapse; font-size: 0.85rem; }
+table.grid th { text-align: left; font-weight: 500; color: var(--muted); padding: 6px 8px; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em; white-space: nowrap; }
+table.grid th.j { text-align: center; border-bottom: 1px solid var(--rule-soft); color: var(--ink); }
+table.grid td { padding: 3px 8px; white-space: nowrap; }
+table.grid td.id { font-family: var(--mono); font-size: 0.74rem; }
+table.grid td.id small { color: var(--muted); margin-left: 8px; font-size: 0.68rem; }
+table.grid tr.sep td { padding-top: 12px; }
+.sq { display: inline-block; width: 13px; height: 13px; margin: 0 3px; cursor: default; }
+td.gapcol { width: 18px; }
+.gridnote { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); margin-top: 10px; letter-spacing: 0.02em; max-width: none; }
 
-/* tables */
-.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
-table.plain { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
-table.plain th, table.plain td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
-table.plain tr:last-child td { border-bottom: 0; }
-table.plain th { color: var(--muted); font-weight: 600; font-size: 0.85rem; }
-table.plain td.num { font-family: var(--mono); white-space: nowrap; }
-table.plain td:first-child { min-width: 240px; }
-@media (max-width: 700px) { table.plain td:first-child { min-width: 160px; } }
+.tablewrap { overflow-x: auto; border-top: 1px solid var(--ink); margin-bottom: 26px; }
+table.plain { border-collapse: collapse; width: 100%; font-size: 0.98rem; }
+table.plain th, table.plain td { text-align: left; padding: 9px 12px 9px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
+table.plain th { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+table.plain th code { text-transform: none; letter-spacing: 0; font-size: 0.7rem; color: var(--ink); }
+table.plain td.num { font-family: var(--mono); font-size: 0.8rem; white-space: nowrap; }
 table.plain td.lo { color: var(--warn); font-weight: 600; }
+table.plain td:first-child { min-width: 210px; }
+@media (max-width: 700px) { table.plain td:first-child { min-width: 150px; } }
 
-/* misses */
-.miss { border-left: 3px solid var(--accent); padding-left: 16px; margin: 22px 0; }
-.quote { color: var(--muted); font-style: italic; }
-.mismatch { background: var(--mark); padding: 2px 6px; border-radius: 4px; font-style: normal; font-weight: 600; font-size: 0.85rem; }
+.miss { display: grid; grid-template-columns: 2.2rem 1fr; gap: 0 10px; margin: 0 0 30px; }
+.miss .n { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); padding-top: 6px; }
+.miss p { margin-bottom: 0.7em; }
+.quote { font-style: italic; border-left: 2px solid var(--accent); padding-left: 14px; margin: 8px 0 12px; display: block; }
+.mismatch { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bad); margin-left: 6px; font-weight: 600; }
 
-/* terminal */
-.term { background: #121216; color: #d6d3cc; border-radius: 14px; padding: 16px 18px; overflow-x: auto; font-family: var(--mono); font-size: 0.82rem; line-height: 1.5; border: 1px solid #2a2930; }
-.term .prompt { color: #6cc48a; }
-.term .cmd { color: #fff; }
-.term .flag { color: #ef6b63; }
-.term .ok { color: #6cc48a; }
-.term .c { color: #8a867f; }
-footer { color: var(--muted); font-size: 0.9rem; margin-top: 88px; border-top: 1px solid var(--line); padding-top: 16px; }
+.term { background: var(--term); color: var(--term-ink); padding: 18px 20px; overflow-x: auto; font-family: var(--mono); font-size: 0.76rem; line-height: 1.55; margin: 0; }
+.term .prompt { color: #8dc9a0; } .term .cmd { color: #fff; } .term .flag { color: #ef7b6f; } .term .ok { color: #8dc9a0; } .term .c { color: #8f887c; }
+footer { font-family: var(--mono); font-size: 0.74rem; color: var(--muted); margin-top: 64px; border-top: 1px solid var(--ink); padding-top: 14px; line-height: 1.7; }
 @media (prefers-reduced-motion: reduce) { .turn, .gap, .check, .dim, .total, .stat .big .d, .total .big .d, .timeline .bar, .timeline .head, .tabs .pill { transition: none; } .status.live { animation: none; } }
 </style>
 </head>
 <body>
 <main>
+<div class="mast">
+  <a class="name" href="#">callgrade</a>
+  <nav class="k"><a href="#watch">Watch</a><a href="#grid">Every run</a><a href="#trust">Trust</a><a href="#wrong">Wrong</a><a href="https://github.com/hharshitarora/callgrade">GitHub</a></nav>
+</div>
+
 <section class="hero">
-<p class="eyebrow">open source · python · MIT</p>
-<h1>Grade your voice agent's calls. <em>Then grade the grader.</em></h1>
-<p class="lede">callgrade reads a call export from any platform, times every reply with plain code, has an LLM score it against a rubric, and measures how far that score can be trusted.</p>
+<h1>Grades voice agent calls. <em>Then grades the grader.</em></h1>
+<p class="lede">Point it at the call exports you already have. Plain code times every reply. A model scores the call against a rubric and has to name the turn before it gives a number. Then the judge itself gets measured, because a judge is a model too.</p>
 <div class="row">
   <a class="btn primary" href="https://github.com/hharshitarora/callgrade">GitHub</a>
   <a class="btn" href="https://github.com/hharshitarora/callgrade#quickstart">Quickstart</a>
-  <a class="btn" href="#grid">Every run</a>
+  <a class="btn" href="launch.mp4">26s video</a>
 </div>
-<div class="install mono"><span>$</span>pip install "callgrade[anthropic] @ git+https://github.com/hharshitarora/callgrade"</div>
+<div class="install">$ <b>pip install "callgrade[anthropic] @ git+https://github.com/hharshitarora/callgrade"</b></div>
 <div class="stats" id="stats"></div>
 </section>
 
-<h2>Watch it grade</h2>
-<p>Three calls from the held-out test set, with the verdict the default judge gave each one. The timing comes from timestamps in plain code. The verdict comes from an LLM reading a rubric, and it has to name the turn before it gives a number.</p>
+<section class="sec" id="watch">
+<div class="mark">01<b>Watch it grade</b></div>
+<div>
+<p>Three calls from the held-out set, exactly as the default judge graded them. Nothing on this page is typed in by hand. The stopwatch part is timestamps and arithmetic. The judge part is a model reading the rubric, so read its reasons before its numbers.</p>
 <div class="tabs" role="tablist" id="tabs"><div class="pill"></div></div>
 <p class="takeaway" id="takeaway"></p>
 <div class="stage">
-  <div class="card">
+  <div class="panel">
     <h3>Call <small id="callid"></small></h3>
-    <svg class="timeline" id="timeline" viewBox="0 0 1000 64" preserveAspectRatio="none" aria-hidden="true"></svg>
+    <svg class="timeline" id="timeline" viewBox="0 0 1000 72" preserveAspectRatio="none" aria-hidden="true"></svg>
     <p class="tlkey"><i class="caller"></i>caller <i class="agent"></i>agent <i class="bad"></i>overlap, or silence over 3s</p>
     <div class="transcript" id="transcript"></div>
     <div class="ctl"><button id="replay">Replay</button><button id="skip">Show all</button></div>
   </div>
-  <div class="card verdict" id="verdict"></div>
+  <div class="panel verdict" id="verdict"></div>
 </div>
+</div>
+</section>
 
-<h2 id="grid">Every call, every run</h2>
-<p>Three judges graded every call three times. One square per run. A planted failure counts as caught only at the minimum score, the same bar that makes a clean call a false alarm, so a judge that merely docks a point for the planted failure does not get credit.</p>
+<section class="sec" id="grid">
+<div class="mark">02<b>Every call, every run</b></div>
+<div>
+<p>Three judges, every call, three runs each. One square per run. A planted failure only counts as caught at the minimum score, which is the same bar that turns a clean call into a false alarm. Docking one point for a planted failure doesn't count. I made that rule after the first run looked better than it was.</p>
 <div class="gridhead">
   <div class="tabs" id="gridtabs"><div class="pill"></div><button class="tab" data-set="holdout" aria-selected="true">Held-out set</button><button class="tab" data-set="dev" aria-selected="false">Development set</button></div>
   <div class="legend"><span><i class="caught"></i>caught</span><span><i class="marked"></i>marked down, not caught</span><span><i class="missed"></i>missed or false alarm</span><span><i class="clean"></i>clean call, no alarm</span></div>
 </div>
 <div class="gridwrap"><table class="grid" id="gridtable"></table></div>
-<p class="sub" id="gridnote"></p>
+<p class="gridnote" id="gridnote"></p>
+</div>
+</section>
 
-<h2>How far to trust it</h2>
-<p>Every rate carries a 95% interval, because 9 of 9 on a small set is a range, not a certainty. The held-out set was written after the rubrics were tuned on the development set, and committed before any judge saw it.</p>
+<section class="sec" id="trust">
+<div class="mark">03<b>How far to trust it</b></div>
+<div>
+<p>Every rate comes with a 95% interval. 9 of 9 on 9 calls means somewhere between 70% and 100%, and I'd rather the page said so than me. The held-out set was written after the rubrics were tuned on the development set and committed before any judge saw it. The development numbers flatter the judge a bit. The held-out ones are the ones to quote.</p>
 <div class="tablewrap"><table class="plain" id="numbers"></table></div>
-<p>How far the judges agree with each other, pair by pair, as quadratic weighted kappa. 1 is perfect, 0 is chance, and 0.6 is a common bar for a judge that gates a release.</p>
+<p>How much the judges agree with each other, pair by pair, as quadratic weighted kappa (1 is perfect agreement, 0 is chance, and 0.6 is where people usually let a judge gate a release). The one number under 0.6 is Haiku and GPT reading the same awkward call differently every single run.</p>
 <div class="tablewrap"><table class="plain" id="kappa"></table></div>
-<p class="sub">No person has scored either set yet. That check exists in the tool (<code>callgrade agree --human</code>) and has not been run.</p>
+<p class="sub">Nobody has scored either set by hand yet. The tool has the command for it (<code>callgrade agree --human</code>), I just haven't sat down and done the 14 calls. It's next.</p>
+</div>
+</section>
 
-<h2>What it got wrong, so far</h2>
-<div class="miss">
-  <p><strong>The judge found a bug in my answer key.</strong> The first run flagged a call I had marked clean. Its reason:</p>
+<section class="sec" id="wrong">
+<div class="mark">04<b>What it got wrong, so far</b></div>
+<div>
+<div class="miss"><div class="n">i.</div><div>
+  <p><strong>The judge found a bug in my answer key.</strong> On the very first run it blocked a call I'd written as clean. Its reason:</p>
   <p class="quote" id="c10"></p>
-  <p>It was right. I had the agent book 6:15pm against a policy that ends viewings at 6pm. I fixed the call, not the judge.</p>
-</div>
-<div class="miss">
-  <p><strong>One call is a coin the judge sometimes calls wrong.</strong> In <code>p09</code> the caller cuts in to say they need three bedrooms and the agent keeps pitching the two-bedroom. Three runs on the current rubric:</p>
+  <p>It was right. I'd had the agent book a 6:15pm viewing and my own policy file says viewings end at 6. So I fixed the call and left the judge alone.</p>
+</div></div>
+<div class="miss"><div class="n">ii.</div><div>
+  <p><strong>One call it still gets wrong sometimes.</strong> In <code>p09</code> the caller cuts in to say they need three bedrooms and the agent keeps pitching the two-bed. Three runs on the current rubric:</p>
   <div id="p09"></div>
-  <p>In the run that scored a 1, the written reason describes a 0. The reason and the score disagree, which no rubric can fix. It is the argument for reading the reasons, not only the totals.</p>
-</div>
-
-<div class="miss">
-  <p><strong>The biggest judge disagrees with the other two on one clean call.</strong> In <code>c04</code> the agent says it will put a pet request to the landlord and call back by Thursday. Haiku and GPT pass it every run. Sonnet blocks it every run:</p>
+  <p>Look at the run that scored a 1. The reason it wrote describes a 0. No rubric wording fixes a judge that contradicts itself in the same breath, and honestly this is why I don't trust totals on their own.</p>
+</div></div>
+<div class="miss"><div class="n">iii.</div><div>
+  <p><strong>The expensive judge disagrees with the other two on one clean call.</strong> In <code>c04</code> the agent says it'll put a pet request to the landlord and call back by Thursday. Haiku and GPT pass it every run. Sonnet blocks it every run:</p>
   <p class="quote" id="c04"></p>
-  <p>The context file says pets need the landlord's consent and nothing about callbacks, so the call is clean by the answer key and a promise by a stricter reading. One line in the context about how callbacks work would settle it. It is left as is, because that is what <code>--context</code> is for.</p>
+  <p>The context file says pets need the landlord's consent and says nothing about callbacks. So by my answer key the call is clean, and by a strict reading "by Thursday" is a promise nobody authorised. Sonnet has a point. One line in the context about callbacks would settle it either way, and I left it alone because that is exactly the kind of line <code>--context</code> exists for.</p>
+</div></div>
 </div>
+</section>
 
-<h2>Run it</h2>
-<p>What the command printed for the held-out set. The HTML report it links to is <a href="https://github.com/hharshitarora/callgrade/blob/main/results/holdout/claude-haiku-5-5/run-1/report.html">in the repo</a>.</p>
+<section class="sec" id="run">
+<div class="mark">05<b>Run it</b></div>
+<div>
+<p>What the command printed for the held-out set, unedited. The HTML report it mentions is <a href="https://github.com/hharshitarora/callgrade/blob/main/results/holdout/claude-haiku-5-5/run-1/report.html">in the repo</a>.</p>
 <pre class="term" id="term"></pre>
+</div>
+</section>
 
-<h2>Where it came from</h2>
-<p>The first version was a sheet I filled in by hand to score test calls for a voice agent that qualified rental leads. The sheet became an LLM judge on four dimensions, and that judge is what moved the agent from "it feels off" to "it misreads intent when the caller says they need to think about it". This is the open version, with platform adapters, measured timing checks, and the agreement measurements the original never had.</p>
+<section class="sec" id="origin">
+<div class="mark">06<b>Where it came from</b></div>
+<div>
+<p>The first version was a scoring sheet I filled in by hand, seven rows, 0 to 2 each, for test calls on a voice agent that qualified rental leads. Listening to calls doesn't scale past a handful a day, so the sheet became an LLM judge on four dimensions. That judge is what got the agent from "it feels off" to "it misreads intent when the caller says they need to think about it", which you can actually fix. This is the open version. It has the platform adapters and the timing checks the original never had, and the part I care about most, the measurements of the judge itself.</p>
 <p>Design choices are in <a href="https://github.com/hharshitarora/callgrade/blob/main/DECISIONS.md">DECISIONS.md</a>. Every failure the test sets cover is in the <a href="https://github.com/hharshitarora/callgrade/blob/main/docs/failure-catalog.md">failure catalog</a>.</p>
+</div>
+</section>
 
-<footer>Every transcript, score, reason and rate on this page is read from the files in the repo at commit <code id="commit"></code>, and a test fails if they drift. MIT licensed. Built by <a href="https://github.com/hharshitarora">Harshit Arora</a>.</footer>
+<footer>Every transcript, score, reason and number on this page is read from the files in the repo at commit <code id="commit"></code>. A test fails if the page and the files drift apart. MIT. Built by <a href="https://github.com/hharshitarora">Harshit Arora</a>.</footer>
 </main>
 <script>
 const $ = (s) => document.querySelector(s);
@@ -254,6 +295,7 @@ const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({"&": "&amp;", "<": "&lt;
 const digits = (s) => String(s).split("").map((c) => `<span class="d">${c === " " ? "&nbsp;" : esc(c)}</span>`).join("");
 
 function movePill(tabs, btn) {
+  if (!btn) return;
   const pill = tabs.querySelector(".pill");
   pill.style.left = btn.offsetLeft + "px";
   pill.style.width = btn.offsetWidth + "px";
@@ -264,22 +306,22 @@ function timeline(call) {
   const svg = $("#timeline");
   const dur = Math.max(...call.turns.map((t) => t.end));
   const x = (s) => (s / dur) * 1000;
-  const lane = { caller: 14, agent: 38 };
-  let h = `<line class="lane" x1="0" y1="${lane.caller + 7}" x2="1000" y2="${lane.caller + 7}"/><line class="lane" x1="0" y1="${lane.agent + 7}" x2="1000" y2="${lane.agent + 7}"/>`;
-  const items = [];
+  const lane = { caller: 16, agent: 42 };
+  let h = `<line class="lane" x1="0" y1="${lane.caller + 8}" x2="1000" y2="${lane.caller + 8}"/><line class="lane" x1="0" y1="${lane.agent + 8}" x2="1000" y2="${lane.agent + 8}"/>`;
+  for (let s = 0; s <= dur; s += 10) h += `<line class="tick" x1="${x(s)}" y1="64" x2="${x(s)}" y2="70"/>`;
   call.turns.forEach((t, i) => {
     if (i > 0) {
       const prev = call.turns[i - 1];
       const gap = t.start - prev.end;
-      if (gap > 3) h += `<rect class="gapbad" data-i="${i}" x="${x(prev.end)}" y="6" width="${x(gap)}" height="46"/>`;
+      if (gap > 3) h += `<rect class="gapbad" data-i="${i}" x="${x(prev.end)}" y="8" width="${x(gap)}" height="50"/>`;
     }
-    h += `<rect class="bar ${t.speaker}" data-i="${i}" x="${x(t.start)}" y="${lane[t.speaker]}" width="${Math.max(2, x(t.end - t.start))}" height="14" rx="2"/>`;
+    h += `<rect class="bar ${t.speaker}" data-i="${i}" x="${x(t.start)}" y="${lane[t.speaker]}" width="${Math.max(2, x(t.end - t.start))}" height="16"/>`;
     if (i > 0 && t.speaker === "agent") {
       const prev = call.turns[i - 1];
-      if (prev.speaker === "caller" && t.start < prev.end - 0.05) h += `<rect class="overlap" data-i="${i}" x="${x(t.start)}" y="${lane.caller}" width="${x(prev.end - t.start)}" height="38" rx="2"/>`;
+      if (prev.speaker === "caller" && t.start < prev.end - 0.05) h += `<rect class="overlap" data-i="${i}" x="${x(t.start)}" y="${lane.caller}" width="${x(prev.end - t.start)}" height="42"/>`;
     }
   });
-  h += `<line class="head" x1="0" y1="4" x2="0" y2="60"/>`;
+  h += `<line class="head" x1="0" y1="4" x2="0" y2="62"/>`;
   svg.innerHTML = h;
   return { x, svg };
 }
@@ -331,7 +373,7 @@ function renderCall(call) {
   const tot = document.createElement("div");
   tot.className = "total";
   const bandClass = call.total >= 9 ? "good" : call.total >= 6 ? "warn" : "bad";
-  tot.innerHTML = `<span class="big">${digits(call.total + " / " + call.max_total)}</span><span class="badge ${bandClass}">${esc(call.band)}</span><span class="flags">${call.flags.length ? esc(call.flags.join("  ")) : "no flags"}</span>`;
+  tot.innerHTML = `<span class="big">${digits(call.total + " / " + call.max_total)}</span><span class="band badge ${bandClass}">${esc(call.band)}</span><span class="flags">${call.flags.length ? esc(call.flags.join("  ")) : "no flags"}</span>`;
   v.appendChild(tot); vnodes.push({ els: [tot], wait: 0 });
   return { nodes, vnodes, head: tl.svg.querySelector(".head") };
 }
@@ -364,8 +406,8 @@ function stats(numbers) {
   const pct = (x) => Math.round(x * 100) + "%";
   const tiles = [
     [h.caught_every_run, "planted failures caught, every run", `held-out set, default judge, 95% interval ${pct(h.caught_ci[0])} to ${pct(h.caught_ci[1])}`],
-    [h.false_alarms_per_run[0], "clean calls with a false alarm", "in each of three runs, both judges"],
-    ["3 × 3", "judges, runs each", "Haiku, GPT and Sonnet, three runs each, with the agreement between them"],
+    [h.false_alarms_per_run[0], "clean calls with a false alarm", "held-out set, every run, every judge"],
+    ["3 × 3", "judges, runs each", "Haiku, GPT and Sonnet, and how far they agree"],
   ];
   $("#stats").innerHTML = tiles.map(([n, what, ci]) => `<div class="stat"><div class="big">${digits(n)}</div><div class="what">${what}</div><div class="ci">${ci}</div></div>`).join("");
   requestAnimationFrame(() => setTimeout(() => $("#stats").querySelectorAll(".stat").forEach((s, i) => setTimeout(() => s.classList.add("on"), i * 150)), 200));
@@ -395,7 +437,7 @@ function gridTable(set, data) {
 
 function numbersTable(numbers) {
   const judges = ["claude-haiku-5-5", "gpt-5.4-mini", "claude-sonnet-5-5"];
-  const sets = [["holdout", "Held-out set"], ["dev", "Development set"]];
+  const sets = [["holdout", "Held-out"], ["dev", "Development"]];
   const pct = (x) => Math.round(x * 100) + "%";
   let h = "<tr><th></th>" + sets.map(([s, label]) => judges.map((j) => `<th>${label}<br><code>${j}</code></th>`).join("")).join("") + "</tr>";
   const row = (label, f) => "<tr><td>" + label + "</td>" + sets.map(([s]) => judges.map((j) => `<td class="num">${f(numbers[s][j])}</td>`).join("")).join("") + "</tr>";
@@ -408,10 +450,10 @@ function numbersTable(numbers) {
 
 function kappaTable(kappa, names) {
   const dims = Object.keys(names);
-  let h = "<tr><th></th><th></th>" + dims.map((d) => `<th>${names[d]}</th>`).join("") + "</tr>";
+  let h = "<tr><th>Pair</th><th>Set</th>" + dims.map((d) => `<th>${names[d]}</th>`).join("") + "</tr>";
   for (const [pair, sets] of Object.entries(kappa)) {
-    [["holdout", "Held-out set"], ["dev", "Development set"]].forEach(([s, label], i) => {
-      h += `<tr>${i === 0 ? `<td rowspan="2"><code>${pair.replace(" vs ", "</code><br>vs<br><code>")}</code></td>` : ""}<td>${label}</td>` +
+    [["holdout", "Held-out"], ["dev", "Development"]].forEach(([s, label], i) => {
+      h += `<tr>${i === 0 ? `<td rowspan="2"><code>${pair.replace(" vs ", "</code><br>vs <code>")}</code></td>` : ""}<td>${label}</td>` +
         dims.map((d) => `<td class="num${sets[s][d] < 0.6 ? " lo" : ""}">${sets[s][d].toFixed(2)}</td>`).join("") + "</tr>";
     });
   }
@@ -444,10 +486,12 @@ fetch("data.json").then((r) => r.json()).then(async (data) => {
   const current = () => data.showcase[[...tabs.querySelectorAll(".tab")].findIndex((t) => t.getAttribute("aria-selected") === "true")];
   $("#replay").onclick = () => play(current());
   $("#skip").onclick = () => play(current(), true);
-  movePill(tabs, tabs.querySelector(".tab"));
   const gt = $("#gridtabs");
   gt.querySelectorAll(".tab").forEach((b) => b.onclick = () => { movePill(gt, b); gridTable(b.dataset.set, data); });
-  movePill(gt, gt.querySelector(".tab"));
+  const placePills = () => { movePill(tabs, tabs.querySelector('[aria-selected="true"]')); movePill(gt, gt.querySelector('[aria-selected="true"]')); };
+  placePills();
+  if (document.fonts) document.fonts.ready.then(placePills);
+  addEventListener("resize", placePills);
   gridTable("holdout", data);
   numbersTable(data.numbers);
   kappaTable(data.kappa, data.dimension_names);
@@ -456,9 +500,8 @@ fetch("data.json").then((r) => r.json()).then(async (data) => {
   $("#c04").textContent = "“" + data.misses.c04.reason + "”";
   $("#p09").innerHTML = data.misses.p09.map((r) => {
     const mis = r.score > 0;
-    return `<p><b>Run ${r.run}, scored ${r.score}${mis ? ' <span class="mismatch">reason says 0</span>' : ""}:</b> <span class="quote">“${esc(r.reason)}”</span></p>`;
+    return `<p><b>Run ${r.run}, scored ${r.score}</b>${mis ? '<span class="mismatch">reason says 0</span>' : ""}<span class="quote">“${esc(r.reason)}”</span></p>`;
   }).join("");
-  addEventListener("resize", () => { movePill(tabs, tabs.querySelector('[aria-selected="true"]')); movePill(gt, gt.querySelector('[aria-selected="true"]')); });
   if (!auto) { play(data.showcase[0]); return; }
   // ?auto plays the three calls back to back, then scrolls to the grid. Used to record the demo video.
   await sleep(2500);
