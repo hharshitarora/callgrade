@@ -1,0 +1,37 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: cimg/python:3.12
+    steps:
+      - checkout
+      # No lockfile in the repo, so no dependency cache yet.
+      - run:
+          name: Install
+          command: pip install -e ".[dev]"
+      - run:
+          name: Unit tests
+          command: circleci testsuite run "pytest"
+      # No API key in CI: grade with measured checks only, as the GitHub workflow does.
+      - run:
+          name: Grade the test set with measured checks only
+          command: callgrade grade examples/calls --judge none --out run
+      - run:
+          name: Prove every planted timing failure is caught
+          command: |
+            python - \<<'PY'
+            import json, subprocess, sys
+            out = json.loads(subprocess.check_output(
+                ["callgrade", "agree", "run/results.jsonl", "--planted", "examples/planted.jsonl"]))["planted_failures"]
+            print(json.dumps(out, indent=2))
+            if out["missed"] or out["false_alarms_on_clean_calls"]:
+                sys.exit("a planted timing failure was missed or a clean call raised an alarm")
+            PY
+      - store_artifacts:
+          path: run
+
+workflows:
+  ci:
+    jobs:
+      - test

@@ -1,0 +1,5 @@
+name: pytest
+discover: find ./tests -type f -name 'test_*.py'
+run: pytest --disable-pytest-warnings --no-header --quiet --tb=short --override-ini=junit_family=legacy --junit-xml="<< outputs.junit >>" << test.atoms >>
+options:
+  store-test-results: true
