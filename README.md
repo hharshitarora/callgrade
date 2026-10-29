@@ -269,9 +269,46 @@ What these numbers do not show:
   "somewhere between 0% and 39%". 9 of 9 means 70% to 100%. Both sets were
   written by the same person for the same made-up agency, so a judge that
   learned the house style of one has seen the other.
+- **Real calls have been read, not labelled.** The 102 Bolna calls above
+  show the adapter and the judge hold up on real exports. Nobody has checked
+  those 102 verdicts against a person yet.
 - **No human has scored either set yet.** Catching planted failures shows the
   judge reads the rubric. Agreement with a person on subtle calls is the
   measurement above that has not been run.
+
+## On real calls
+
+On 2026-10-28 callgrade ran on 102 real outbound calls from a Bolna account
+(every completed call with at least two turns out of 500 executions from
+February and March 2026, for a property sales agent). The calls stay private.
+What happened:
+
+- **The adapter read all 102**, from the standard export, with no code
+  change. Reply latency was measured on 101 of them from the platform's own
+  per-turn latency data (worst 2.0s, none over 3s), which the adapter now
+  reads when timestamps are missing. Talk-over, dead air and barge-ins stayed
+  unmeasured, because that export has no timestamps.
+- **The judge made 0 errors** on 102 calls and cited turns for every one of
+  the 223 dimension scores it marked down.
+- **The context has to match the agent version that made the call.** The
+  calls spanned seven versions of the agent, and the company it said it was
+  calling from changed between them. Graded against the agent's current
+  prompt, 35 calls were blocked, 34 of them for naming the wrong company.
+  Against the older prompt, 73. Against the prompt that matched each call's
+  version, 2: one agent that kept pitching after three clear refusals, and one
+  that resumed the pitch after a no and switched language against its own
+  rules. The blocker count was measuring prompt drift, not the agent, until
+  the context was right.
+- **With matched context**: mean 7.6 of 10; 13 calls production ready, 44
+  minor tweaks, 40 needs work, 5 fix before scaling. Intent and completion
+  were the weak dimensions (1.2 of 2 each): the agent often did not take the
+  message a caller asked for, or kept qualifying a caller who had said why
+  they rang. Calls of three turns or fewer averaged 8.1; calls of six or more
+  averaged 6.4, because a longer call gives an agent more chances to go wrong.
+
+Scripts: `scripts/fetch_bolna.py` pulls an account's history into a
+gitignored folder, seven days at a time, because the v2 API refuses longer
+windows.
 
 ## Use it as a gate
 

@@ -113,3 +113,13 @@ judge noise is a gate people learn to ignore. The rule and the categories
 (fixed, regressed, still failing, now flaky, missing) follow Tony Cueva's
 "Build Your Eval Harness" (2026-10-27), which reached the same rule on a
 support bot after two tries that did not hold.
+
+## The context is part of the measurement
+
+On real calls, the same judge on the same 102 transcripts blocked 35, 73 or
+2 calls depending on which version of the agent's prompt was handed in as
+`--context`. Agents get rebranded, rewritten and versioned, and a call made
+under one prompt graded against another reads as a wall of invented facts.
+A context file is therefore pinned to the agent version it describes, and a
+result is only comparable to another result with the same context. The
+history folders record which context each run used.
