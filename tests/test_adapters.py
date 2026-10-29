@@ -68,3 +68,14 @@ def test_roundtrip_through_callgrade_format(tmp_path):
     call.save(tmp_path / "c.json")
     again = adapters.load(tmp_path / "c.json")
     assert again.to_dict() == call.to_dict()
+
+
+def test_bolna_latency_data_measures_reply_latency_without_timestamps():
+    data = {"id": "x", "transcript": "assistant: Hi there.\nuser: Hello.\nassistant: How can I help?\nuser: Rent.\nassistant: Sure.",
+            "latency_data": {"llm": {"turns": [{"turn": 1, "time_to_first_token": 600.0}, {"turn": 2, "time_to_first_token": 2900.0}]},
+                             "synthesizer": {"turns": [{"turn": 1, "time_to_first_token": 250}, {"turn": 2, "time_to_first_token": 400}]}}}
+    call = adapters.from_bolna(data)
+    assert call.meta["reply_latency_s"] == [0.85, 3.3]
+    r = checks.reply_latency(call, 3.0)
+    assert r.status == "fail" and r.value == 3.3 and "platform" in r.detail
+    assert checks.reply_latency(adapters.from_bolna({"id": "y", "transcript": "assistant: Hi."}), 3.0).status == "unmeasured"

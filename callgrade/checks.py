@@ -47,6 +47,14 @@ def reply_latency(call: Call, limit: float) -> CheckResult:
                 gaps.append(gap)
                 if gap > limit:
                     slow.append(i)
+    if not gaps and call.meta.get("reply_latency_s"):
+        # no timestamps, but the platform measured each reply itself (see the adapter's note)
+        lat = [float(v) for v in call.meta["reply_latency_s"]]
+        slow_n = sum(v > limit for v in lat)
+        status = "fail" if slow_n else "pass"
+        detail = (f"worst {max(lat):.1f}s over {len(lat)} replies, from the platform's own per-turn latency data"
+                  + (f", {slow_n} slower than {limit:g}s" if slow_n else ""))
+        return CheckResult("reply_latency", "Reply latency", status, detail, [], round(max(lat), 3))
     if not gaps:
         return CheckResult("reply_latency", "Reply latency", "unmeasured", "needs start and end times on each turn")
     worst = max(gaps)

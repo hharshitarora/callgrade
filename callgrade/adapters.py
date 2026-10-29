@@ -12,7 +12,7 @@ What each platform gives us for timing:
 | Retell     | yes   | yes (word timings) | no |
 | ElevenLabs | yes   | no  | yes              |
 | Bland      | yes   | no  | no               |
-| Bolna      | no    | no  | no (yes in the debug bundle, start only) |
+| Bolna      | no    | no  | no (yes in the debug bundle, start only); reply latency per turn from `latency_data` |
 """
 from __future__ import annotations
 
@@ -129,7 +129,19 @@ def from_bolna(data: dict) -> Call:
             turns.append(Turn(_speaker(m.group(1)), m.group(2).strip()))
         elif turns and line.strip():  # a wrapped line continues the previous turn
             turns[-1].text += " " + line.strip()
-    return Call(id=str(data.get("id", "bolna-call")), turns=turns, meta={"platform": "bolna"})
+    meta = {"platform": "bolna"}
+    # The standard export has no timestamps, but latency_data records, per agent turn, the
+    # model's time to first token and the voice's time to first audio in milliseconds. Their
+    # sum is the agent's reply time from the end of transcription: a floor on what the
+    # caller waited, since it leaves out the transcriber's endpointing.
+    ld = data.get("latency_data") or {}
+    llm = {t.get("turn"): t.get("time_to_first_token") for t in (ld.get("llm") or {}).get("turns") or []}
+    tts = {t.get("turn"): t.get("time_to_first_token") for t in (ld.get("synthesizer") or {}).get("turns") or []}
+    lat = [(llm[n] or 0) + (tts.get(n) or 0) for n in sorted(llm) if llm[n] is not None]
+    if lat:
+        meta["reply_latency_s"] = [round(v / 1000.0, 3) for v in lat]
+        meta["reply_latency_source"] = "bolna latency_data: model time to first token plus voice time to first audio, after transcription"
+    return Call(id=str(data.get("id", "bolna-call")), turns=turns, meta=meta)
 
 
 ADAPTERS = {
