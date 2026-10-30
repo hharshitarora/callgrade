@@ -48,9 +48,10 @@ function findFfmpeg() {
   const gif = path.join(ROOT, "docs", "demo.gif");
   fs.mkdirSync(path.dirname(gif), { recursive: true });
   execFileSync(ffmpeg, ["-y", "-i", webm, "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "26", "-movflags", "+faststart", mp4], { stdio: "inherit" });
-  // GIF: the first call only, 640px wide, 8 fps, with a palette so text stays readable
+  // GIF: the first call only, 640px wide, 8 fps, with a palette so text stays readable.
+  // No dithering: on the tinted paper it turns into noise and triples the file size.
   const gifSeconds = process.env.GIF_SECONDS || "26";
-  execFileSync(ffmpeg, ["-y", "-ss", "2", "-t", gifSeconds, "-i", webm, "-vf", "fps=8,scale=640:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=96[p];[b][p]paletteuse=dither=bayer:bayer_scale=4", gif], { stdio: "inherit" });
+  execFileSync(ffmpeg, ["-y", "-ss", "2", "-t", gifSeconds, "-i", webm, "-vf", "fps=8,scale=640:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=96:stats_mode=diff[p];[b][p]paletteuse=dither=none:diff_mode=rectangle", gif], { stdio: "inherit" });
   const mb = (f) => (fs.statSync(f).size / 1e6).toFixed(1) + "MB";
   console.log(`wrote ${mp4} (${mb(mp4)}) and ${gif} (${mb(gif)})`);
 })();
