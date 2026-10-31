@@ -128,6 +128,33 @@ out which platform it came from.
 callgrade convert my-export.json -o call.json   # see what callgrade understood
 ```
 
+### Getting calls out of your platform
+
+Every platform has one API call that lists your calls and one that returns a single
+call with its transcript. Save each call to its own file in a folder, then grade the folder.
+
+| Platform | List calls | Get one call | Auth header |
+|---|---|---|---|
+| Vapi | `GET https://api.vapi.ai/call?limit=100` | `GET https://api.vapi.ai/call/{id}` | `Authorization: Bearer <key>` |
+| Retell | `POST https://api.retellai.com/v3/list-calls` | `GET https://api.retellai.com/v2/get-call/{call_id}` | `Authorization: Bearer <key>` |
+| ElevenLabs Agents | `GET https://api.elevenlabs.io/v1/convai/conversations?agent_id=...` | `GET https://api.elevenlabs.io/v1/convai/conversations/{conversation_id}` | `xi-api-key: <key>` |
+| Bland | `GET https://api.bland.ai/v1/calls` | `GET https://api.bland.ai/v1/calls/{call_id}` | `authorization: <key>` |
+| Bolna | `GET https://api.bolna.ai/v2/agent/{agent_id}/executions` | `GET https://api.bolna.ai/executions/{execution_id}` | `Authorization: Bearer <key>` |
+
+For example, the last 20 Vapi calls (needs `jq`):
+
+```bash
+mkdir -p calls
+for id in $(curl -s "https://api.vapi.ai/call?limit=20" -H "Authorization: Bearer $VAPI_API_KEY" | jq -r '.[].id'); do
+  curl -s "https://api.vapi.ai/call/$id" -H "Authorization: Bearer $VAPI_API_KEY" > "calls/$id.json"
+done
+callgrade grade calls/ --context my-agent.md
+```
+
+The other platforms work the same way with their URLs and header; only the name of the
+id field in the list response changes. Calls with no conversation in them, like a
+voicemail or a call nobody picked up, are skipped with a note.
+
 The callgrade format is one file per call:
 
 ```json
