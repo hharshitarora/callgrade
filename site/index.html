@@ -284,7 +284,7 @@ footer .formno { color: var(--form); font-stretch: 75%; font-weight: 600; }
 <div class="tablewrap"><table class="plain" id="numbers"></table></div>
 <p>How much the judges agree with each other, pair by pair, as quadratic weighted kappa (1 is perfect agreement, 0 is chance, and 0.6 is where people usually let a judge gate a release). The one number under 0.6 is Haiku and GPT reading the same awkward call differently every single run.</p>
 <div class="tablewrap"><table class="plain" id="kappa"></table></div>
-<p class="sub">Nobody has scored either set by hand yet. The tool has the command for it (<code>callgrade agree --human</code>), I just haven't sat down and done the 14 calls. It's next.</p>
+<p class="sub">The answer key here is the planted failures, not a person. That shows the judge reads the rubric. It doesn't show it agrees with a person on a subtle call. <code>callgrade agree --human</code> measures that against your own blind scores, and it hasn't been run on these sets.</p>
 </div>
 </section>
 

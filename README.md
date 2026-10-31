@@ -80,8 +80,12 @@ on the same items.
 
 ## Quickstart
 
+Needs Python 3.10 or newer. Clone it so the test calls come with it:
+
 ```bash
-pip install "callgrade[anthropic] @ git+https://github.com/hharshitarora/callgrade"
+git clone https://github.com/hharshitarora/callgrade
+cd callgrade
+pip install ".[anthropic]"
 
 # measured checks only, no API key, runs on the bundled test set
 callgrade grade examples/calls --judge none
@@ -89,8 +93,10 @@ callgrade grade examples/calls --judge none
 # the full grade
 export ANTHROPIC_API_KEY=...
 callgrade grade examples/calls --context examples/northgate-context.md
-open callgrade-out/report.html
+open callgrade-out/report.html   # Windows: start callgrade-out/report.html
 ```
+
+To grade only your own calls, `pip install "callgrade[anthropic] @ git+https://github.com/hharshitarora/callgrade"` is enough.
 
 `--context` is a plain text file saying what the agent is for and what it must
 never say. Without it the judge can still catch talk-over and dodged questions,

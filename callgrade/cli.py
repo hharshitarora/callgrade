@@ -14,6 +14,8 @@ from . import rubric as rubric_mod
 def _call_files(paths: list[str]) -> list[Path]:
     files = []
     for p in map(Path, paths):
+        if not p.exists():
+            sys.exit(f"no such file or folder: {p}")
         files += sorted(p.glob("*.json")) if p.is_dir() else [p]
     if not files:
         sys.exit("no call files found")
