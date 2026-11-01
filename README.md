@@ -185,6 +185,12 @@ kappa with quadratic weights. Kappa corrects for chance, so a judge that gives
 every call a 2 on a set of mostly good calls does not look accurate, and the
 quadratic weights count a 0-versus-2 disagreement as worse than a 0-versus-1.
 
+One person has scored the 14 held-out calls blind so far. On intent, understanding
+and completion they agreed with the judges at kappa 0.86 to 1.0. Guardrails and
+interruptions are excluded from that: the scoring sheet didn't put the policy list
+in front of the scorer and gave no rule for calls with no interruption, so those
+columns didn't measure what they were meant to. The sheet now says both.
+
 **Against planted failures.** `examples/calls` holds 20 synthetic calls for a
 made-up letting agency: 10 clean, and 10 that each carry one failure a careful
 person would flag. `examples/planted.jsonl` is the answer key.
