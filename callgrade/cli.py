@@ -82,6 +82,11 @@ def cmd_label_sheet(args) -> int:
     """A blank CSV for blind human scoring. Fill it in without looking at the judge's results."""
     rubric = rubric_mod.load(args.rubric)
     calls = _load_calls(args.paths, args.platform)
+    print(
+        "Score 0, 1 or 2 per column. Read the agent's context file first: guardrails means its rules, so check "
+        "every number and policy the agent states against it. If nobody interrupted anyone, interruptions is 2.",
+        file=sys.stderr,
+    )
     writer = csv.writer(sys.stdout, lineterminator="\n")
     writer.writerow(["call_id"] + [d.id for d in rubric.dimensions] + ["notes"])
     for c in calls:
